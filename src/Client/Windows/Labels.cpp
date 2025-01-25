@@ -393,7 +393,7 @@ void Labels::refreshList()
             grab->setContentSize(ccp(cell->getContentHeight() - 2, cell->getContentHeight() - 2));
             grab->setPosition(arrowBack->getPosition());
 
-            auto grabSpr = CCSprite::create("draggable.png"_spr);
+            auto grabSpr = CCSprite::createWithSpriteFrameName("draggable.png"_spr);
             grabSpr->setPosition(grab->getPosition());
             grabSpr->setScale(0.6f);
 

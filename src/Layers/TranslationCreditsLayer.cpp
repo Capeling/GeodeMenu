@@ -171,7 +171,7 @@ void TranslationCreditsLayer::customSetup()
     }
     else
     {
-        auto btn = CCMenuItemSpriteExtra::create(CCSprite::create("heart.png"_spr), this, menu_selector(TranslationCreditsLayer::onMessage));
+        auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("heart.png"_spr), this, menu_selector(TranslationCreditsLayer::onMessage));
         btn->setPosition(ccp(142, 144));
 
         gameNode->addChild(btn);

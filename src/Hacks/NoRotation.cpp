@@ -9,19 +9,19 @@ using namespace geode::prelude;
 
 Module* rot = nullptr;
 
-class $modify (PlayerObject)
-{
-    void setRotation(float r)
-    {
-        if (!rot)
-            rot = Client::GetModule("no-rot");
+// class $modify (PlayerObject)
+// {
+//     void setRotation(float r)
+//     {
+//         if (!rot)
+//             rot = Client::GetModule("no-rot");
 
-        if (rot->enabled)
-            PlayerObject::setRotation(0);
-        else
-            PlayerObject::setRotation(r);
-    }
-};
+//         if (rot->enabled)
+//             PlayerObject::setRotation(0);
+//         else
+//             PlayerObject::setRotation(r);
+//     }
+// };
 
 #endif
 

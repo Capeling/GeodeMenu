@@ -15,8 +15,7 @@ class $modify (PauseLayer)
         menu->setScale(0.75f);
         menu->setAnchorPoint(ccp(0, 0));
 
-        auto questsSpr = CCSprite::create("questsBtn.png"_spr);
-        questsSpr->setScale(CCDirector::get()->getContentScaleFactor() / 4);
+        auto questsSpr = CCSprite::createWithSpriteFrameName("questsBtn.png"_spr);
 
         auto questsBtn = CCMenuItemSpriteExtra::create(questsSpr, this, menu_selector(CreatorLayer::onChallenge));
 

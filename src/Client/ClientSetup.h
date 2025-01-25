@@ -359,7 +359,7 @@ public:
         //cosmetic->modules.push_back(new Module("Force Don't Enter", "dont-enter", "Forces all object to be Don't Enter"));
 
         #ifndef GEODE_IS_ANDROID32
-        cosmetic->modules.push_back(new Module("No Player Rotation", "no-rot", "Disables rotation on players"));
+        // cosmetic->modules.push_back(new Module("No Player Rotation", "no-rot", "Disables rotation on players"));
         #endif
         cosmetic->modules.push_back(new Module("No Particles", "no-particles", "Disables particles, seems pretty obvious what this does imo"));
         cosmetic->modules.push_back(new Module("Hide Level", "no-level", "Disables the level visually, good for hitbox only showcases ig"));

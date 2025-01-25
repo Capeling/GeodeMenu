@@ -1,5 +1,5 @@
 {
-	"geode": "4.1.0",
+	"geode": "4.2.0",
 	"version": "v1.7.8",
 	"gd": {
 		"win": "2.2074",
@@ -29,7 +29,12 @@
         ],
 		"sprites": [
 			"resources/sprites/*.png"
-		]
+		],
+		"spritesheets": {
+			"QOLSheet_01":[
+				"resources/QOLSheet_01/*.png"
+			]
+		}
     },
 	"settings": {
 		"set-bind": { 
@@ -43,21 +48,19 @@
 		"customization",
 		"universal"
 	],
-	"incompatibilities": [
-        {
-            "id": "TheSillyDoggo.Cheats",
-            "version": "*",
-            "importance": "superseded"
-        },
-		{
-			"id": "camila314.text-select",
+	"incompatibilities": {
+		"TheSillyDoggo.Cheats": {
+			"version": "*",
+			"importance": "superseded"
+		},
+		"camila314.text-select": {
 			"version": "<=1.1.1",
 			"importance": "conflicting",
 			"platforms": [
 				"android"
 			]
 		}
-    ],
+	},
 	"api": {
 		"include": [
 			"src/Hacks/SafeMode.hpp"

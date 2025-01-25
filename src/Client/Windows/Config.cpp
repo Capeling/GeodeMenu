@@ -32,7 +32,7 @@ void Config::cocosCreate(CCMenu* menu)
 
     if (!Mod::get()->getSavedValue<bool>("hasShownDCMsg", false))
     {
-        sprJoin = CCSprite::create("joinDiscord.png"_spr);
+        sprJoin = CCSprite::createWithSpriteFrameName("joinDiscord.png"_spr);
         sprJoin->setPosition(menu->getContentSize() + ccp(-50, -40));
 
         menu->addChild(sprJoin, 42069);
