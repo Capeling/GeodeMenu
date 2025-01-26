@@ -15,7 +15,9 @@ bool ThreadedLabelBMFont::init(std::string text, std::string font, std::function
         this->retain();
 
         if (labels.size() - 1 == 0) {
-            Loader::get()->queueInMainThread([this] { queueStep(); });
+            Loader::get()->queueInMainThread([this] {
+                queueStep();
+            });
         }
     }
 
@@ -40,10 +42,14 @@ void ThreadedLabelBMFont::queueStep() {
             }
         }
 
-        labels.erase(std::remove_if(labels.begin(), labels.end(), [fnt](ThreadedLabelBMFont* obj) { return obj->getFont() == fnt; }));
+        labels.erase(std::remove_if(labels.begin(), labels.end(), [fnt](ThreadedLabelBMFont* obj) {
+            return obj->getFont() == fnt;
+        }));
 
         if (labels.size() != 0) {
-            Loader::get()->queueInMainThread([this] { queueStep(); });
+            Loader::get()->queueInMainThread([this] {
+                queueStep();
+            });
         }
     }
 }

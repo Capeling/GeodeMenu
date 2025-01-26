@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Client.h"
-
 #include "Types/InputModule.hpp"
 
 class SpeedhackEnabled : public Module {

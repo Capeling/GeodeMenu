@@ -2,13 +2,16 @@
 #include "SwitchGamemodePopup.hpp"
 
 #define speedbtn(speedid) \
-speed = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName(speedid), CCSprite::createWithSpriteFrameName(speedid), this, menu_selector(SwitchGamemodePopup::onSpeed)); \
+speed = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName(speedid),
+CCSprite::createWithSpriteFrameName(speedid),
+this, menu_selector(SwitchGamemodePopup::onSpeed)); \
 as<CCSprite*>(speed->m_offButton->getNormalImage())->setColor(ccc3(175, 175, 175)); \
 speedBtns.push_back(speed);
 
 #define gamemodebtn(iconname) \
-gamemode = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName(fmt::format("gj_{}Btn_off_001.png", iconname).c_str()), CCSprite::createWithSpriteFrameName(fmt::format("gj_{}Btn_on_001.png", iconname).c_str()), this, menu_selector(SwitchGamemodePopup::onGamemode)); \
-gamemodeBtns.push_back(gamemode);
+gamemode = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName(fmt::format("gj_{}Btn_off_001.png",
+iconname).c_str()), CCSprite::createWithSpriteFrameName(fmt::format("gj_{}Btn_on_001.png", iconname).c_str()),
+this, menu_selector(SwitchGamemodePopup::onGamemode)); \ gamemodeBtns.push_back(gamemode);
 
 void SwitchGamemodePopup::customSetup()
 {
@@ -42,7 +45,8 @@ void SwitchGamemodePopup::customSetup()
     gamemodebtn("spider")
     gamemodebtn("swing")
 
-    mirror = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("portal_06_front_001.png"), CCSprite::createWithSpriteFrameName("portal_05_front_001.png"), this, menu_selector(SwitchGamemodePopup::onMirror));
+    mirror = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("portal_06_front_001.png"),
+CCSprite::createWithSpriteFrameName("portal_05_front_001.png"), this, menu_selector(SwitchGamemodePopup::onMirror));
     mirror->setScale(0.45f);
     //misc->addChild(mirror);
 
@@ -57,7 +61,7 @@ void SwitchGamemodePopup::customSetup()
         gamemodeBtns[i]->setTag(i);
         gamemodes->addChild(gamemodeBtns[i]);
     }
-    
+
     speeds->updateLayout();
     gamemodes->updateLayout();
     misc->updateLayout();
@@ -203,10 +207,10 @@ int SwitchGamemodePopup::getGamemodeIndex(PlayerObject* player)
 
     if (player->m_isBird)
         return 3;
-    
+
     if (player->m_isDart)
         return 4;
-    
+
     if (player->m_isRobot)
         return 5;
 

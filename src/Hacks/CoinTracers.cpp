@@ -1,8 +1,9 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/DashRingObject.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/UILayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

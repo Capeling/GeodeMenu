@@ -1,17 +1,19 @@
-#include <Geode/modify/CCDictionary.hpp>
-#include <Geode/modify/CCKeyboardDispatcher.hpp>
-#include <Geode/modify/MenuLayer.hpp>
 #include "Client/AndroidBall.h"
 #include "Client/AndroidUI.h"
 #include "Layers/SillyBaseLayer.h"
 
+#include <Geode/modify/CCDictionary.hpp>
+#include <Geode/modify/CCKeyboardDispatcher.hpp>
+#include <Geode/modify/MenuLayer.hpp>
+
 using namespace geode::prelude;
-#include <Geode/modify/LoadingLayer.hpp>
 #include "Keybinds/RecordKeyPopup.hpp"
 #include "Keybinds/SetBindSetting.hpp"
 
+#include <Geode/modify/LoadingLayer.hpp>
+
 #ifdef GEODE_IS_WINDOWS
-//#define IMGUI
+// #define IMGUI
 #endif
 
 bool showing = false;
@@ -36,12 +38,12 @@ class $modify(CCKeyboardDispatcher) {
 
             std::vector<int> btns = {enumKeyCodes::KEY_Tab, enumKeyCodes::KEY_Insert};
 
-#    ifdef QOLMOD_CUSTOM_KEYS_SETTING
+# ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
             if (SetBindValue::instance)
                 btns = SetBindValue::instance->buttons;
 
-#    endif
+# endif
 
             for (auto btn : btns) {
                 if (btn == key)
@@ -127,12 +129,18 @@ class $modify(MenuLayer) {
 
         if (!v) {
             if (Client::get()->useImGuiUI()) {
-                ImGuiCocos::get().setup([] { Client::get()->initImGui(); }).draw([] { Client::get()->drawImGui(); });
+                ImGuiCocos::get()
+                    .setup([] {
+                        Client::get()->initImGui();
+                    })
+                    .draw([] {
+                        Client::get()->drawImGui();
+                    });
             }
 
             if (Client::GetModuleEnabled("save-pos")) {
-                AndroidBall::position = ccp(Mod::get()->getSavedValue("posX", 32),
-                                            Mod::get()->getSavedValue("posY", CCDirector::get()->getWinSize().height / 2));
+                AndroidBall::position =
+                    ccp(Mod::get()->getSavedValue("posX", 32), Mod::get()->getSavedValue("posY", CCDirector::get()->getWinSize().height / 2));
 
                 if (AndroidBall::position.x < 0)
                     AndroidBall::position.x = 0;

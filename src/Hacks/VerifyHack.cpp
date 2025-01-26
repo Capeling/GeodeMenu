@@ -1,6 +1,7 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/ShareLevelLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -18,7 +19,7 @@ class $modify(ShareLevelLayer) {
     }
 
     void onShare(cocos2d::CCObject* sender) {
-#    ifdef QOLMOD_GOODVERIFYHACK
+# ifdef QOLMOD_GOODVERIFYHACK
         if (Client::GetModuleEnabled("verify-hack")) {
             auto pop = UploadPopup::create(m_fields->m_level);
             CCScene::get()->addChild(pop, CCScene::get()->getHighestChildZ() + 1);
@@ -30,7 +31,7 @@ class $modify(ShareLevelLayer) {
         }
 
         ShareLevelLayer::onShare(sender);
-#    else
+# else
         auto level = m_fields->m_level;
         auto p1 = level->m_isVerifiedRaw;
         auto p2 = level->m_isVerified.value();
@@ -44,7 +45,7 @@ class $modify(ShareLevelLayer) {
 
         level->m_isVerifiedRaw = p1;
         level->m_isVerified = p2;
-#    endif
+# endif
     }
 };
 

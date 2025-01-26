@@ -1,6 +1,7 @@
+#include "../../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/SecretLayer2.hpp>
-#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -8,7 +9,9 @@ class $modify(SecretLayer2) {
     static void onModify(auto& self) {
         (void) self.setHookPriority("SecretLayer2::onSecretLevel", 99999999);
         auto hook = self.getHook("SecretLayer2::onSecretLevel");
-        Loader::get()->queueInMainThread([hook] { Client::GetModule("the-challenge-bypass")->addHookRaw(hook); });
+        Loader::get()->queueInMainThread([hook] {
+            Client::GetModule("the-challenge-bypass")->addHookRaw(hook);
+        });
     }
 
     void onSecretLevel(cocos2d::CCObject* sender) {

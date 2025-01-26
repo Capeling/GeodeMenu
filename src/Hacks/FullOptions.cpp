@@ -1,13 +1,15 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/OptionsLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
 namespace FullOptions {
-bool ignore = false;
+    bool ignore = false;
 };
+
 using namespace FullOptions;
 
 class $modify(OptionsLayerExt, OptionsLayer) {
@@ -28,7 +30,8 @@ class $modify(OptionsLayerExt, OptionsLayer) {
             return;
 
         auto btn = CCMenuItemSpriteExtra::create(
-            CCSprite::createWithSpriteFrameName("GJ_optionsBtn02_001.png"), this, menu_selector(OptionsLayerExt::onPauseOptions));
+            CCSprite::createWithSpriteFrameName("GJ_optionsBtn02_001.png"), this, menu_selector(OptionsLayerExt::onPauseOptions)
+        );
         btn->setID("normal-settings-btn"_spr);
 
         if (auto m = m_mainLayer->getChildByType<CCMenu>(-2)) {

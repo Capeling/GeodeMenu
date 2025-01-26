@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCSpriteGrayscale.hpp>
 #include <Geode/modify/CreatorLayer.hpp>
-#include "../Client/Client.h"
 
 bool __creatorlayer__init__ = false;
 

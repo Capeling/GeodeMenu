@@ -1,6 +1,6 @@
 #if !(defined(GEODE_IS_IOS) || defined(GEODE_IS_MACOS))
 
-#    include <Geode/Geode.hpp>
+# include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
@@ -19,8 +19,9 @@ public:
 
     virtual void update(float time) {
         if (_target) {
-            cocos2d::CCSize newSize(_startSize.width + (_endSize.width - _startSize.width) * time,
-                                    _startSize.height + (_endSize.height - _startSize.height) * time);
+            cocos2d::CCSize newSize(
+                _startSize.width + (_endSize.width - _startSize.width) * time, _startSize.height + (_endSize.height - _startSize.height) * time
+            );
             _target->setContentSize(newSize);
         }
     }

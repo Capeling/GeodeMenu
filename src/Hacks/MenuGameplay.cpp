@@ -1,8 +1,9 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/MenuGameLayer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

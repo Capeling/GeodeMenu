@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>
 #include <Geode/modify/NumberInputLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -23,7 +24,8 @@ class $modify(LevelInfoLayer) {
                 unlocked->setVisible(true);
             } else {
                 auto btn = CCMenuItemSpriteExtra::create(
-                    CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"), this, menu_selector(LevelInfoLayer::confirmClone));
+                    CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"), this, menu_selector(LevelInfoLayer::confirmClone)
+                );
                 btn->setID("copy-button");
 
                 m_cloneBtn = btn;
@@ -43,7 +45,8 @@ class $modify(LevelInfoLayer) {
             return true;
 
         auto aCloneBtn = CCMenuItemSpriteExtra::create(
-            CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"), this, menu_selector(LevelInfoLayer::confirmClone));
+            CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"), this, menu_selector(LevelInfoLayer::confirmClone)
+        );
         aCloneBtn->setPosition(m_cloneBtn->getPosition());
         m_cloneBtn->getParent()->addChild(aCloneBtn);
         m_cloneBtn->setVisible(false);
@@ -71,7 +74,8 @@ class $modify(ShowPasswordLayer, NumberInputLayer) {
 
         if (auto l = CCScene::get()->getChildByType<LevelInfoLayer>(0)) {
             auto btn = CCMenuItemSpriteExtra::create(
-                CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(ShowPasswordLayer::onShowPassword));
+                CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(ShowPasswordLayer::onShowPassword)
+            );
             btn->setTag(l->m_level->m_password.value());
             btn->setPosition(ccp(119, 117));
 

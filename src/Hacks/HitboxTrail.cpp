@@ -1,8 +1,9 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -65,10 +66,14 @@ class $modify(GJBaseGameLayerExt, GJBaseGameLayer) {
                 CCPoint squarePosition = point;
 
                 CCPoint squareVertices[] = {
-                    ccp(squarePosition.x - squareSize.x / 2, squarePosition.y - squareSize.y / 2), // Bottom-left
-                    ccp(squarePosition.x + squareSize.x / 2, squarePosition.y - squareSize.y / 2), // Bottom-right
-                    ccp(squarePosition.x + squareSize.x / 2, squarePosition.y + squareSize.y / 2), // Top-right
-                    ccp(squarePosition.x - squareSize.x / 2, squarePosition.y + squareSize.y / 2)  // Top-left
+                    ccp(squarePosition.x - squareSize.x / 2,
+                        squarePosition.y - squareSize.y / 2), // Bottom-left
+                    ccp(squarePosition.x + squareSize.x / 2,
+                        squarePosition.y - squareSize.y / 2), // Bottom-right
+                    ccp(squarePosition.x + squareSize.x / 2,
+                        squarePosition.y + squareSize.y / 2), // Top-right
+                    ccp(squarePosition.x - squareSize.x / 2,
+                        squarePosition.y + squareSize.y / 2) // Top-left
                 };
 
                 m_debugDrawNode->drawPolygon(squareVertices, 4, ccc4f(0, 0, 0, 0), 0.35f, ccc4f(1, 0, 0, 1));

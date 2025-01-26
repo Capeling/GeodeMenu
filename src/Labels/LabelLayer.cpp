@@ -1,4 +1,5 @@
 #include "LabelLayer.hpp"
+
 #include "../Client/Windows/Labels.hpp"
 #include "../Utils/CCDirectorExt.hpp"
 
@@ -52,8 +53,26 @@ void LabelLayer::update(float dt) {
     for (size_t i = 0; i < cps2.size(); i++)
         cps2[i] -= dt;
 
-    cps1.erase(std::remove_if(cps1.begin(), cps1.end(), [](float i) { return i < 0; }), cps1.end());
-    cps2.erase(std::remove_if(cps2.begin(), cps2.end(), [](float i) { return i < 0; }), cps2.end());
+    cps1.erase(
+        std::remove_if(
+            cps1.begin(),
+            cps1.end(),
+            [](float i) {
+                return i < 0;
+            }
+        ),
+        cps1.end()
+    );
+    cps2.erase(
+        std::remove_if(
+            cps2.begin(),
+            cps2.end(),
+            [](float i) {
+                return i < 0;
+            }
+        ),
+        cps2.end()
+    );
 
     for (auto label : labels) {
         label->update(dt);

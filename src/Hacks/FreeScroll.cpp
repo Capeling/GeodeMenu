@@ -1,8 +1,9 @@
 #ifndef GEODE_IS_MACOS
 
-#    include <Geode/Geode.hpp>
-#    include <Geode/modify/EditorUI.hpp>
-#    include "../Client/Client.h"
+# include "../Client/Client.h"
+
+# include <Geode/Geode.hpp>
+# include <Geode/modify/EditorUI.hpp>
 
 using namespace geode::prelude;
 

@@ -1,9 +1,9 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#    pragma once
+# pragma once
 
-#    include "SetBindSetting.hpp"
-#    include "../Layers/SillyBaseLayer.h"
+# include "../Layers/SillyBaseLayer.h"
+# include "SetBindSetting.hpp"
 
 class KeyInfoPopup : public SillyBaseLayer {
 public:

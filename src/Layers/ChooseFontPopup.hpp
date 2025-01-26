@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
+#include "../Client/Module.h"
 #include "../Hacks/SafeMode/SafeMode.hpp"
 #include "../UI/ThreadedLabelBMFont.hpp"
-#include "../Client/Module.h"
-
 #include "SillyBaseLayer.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
@@ -16,7 +16,8 @@ public:
     std::vector<CCMenuItemToggler*> toggles;
 
     void setSelected(int id);
-    void setSelected(std::string font); // selects the node based of a font name, if the font does not exist just sets it to bigFont
+    void setSelected(std::string font); // selects the node based of a font name, if the font does not exist just sets
+                                        // it to bigFont
 
     void onSelect(CCObject* sender);
 

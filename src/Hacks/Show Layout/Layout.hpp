@@ -1,10 +1,11 @@
 #pragma once
 
+#include "../../Client/Client.h"
+#include "../SafeMode/SafeMode.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../SafeMode/SafeMode.hpp"
-#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -69,15 +70,8 @@ class $modify(LayoutBaseGameLayer, GJBaseGameLayer) {
     void createGroundLayer(int p0, int p1);
     void createMiddleground(int p0);
 
-    virtual void updateColor(cocos2d::ccColor3B& color,
-                             float fadeTime,
-                             int colorID,
-                             bool blending,
-                             float opacity,
-                             cocos2d::ccHSVValue& copyHSV,
-                             int colorIDToCopy,
-                             bool copyOpacity,
-                             EffectGameObject* callerObject,
-                             int unk1,
-                             int unk2);
+    virtual void updateColor(
+        cocos2d::ccColor3B& color, float fadeTime, int colorID, bool blending, float opacity, cocos2d::ccHSVValue& copyHSV,
+        int colorIDToCopy, bool copyOpacity, EffectGameObject* callerObject, int unk1, int unk2
+    );
 };

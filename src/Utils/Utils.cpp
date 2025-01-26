@@ -1,7 +1,9 @@
 #include "Utils.hpp"
+
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <imgui-cocos.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

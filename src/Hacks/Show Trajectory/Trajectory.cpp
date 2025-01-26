@@ -3,11 +3,10 @@
 #define ResetMember(_mem) fields->trajectoryPlayer->_mem = player->_mem;
 #define RM ResetMember
 
-void drawSegmentAlternative(CCDrawNode* drawNode,
-                            const CCPoint& startPoint,
-                            const CCPoint& endPoint,
-                            float radius,
-                            const ccColor4F& color) // taken from the depths of google
+void drawSegmentAlternative(
+    CCDrawNode* drawNode, const CCPoint& startPoint, const CCPoint& endPoint, float radius,
+    const ccColor4F& color
+) // taken from the depths of google
 {
     CCPoint direction = ccpNormalize(ccpSub(endPoint, startPoint));
     CCPoint perpendicular = ccp(-direction.y, direction.x);
@@ -441,11 +440,13 @@ void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player) {
         m_fields->trajectoryPlayer->update(delta);
         this->checkCollisions(m_fields->trajectoryPlayer, delta, false);
 
-        drawSegmentAlternative(m_fields->trajectoryDraw,
-                               m_fields->trajectoryPlayer->getPosition(),
-                               m_fields->point,
-                               0.5f,
-                               m_fields->trajectoryPlayer->m_isDead ? ccc4f(1, 0, 0, 1) : ccc4f(0, press ? 1 : 0.45f, 0, 1));
+        drawSegmentAlternative(
+            m_fields->trajectoryDraw,
+            m_fields->trajectoryPlayer->getPosition(),
+            m_fields->point,
+            0.5f,
+            m_fields->trajectoryPlayer->m_isDead ? ccc4f(1, 0, 0, 1) : ccc4f(0, press ? 1 : 0.45f, 0, 1)
+        );
         m_fields->point = m_fields->trajectoryPlayer->getPosition();
 
         if (m_fields->trajectoryPlayer->m_isDead) {
@@ -453,10 +454,12 @@ void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player) {
             CCPoint squarePosition = m_fields->trajectoryPlayer->getPosition();
 
             CCPoint squareVertices[] = {
-                ccp(squarePosition.x - squareSize.x / 2, squarePosition.y - squareSize.y / 2), // Bottom-left
-                ccp(squarePosition.x + squareSize.x / 2, squarePosition.y - squareSize.y / 2), // Bottom-right
+                ccp(squarePosition.x - squareSize.x / 2,
+                    squarePosition.y - squareSize.y / 2), // Bottom-left
+                ccp(squarePosition.x + squareSize.x / 2,
+                    squarePosition.y - squareSize.y / 2), // Bottom-right
                 ccp(squarePosition.x + squareSize.x / 2, squarePosition.y + squareSize.y / 2), // Top-right
-                ccp(squarePosition.x - squareSize.x / 2, squarePosition.y + squareSize.y / 2)  // Top-left
+                ccp(squarePosition.x - squareSize.x / 2, squarePosition.y + squareSize.y / 2) // Top-left
             };
 
             m_fields->trajectoryDraw->drawPolygon(squareVertices, 4, ccc4f(0, 0, 0, 0), 0.35f, ccc4f(1, 0, 0, 1));

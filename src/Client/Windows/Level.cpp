@@ -1,6 +1,7 @@
 #include "Level.hpp"
-#include "Uncomplete.hpp"
+
 #include "../../Layers/ConfirmFLAlertLayer.h"
+#include "Uncomplete.hpp"
 
 using namespace geode::prelude;
 
@@ -36,14 +37,16 @@ void Level::onUnc(CCObject* sender) {
             "Don't show this popup again",
             false,
             menu_selector(Uncomplete::onToggle),
-            "Are you sure you want to <cr>uncomplete</c> this <cg>level</c>? Uncompleting a level will:\n<cl>- Reset "
+            "Are you sure you want to <cr>uncomplete</c> this <cg>level</c>? Uncompleting a level "
+            "will:\n<cl>- Reset "
             "Attempts</c>\n<cl>- Reset Percentage</c>\n<cl>- Reset Jumps</c>",
             "Cancel",
             "Reset",
             350,
             false,
             310,
-            1.0f);
+            1.0f
+        );
         alert->show();
     }
 }

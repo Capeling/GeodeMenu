@@ -1,9 +1,9 @@
 #pragma once
 
+#include "CCContentSizeTo.h"
 #include "Client.h"
 
 #include <Geode/Geode.hpp>
-#include "CCContentSizeTo.h"
 
 using namespace geode::prelude;
 

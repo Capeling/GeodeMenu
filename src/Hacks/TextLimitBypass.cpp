@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCSprite.hpp>
 #include <Geode/modify/CCTextInputNode.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -18,7 +19,9 @@ class $modify(CCTextInputNode) {
 
         if (Client::GetModuleEnabled("char-filter"))
             CCTextInputNode::setAllowedChars(
-                "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ ");
+                "!\"#$%&'()*+,-./"
+                "0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ "
+            );
 
         CCTextInputNode::updateLabel(p0);
     }

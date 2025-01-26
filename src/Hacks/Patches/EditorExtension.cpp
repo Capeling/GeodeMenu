@@ -1,7 +1,8 @@
+#include "../../Client/Client.h"
+#include "../../Utils/OffsetManager.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include "../../Utils/OffsetManager.hpp"
-#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 

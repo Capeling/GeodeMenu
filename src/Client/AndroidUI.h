@@ -1,13 +1,14 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include <Geode/ui/GeodeUI.hpp>
 #include "../Layers/ManageKeybindsLayer.hpp"
 #include "../UI/CategoryTabSprite.hpp"
 #include "../UI/QOLModMenuBG.hpp"
 #include "../Utils/defines.hpp"
-#include "idkwhattocallthis.hpp"
 #include "ClientSetup.h"
+#include "idkwhattocallthis.hpp"
+
+#include <Geode/Geode.hpp>
+#include <Geode/ui/GeodeUI.hpp>
 
 using namespace geode::prelude;
 

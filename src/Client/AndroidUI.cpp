@@ -1,4 +1,5 @@
 #include "AndroidUI.h"
+
 #include "../UI/BlurLayer.hpp"
 #include "../Utils/LaunchArgs.hpp"
 #include "../Utils/UnspeedhackedAction.hpp"
@@ -73,8 +74,9 @@ bool AndroidUI::setup() {
                                ->setAutoScale(false)
                                ->setGap(3.5f));
 
-    std::sort(
-        Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) { return a->priority < b->priority; });
+    std::sort(Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) {
+        return a->priority < b->priority;
+    });
 
     // 🥶
     auto windowScroll = ScrollLayer::create(ccp(windows->getContentSize().width + 5 * 2, windows->getContentSize().height - 35 - 5));
@@ -178,7 +180,7 @@ bool AndroidUI::setup() {
     versionParent->getLayout()->ignoreInvisibleChildren(true);
 
     versionInfo = CCLabelBMFont::create("L", "chatFont.fnt");
-    //versionInfo->setBlendFunc({ GL_ONE_MINUS_DST_COLOR, GL_ZERO });
+    // versionInfo->setBlendFunc({ GL_ONE_MINUS_DST_COLOR, GL_ZERO });
     versionInfo->setAlignment(CCTextAlignment::kCCTextAlignmentCenter);
     versionInfo->setAnchorPoint(ccp(0.5f, 0));
     versionInfo->setScale(0.55f);
@@ -196,19 +198,19 @@ bool AndroidUI::setup() {
     updateSearchBox();
     updateVersionLabel();
 
-    //if (Client::GetModuleEnabled("npesta-width"))
+    // if (Client::GetModuleEnabled("npesta-width"))
     //{
-    //    panel->setPositionX(panel->getPositionX() + 5);
-    //    panel->setContentSize(panel->getContentSize() + ccp(10, 0));
-    //    as<CCNode*>(panel->getChildren()->objectAtIndex(0))->setPositionX(-5);
-    //}
+    //     panel->setPositionX(panel->getPositionX() + 5);
+    //     panel->setContentSize(panel->getContentSize() + ccp(10, 0));
+    //     as<CCNode*>(panel->getChildren()->objectAtIndex(0))->setPositionX(-5);
+    // }
 
     panel->runAction(getEnterAction(panel));
 
     this->addChild(panel);
     this->addChild(backMenu);
 
-    //UIOpenEvent("open-menu"_spr, nullptr).post();
+    // UIOpenEvent("open-menu"_spr, nullptr).post();
 
     return true;
 }
@@ -223,7 +225,7 @@ AndroidUI* AndroidUI::get() {
     /*if (__androidui__instance__)
     {
         __androidui__instance__->removeFromParent();
-        
+
         __androidui__instance__ = nullptr;
     }*/
 
@@ -442,7 +444,6 @@ void AndroidUI::goToPage(int p, bool transition) {
     selectedTab = p;
 
     if (transition) {
-
     } else {
         for (size_t i = 0; i < pages.size(); i++) {
             pages[i]->setVisible(i == p);
@@ -479,17 +480,21 @@ void AndroidUI::onPressTab(CCObject* sender) {
     auto btn = static_cast<CCMenuItemSprite*>(sender);
 
     if (typeinfo_cast<IconEffects*>(Client::instance->windows[btn->getTag()]) && EffectUI::getIncompatibleModLoaded())
-        return FLAlertLayer::create(nullptr,
-                                    "Icon Effects",
-                                    fmt::format("Icon Effects have been disabled due to incompatibilities.\nTo use "
-                                                "icon effects, disable the following mod:\n{}",
-                                                EffectUI::getIncompatibleMods()),
-                                    "OK",
-                                    nullptr,
-                                    330,
-                                    false,
-                                    300,
-                                    0.75f)
+        return FLAlertLayer::create(
+                   nullptr,
+                   "Icon Effects",
+                   fmt::format(
+                       "Icon Effects have been disabled due to incompatibilities.\nTo use "
+                       "icon effects, disable the following mod:\n{}",
+                       EffectUI::getIncompatibleMods()
+                   ),
+                   "OK",
+                   nullptr,
+                   330,
+                   false,
+                   300,
+                   0.75f
+        )
             ->show();
 
     lastTab = selectedTab;
@@ -566,11 +571,11 @@ void AndroidUI::keyDown(cocos2d::enumKeyCodes key) {
     if (key == enumKeyCodes::KEY_Eight)
         onPressTab(buttons[7]);
 
-    //if (key == enumKeyCodes::KEY_Nine)
-    //    onPressTab(buttons[8]);
+    // if (key == enumKeyCodes::KEY_Nine)
+    //     onPressTab(buttons[8]);
 
-    //if (key == enumKeyCodes::KEY_Zero)
-    //    onPressTab(buttons[9]);
+    // if (key == enumKeyCodes::KEY_Zero)
+    //     onPressTab(buttons[9]);
 
     Popup<>::keyDown(key);
 }

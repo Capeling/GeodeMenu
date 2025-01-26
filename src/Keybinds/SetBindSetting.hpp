@@ -1,9 +1,10 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#    pragma once
-#    include <Geode/Geode.hpp>
-#    include <Geode/loader/SettingNode.hpp>
-#    include "../Utils/Utils.hpp"
+# pragma once
+# include "../Utils/Utils.hpp"
+
+# include <Geode/Geode.hpp>
+# include <Geode/loader/SettingNode.hpp>
 
 using namespace geode::prelude;
 
@@ -15,9 +16,9 @@ public:
 
     std::vector<int> buttons = {enumKeyCodes::KEY_Tab, enumKeyCodes::KEY_Insert};
 
-    SetBindValue(std::string const& key, std::string const& modID) : SettingValue(key, modID) {}
+    SetBindValue(const std::string& key, const std::string& modID) : SettingValue(key, modID) {}
 
-    bool load(matjson::Value const& json) override {
+    bool load(const matjson::Value& json) override {
         instance = this;
 
         if (!json.is_array())

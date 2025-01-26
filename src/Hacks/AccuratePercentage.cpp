@@ -1,6 +1,7 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -15,8 +16,8 @@ class $modify(PlayLayer) {
     };
 
     float getPerc() {
-        return inaccurateMod->enabled ? ((m_player1->getPositionX() / (m_levelLength == 0 ? 1 : m_levelLength))) * 100
-                                      : this->getCurrentPercent();
+        return inaccurateMod->enabled ? ((m_player1->getPositionX() / (m_levelLength == 0 ? 1 : m_levelLength))) * 100 :
+                                        this->getCurrentPercent();
     }
 
     void updateProgressbar() {
@@ -55,9 +56,11 @@ class $modify(PlayLayer) {
             m_fields->title->setString((utils::numToString<float>(getPerc(), places) + std::string("%")).c_str());
 
             if (bestMod->enabled)
-                m_fields->title->setString(fmt::format("{} / {}%",
-                                                       m_fields->title->getString(),
-                                                       m_isPracticeMode ? m_level->m_practicePercent : m_level->m_normalPercent.value())
+                m_fields->title->setString(fmt::format(
+                                               "{} / {}%",
+                                               m_fields->title->getString(),
+                                               m_isPracticeMode ? m_level->m_practicePercent : m_level->m_normalPercent.value()
+                )
                                                .c_str());
         }
     }

@@ -1,7 +1,9 @@
 #include "LabelNode.hpp"
+
 #include "../Client/Windows/Labels.hpp"
 #include "../Hacks/Noclip/Noclip.hpp"
 #include "LabelLayer.hpp"
+
 #include <chrono>
 
 bool LabelNode::init(LabelModule* mod) {
@@ -107,8 +109,7 @@ void LabelNode::update(float dt) {
     script->setVariable("isLevel", rift::Value::boolean(PlayLayer::get()));
 
     script->setVariable("noclip_deaths", rift::Value::integer(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipDeaths()));
-    script->setVariable("noclip_accuracy",
-                        rift::Value::floating(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipAccuracy() * 100));
+    script->setVariable("noclip_accuracy", rift::Value::floating(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipAccuracy() * 100));
 
     if (auto lvl = GJBaseGameLayer::get()->m_level) {
         script->setVariable("level_name", rift::Value::string(lvl->m_levelName));

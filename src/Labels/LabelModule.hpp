@@ -1,8 +1,9 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include "LabelCommon.hpp"
 #include "../Client/Module.h"
+#include "LabelCommon.hpp"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 

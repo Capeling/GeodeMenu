@@ -1,7 +1,9 @@
 #include "RecordKeyPopup.hpp"
-#include <Geode/ui/GeodeUI.hpp>
-#include "../UI/BlurLayer.hpp"
+
 #include "../Client/Client.h"
+#include "../UI/BlurLayer.hpp"
+
+#include <Geode/ui/GeodeUI.hpp>
 
 bool RecordKeyPopup::init(SEL_MenuHandler obj) {
     if (!CCLayerColor::init())

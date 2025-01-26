@@ -30,7 +30,8 @@ void Dropdown::setVis(bool n) {
             btns[i]->stopAllActions();
             btns[i]->setEnabled(n);
 
-            //btns[i]->runAction(CCSequence::createWithTwoActions(CCDelayTime::create(0.1f * i), CCEaseInOut::create(CCScaleTo::create(0.5f, 1), 2)));
+            // btns[i]->runAction(CCSequence::createWithTwoActions(CCDelayTime::create(0.1f * i),
+            // CCEaseInOut::create(CCScaleTo::create(0.5f, 1), 2)));
         }
     } else {
         std::reverse(btns.begin(), btns.end());
@@ -39,7 +40,8 @@ void Dropdown::setVis(bool n) {
             btns[i]->stopAllActions();
             btns[i]->setEnabled(n);
 
-            //btns[i]->runAction(CCSequence::createWithTwoActions(CCDelayTime::create(0.1f * i), CCEaseInOut::create(CCScaleTo::create(0.35f, 0), 2)));
+            // btns[i]->runAction(CCSequence::createWithTwoActions(CCDelayTime::create(0.1f * i),
+            // CCEaseInOut::create(CCScaleTo::create(0.35f, 0), 2)));
         }
 
         std::reverse(btns.begin(), btns.end());
@@ -59,10 +61,12 @@ void Dropdown::onPress(CCObject* sender) {
 
 void Dropdown::visit() {
     auto rect = CCRect(
-        -this->size.width, -this->bg->getContentHeight() / 2 + this->size.height, this->size.width * 3, this->bg->getContentHeight() / 2);
+        -this->size.width, -this->bg->getContentHeight() / 2 + this->size.height, this->size.width * 3, this->bg->getContentHeight() / 2
+    );
 
-    //glEnable(0xc11);
-    //CCEGLView::sharedOpenGLView()->setScissorInPoints(rect.getMinX(), rect.getMinY(), rect.getMaxX(), rect.getMaxY());
+    // glEnable(0xc11);
+    // CCEGLView::sharedOpenGLView()->setScissorInPoints(rect.getMinX(), rect.getMinY(), rect.getMaxX(),
+    // rect.getMaxY());
     GameToolbox::preVisitWithClippingRect(this, rect);
 
     CCMenu::visit();

@@ -1,8 +1,9 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCNode.hpp>
 #include <Geode/modify/GameObject.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../Client/Client.h"
 
 class $modify(PlayLayer) {
     struct Fields {

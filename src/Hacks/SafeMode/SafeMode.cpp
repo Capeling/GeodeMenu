@@ -99,23 +99,23 @@ std::vector<std::pair<bool, std::string>> SafeMode::getReasons() {
 void SafeMode::updateIndicator() {
 #ifdef STATUS_TEXTS
 
-    //if (auto a = StatusNode::get())
+    // if (auto a = StatusNode::get())
     //{
-    //    if (auto l = a->sLabels[0])
-    //        l->setColor(colourForState());
+    //     if (auto l = a->sLabels[0])
+    //         l->setColor(colourForState());
     //
-    //        a->update(-1);
-    //        a->reorderSides();
-    //        a->reorderPosition();
-    //    }
+    //         a->update(-1);
+    //         a->reorderSides();
+    //         a->reorderPosition();
+    //     }
 
 #endif
 }
 
 void SafeMode::updateSpeedhackShouldKick() {
-    speedhackKick = Client::GetModuleEnabled("auto-safe-mode")
-                        ? (SpeedhackEnabled::instance->enabled ? (SpeedhackTop::instance->getFloatValue() < 1) : false)
-                        : false;
+    speedhackKick = Client::GetModuleEnabled("auto-safe-mode") ?
+        (SpeedhackEnabled::instance->enabled ? (SpeedhackTop::instance->getFloatValue() < 1) : false) :
+        false;
 }
 
 void HackModuleDelegate::onModuleChanged(bool enabled) {
@@ -209,8 +209,9 @@ void SafeEndLevelLayer::customSetup() {
             lbl->setScale(0.7f);
 
             // i dont even know
-            lbl->setPositionY((m_playLayer->m_level->isPlatformer() ? 147 - (32.5 * 0.5) : 95) - 320 / 2 +
-                              CCDirector::get()->getWinSize().height / 2);
+            lbl->setPositionY(
+                (m_playLayer->m_level->isPlatformer() ? 147 - (32.5 * 0.5) : 95) - 320 / 2 + CCDirector::get()->getWinSize().height / 2
+            );
             lbl->setPositionX(CCDirector::get()->getWinSize().width / 2);
 
             m_mainLayer->addChild(lbl);

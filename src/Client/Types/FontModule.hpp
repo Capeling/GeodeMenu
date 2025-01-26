@@ -1,8 +1,9 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
 #include "../Dropdown.h"
 #include "../Module.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 

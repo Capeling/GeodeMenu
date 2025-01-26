@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/FMODAudioEngine.hpp>
 #include <Geode/modify/MusicDownloadManager.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

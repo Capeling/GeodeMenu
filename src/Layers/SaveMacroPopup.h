@@ -32,7 +32,8 @@ class SaveMacroPopup : public FLAlertLayer, TextInputDelegate
 
             auto res = utils::file::writeString(p, str.c_str());
 
-            CCScene::get()->addChild(TextAlertPopup::create("Successfully saved '" + inp->getString() + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
+            CCScene::get()->addChild(TextAlertPopup::create("Successfully saved '" +
+inp->getString() + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
 
             this->removeFromParent();
         }
@@ -48,15 +49,15 @@ class SaveMacroPopup : public FLAlertLayer, TextInputDelegate
             ss << "Level Name: <ca>";
             ss << GJReplayManager::replay.levelInfo.name;
             ss << "</c>\n";
-            
+
             ss << "Level ID: <cy>";
             ss << GJReplayManager::replay.levelInfo.id;
             ss << "</c>\n";
-            
+
             ss << "LDM: <cg>";
             ss << GJReplayManager::replay.ldm;
             ss << "</c>\n";
-            
+
             ss << "Inputs: <cb>";
             ss << GJReplayManager::replay.inputs.size();
             ss << "</c>\n";
@@ -159,9 +160,8 @@ class SaveMacroPopup : public FLAlertLayer, TextInputDelegate
             {
                 auto size = panel->getContentSize();
 
-                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
-                gradient->setContentSize(size);
-                gradient->setZOrder(-1);
+                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255,
+255, 255)); gradient->setContentSize(size); gradient->setZOrder(-1);
                 gradient->setID("gradient"_spr);
 
                 if (Mod::get()->getSettingValue<bool>("use-custom-colours"))
@@ -181,18 +181,18 @@ class SaveMacroPopup : public FLAlertLayer, TextInputDelegate
                 if (Mod::get()->getSettingValue<bool>("reverse-order"))
                 gradient->setScaleY(-1);
 
-                auto darken = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-fill.png")).c_str());
-                darken->setID("darken"_spr);
-                darken->setContentSize(size - ccp(15, 15));
-                darken->setZOrder(0);
-                darken->setPosition(size / 2);
+                auto darken =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-fill.png")).c_str()); darken->setID("darken"_spr); darken->setContentSize(size -
+ccp(15, 15)); darken->setZOrder(0); darken->setPosition(size / 2);
 
-                auto outline = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-outline.png")).c_str());
-                outline->setPosition(size / 2);
+                auto outline =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-outline.png")).c_str()); outline->setPosition(size / 2);
                 outline->setContentSize(size);
                 outline->setZOrder(1);
                 outline->setID("outline"_spr);
-                
+
                 gradient->addChild(darken);
                 gradient->addChild(outline);
 
@@ -215,24 +215,21 @@ class SaveMacroPopup : public FLAlertLayer, TextInputDelegate
             lb->setScale(0.55f);
             l->addChild(lb);
 
-            inp = geode::TextInput::create(lb->getScaledContentSize().width + 150, "Macro Name (.gdr)");
-            inp->setPosition(l->getContentSize() / 2 + ccp(0, 5));
-            inp->getInputNode()->setAllowedChars("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNNM0987654321 ");
-            inp->getInputNode()->setMaxLabelLength(32);
-            inp->getInputNode()->setDelegate(this);
+            inp = geode::TextInput::create(lb->getScaledContentSize().width + 150, "Macro Name
+(.gdr)"); inp->setPosition(l->getContentSize() / 2 + ccp(0, 5));
+            inp->getInputNode()->setAllowedChars("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNNM0987654321
+"); inp->getInputNode()->setMaxLabelLength(32); inp->getInputNode()->setDelegate(this);
             inp->getInputNode()->setID("IGNOREBYPASSES"_spr);
             l->addChild(inp);
 
-            errorLbl = CCLabelBMFont::create(GJReplayManager::replay.inputs.size() == 0 ? "Macro cannot be empty" : "Macro name cannot be empty", "bigFont.fnt");
-            errorLbl->setColor(ccc3(255, 0, 0));
-            errorLbl->setOpacity(100);
-            errorLbl->setPosition(l->getContentSize() / 2 + ccp(0, -25));
-            errorLbl->limitLabelWidth(725*0.375, 1.0f, 0.1f);
-            l->addChild(errorLbl);
+            errorLbl = CCLabelBMFont::create(GJReplayManager::replay.inputs.size() == 0 ? "Macro
+cannot be empty" : "Macro name cannot be empty", "bigFont.fnt"); errorLbl->setColor(ccc3(255, 0,
+0)); errorLbl->setOpacity(100); errorLbl->setPosition(l->getContentSize() / 2 + ccp(0, -25));
+errorLbl->limitLabelWidth(725*0.375, 1.0f, 0.1f); l->addChild(errorLbl);
 
-            auto cancel = CCMenuItemSpriteExtra::create(ButtonSprite::create("Cancel"), this, menu_selector(SaveMacroPopup::onClose));
-            cancel->setPosition(l->getContentSize() / 2 + ccp(-40, -82));
-            l->addChild(cancel);
+            auto cancel = CCMenuItemSpriteExtra::create(ButtonSprite::create("Cancel"), this,
+menu_selector(SaveMacroPopup::onClose)); cancel->setPosition(l->getContentSize() / 2 + ccp(-40,
+-82)); l->addChild(cancel);
 
             bs = ButtonSprite::create("OK", "goldFont.fnt", "GJ_button_04.png");
 
@@ -241,14 +238,16 @@ class SaveMacroPopup : public FLAlertLayer, TextInputDelegate
             ok->setEnabled(false);
             l->addChild(ok);
 
-            auto info = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(SaveMacroPopup::onMacroInfo));
-            l->addChildAtPosition(info, Anchor::TopRight, ccp(-10 - 6, -10 - 8));
+            auto info =
+CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this,
+menu_selector(SaveMacroPopup::onMacroInfo)); l->addChildAtPosition(info, Anchor::TopRight, ccp(-10 -
+6, -10 - 8));
 
             this->addChild(l);
 
             l->setScale(0.1f);
-            l->runAction(CCEaseElasticOut::create(CCScaleTo::create(1, 1))); 
-    
+            l->runAction(CCEaseElasticOut::create(CCScaleTo::create(1, 1)));
+
             return true;
         }
 

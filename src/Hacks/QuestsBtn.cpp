@@ -1,6 +1,7 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include "../Client/Client.h"
 
 class $modify(PauseLayer) {
     virtual void customSetup() {

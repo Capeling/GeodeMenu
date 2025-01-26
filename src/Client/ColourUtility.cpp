@@ -1,6 +1,6 @@
 #ifdef QOLMOD_IMGUI
 
-#    include "ColourUtility.h"
+# include "ColourUtility.h"
 
 ImColor ColourUtility::GetColour(ClientColour colour) {
     switch (colour) {

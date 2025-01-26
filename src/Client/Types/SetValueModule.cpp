@@ -27,10 +27,12 @@ void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos) {
 
         auto btn = CCMenuItemToggler::create(
             ButtonSprite::create(
-                reinterpret_cast<CCSprite*>(CCLabelBMFont::create("XY", "bigFont.fnt")), 30, 69, 30, 1, false, "GJ_button_05.png", true),
+                reinterpret_cast<CCSprite*>(CCLabelBMFont::create("XY", "bigFont.fnt")), 30, 69, 30, 1, false, "GJ_button_05.png", true
+            ),
             ButtonSprite::create(ok, 30, 69, 30, 1, false, "GJ_button_05.png", true),
             menu,
-            menu_selector(SetValueModule::onScaleToggle));
+            menu_selector(SetValueModule::onScaleToggle)
+        );
         btn->setPosition(pos + ccp(145, 0));
         btn->setScale(0.55f);
         btn->setUserData(this);
@@ -63,7 +65,9 @@ void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos) {
 void SetValueModule::onSet(CCObject* sender) {
     /*auto mod = as<SetValueModule*>(as<CCNode*>(sender)->getUserData());
 
-    if (LevelEditorLayer::get() && LevelEditorLayer::get()->m_editorUI && (LevelEditorLayer::get()->m_editorUI->m_selectedObject || LevelEditorLayer::get()->m_editorUI->m_selectedObjects->count() > 0))
+    if (LevelEditorLayer::get() && LevelEditorLayer::get()->m_editorUI &&
+    (LevelEditorLayer::get()->m_editorUI->m_selectedObject
+    || LevelEditorLayer::get()->m_editorUI->m_selectedObjects->count() > 0))
     {
         float v = 1.0f;
 

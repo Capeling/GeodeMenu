@@ -1,8 +1,9 @@
+#include "../Client/Client.h"
+#include "../Utils/Utils.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCCircleWave.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../Utils/Utils.hpp"
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -19,19 +20,19 @@ class $modify(CCCircleWave) {
 };
 
 #ifdef GEODE_IS_WINDOWS
-#    define offset 0x210
+# define offset 0x210
 #endif
 #ifdef GEODE_IS_ANDROID32
-#    define offset 0x16c
+# define offset 0x16c
 #endif
 #ifdef GEODE_IS_ANDROID64
-#    define offset 0x1f8
+# define offset 0x1f8
 #endif
 #ifdef GEODE_IS_MACOS
-#    define offset 0x1c8
+# define offset 0x1c8
 #endif
 #ifdef GEODE_IS_IOS
-#    define offset 0x1c8
+# define offset 0x1c8
 #endif
 
 class $modify(PlayLayer) {

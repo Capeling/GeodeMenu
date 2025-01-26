@@ -1,4 +1,5 @@
 #include "CCPastelLabelBMFont.hpp"
+
 #include "../Client/ColourUtility.h"
 
 CCPastelLabelBMFont::CCPastelLabelBMFont() {}

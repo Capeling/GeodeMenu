@@ -6,7 +6,7 @@ using namespace geode::prelude;
 
 class TransAlertLayer : public FLAlertLayer {
 public:
-    bool init(char const* title, const gd::string& desc, char const* btn);
+    bool init(const char* title, const gd::string& desc, const char* btn);
 
-    static TransAlertLayer* create(char const* title, const gd::string& desc, char const* btn);
+    static TransAlertLayer* create(const char* title, const gd::string& desc, const char* btn);
 };

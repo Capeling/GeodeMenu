@@ -1,4 +1,5 @@
 #include "BlurLayer.hpp"
+
 #include <Geode/modify/MenuLayer.hpp>
 
 bool BlurLayer::init() {
@@ -79,7 +80,7 @@ bool BlurLayer::init() {
     program->setUniformLocationWith2f(resolutionLoc, screenWidth, screenHeight);
     program->setUniformLocationWith2f(texScaleLoc, 1.0f / screenWidth, 1.0f / screenHeight);
 
-    //sizeLocation = program->getUniformLocationForName("blurSize");
+    // sizeLocation = program->getUniformLocationForName("blurSize");
 
     rtex->getSprite()->setShaderProgram(program);
 
@@ -154,7 +155,7 @@ void BlurLayer::draw() {
 void BlurLayer::setBlurSize(float size) {
     blurSize = size;
 
-    //program->setUniformLocationWith1f(sizeLocation, size);
+    // program->setUniformLocationWith1f(sizeLocation, size);
 }
 
 float BlurLayer::getBlurSize() {

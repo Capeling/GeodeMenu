@@ -1,4 +1,5 @@
 #include "Speedhack.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCScheduler.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
@@ -28,18 +29,22 @@ float speedhackLogic(float dt) {
             float v = SpeedhackTop::instance->getFloatValue();
 
 #ifdef GEODE_IS_IOS
-            reinterpret_cast<FMOD_RESULT(__cdecl*)(FMOD::ChannelControl*, float)>(
-                geode::base::get() + OffsetManager::get()->offsetForFunction(FunctionType::FMOD__ChannelControl__setPitch))(
+            reinterpret_cast<FMOD_RESULT(__cdecl*)(
+                FMOD::ChannelControl*, float
+            )>(geode::base::get() + OffsetManager::get()->offsetForFunction(FunctionType::FMOD__ChannelControl__setPitch))(
                 masterGroup,
-                (SpeedhackGameplay::instance->enabled ? GJBaseGameLayer::get() && SpeedhackMus::instance->enabled
-                                                      : SpeedhackMus::instance->enabled)
-                    ? v
-                    : 1);
+                (SpeedhackGameplay::instance->enabled ? GJBaseGameLayer::get() && SpeedhackMus::instance->enabled :
+                                                        SpeedhackMus::instance->enabled) ?
+                    v :
+                    1
+            );
 #else
-            masterGroup->setPitch((SpeedhackGameplay::instance->enabled ? GJBaseGameLayer::get() && SpeedhackMus::instance->enabled
-                                                                        : SpeedhackMus::instance->enabled)
-                                      ? v
-                                      : 1);
+            masterGroup->setPitch(
+                (SpeedhackGameplay::instance->enabled ? GJBaseGameLayer::get() && SpeedhackMus::instance->enabled :
+                                                        SpeedhackMus::instance->enabled) ?
+                    v :
+                    1
+            );
 #endif
 
             if (SpeedhackGameplay::instance->enabled) {
@@ -50,8 +55,8 @@ float speedhackLogic(float dt) {
             ColourUtility::update(dt * v);
 
 // okay, time to explain myself.
-// CBF (cheat between frames) has a setting called Physics Bypass. This breaks the speedhack in qolmod.
-// because of this i have to do this :c
+// CBF (cheat between frames) has a setting called Physics Bypass. This breaks the speedhack in
+// qolmod. because of this i have to do this :c
 #ifdef GEODE_IS_WINDOWS
             static bool cbfChecked = false;
             static bool cbfEnabled = false;
@@ -76,8 +81,9 @@ float speedhackLogic(float dt) {
     }
 
 #ifdef GEODE_IS_IOS
-    reinterpret_cast<FMOD_RESULT(__cdecl*)(FMOD::ChannelControl*, float)>(
-        geode::base::get() + OffsetManager::get()->offsetForFunction(FunctionType::FMOD__ChannelControl__setPitch))(masterGroup, 1);
+    reinterpret_cast<FMOD_RESULT(__cdecl*)(
+        FMOD::ChannelControl*, float
+    )>(geode::base::get() + OffsetManager::get()->offsetForFunction(FunctionType::FMOD__ChannelControl__setPitch))(masterGroup, 1);
 #else
     masterGroup->setPitch(1);
 #endif
@@ -104,10 +110,12 @@ void myUpdate(CCScheduler* ins, float dt) {
 }
 
 $execute {
-    (void) Mod::get()->hook(reinterpret_cast<void*>(geode::addresser::getVirtual(&CCScheduler::update)),
-                            &myUpdate,
-                            "cocos2d::CCScheduler::update",
-                            tulip::hook::TulipConvention::Thiscall);
+    (void) Mod::get()->hook(
+        reinterpret_cast<void*>(geode::addresser::getVirtual(&CCScheduler::update)),
+        &myUpdate,
+        "cocos2d::CCScheduler::update",
+        tulip::hook::TulipConvention::Thiscall
+    );
 }
 
 #endif
@@ -116,7 +124,8 @@ $execute {
 
 FMOD_RESULT FMOD_System_createChannelGroup(FMOD::System* self, const char* name, FMOD::ChannelGroup** channelgroup) {
     auto res = reinterpret_cast<FMOD_RESULT(__cdecl*)(FMOD::System*, const char*, FMOD::ChannelGroup**)>(geode::base::get() + 0x4d4f1c)(
-        self, name, channelgroup);
+        self, name, channelgroup
+    );
 
     if (!masterGroup)
         masterGroup = *channelgroup;
@@ -127,11 +136,13 @@ FMOD_RESULT FMOD_System_createChannelGroup(FMOD::System* self, const char* name,
 }
 
 $execute {
-    (void) Mod::get()->hook(reinterpret_cast<void*>(geode::base::get() + OffsetManager::get()->offsetForFunction(
-                                                                             FunctionType::FMOD__System__createChannelGroup)), // address
-                            &FMOD_System_createChannelGroup,                                                                   // detour
-                            "FMOD::System::createChannelGroup", // display name, shows up on the console
-                            tulip::hook::TulipConvention::Cdecl // calling convention
+    (void) Mod::get()->hook(
+        reinterpret_cast<void*>(
+            geode::base::get() + OffsetManager::get()->offsetForFunction(FunctionType::FMOD__System__createChannelGroup)
+        ), // address
+        &FMOD_System_createChannelGroup, // detour
+        "FMOD::System::createChannelGroup", // display name, shows up on the console
+        tulip::hook::TulipConvention::Cdecl // calling convention
     );
 }
 

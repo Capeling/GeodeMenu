@@ -1,11 +1,12 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include <rift.hpp>
+#include "../Client/Client.h"
 #include "BestRun.hpp"
 #include "LabelModule.hpp"
 #include "RunInfo.hpp"
-#include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
+#include <rift.hpp>
 
 using namespace geode::prelude;
 

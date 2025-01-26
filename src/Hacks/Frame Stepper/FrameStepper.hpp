@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../../Client/Client.h"
+#include "../../Layers/EditPositionLayer.hpp"
+#include "../../UI/RepeatableMenuItemSpriteExtra.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/UILayer.hpp>
-#include "../../Layers/EditPositionLayer.hpp"
-#include "../../UI/RepeatableMenuItemSpriteExtra.hpp"
-#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 

@@ -1,10 +1,11 @@
 #pragma once
 
+#include "../Utils/Utils.hpp"
+#include "Module.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCMouseDispatcher.hpp>
 #include <imgui-cocos.hpp>
-#include "../Utils/Utils.hpp"
-#include "Module.h"
 
 class Window : public UIComponent {
 public:
@@ -39,7 +40,7 @@ public:
 
     virtual void drawImGui();
 
-    //stolen from stack overflow
+    // stolen from stack overflow
     int getIndex(std::vector<float> v, float K);
     float clampf(float v, float min, float max);
 

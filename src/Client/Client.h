@@ -1,9 +1,9 @@
 #pragma once
 
-#include <imgui-cocos.hpp>
 #include "../Defines/Platform.h"
-
 #include "../Labels/LabelModule.hpp"
+#include "../UI/BlurLayer.hpp"
+#include "../Utils/SimpleINI.hpp"
 #include "Types/ColourPickModule.hpp"
 #include "Types/DropdownModule.hpp"
 #include "Types/FontModule.hpp"
@@ -12,11 +12,10 @@
 #include "Types/SliderModule.hpp"
 #include "Types/SmartStartposUI.hpp"
 #include "Types/TransitionCustomizerUI.hpp"
-
-#include "../UI/BlurLayer.hpp"
-#include "../Utils/SimpleINI.hpp"
-#include "idkwhattocallthis.hpp"
 #include "Window.h"
+#include "idkwhattocallthis.hpp"
+
+#include <imgui-cocos.hpp>
 
 enum class WindowTransitionType {
     None,

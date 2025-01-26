@@ -1,11 +1,12 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GauntletLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
 class $modify(GauntletLayer) {
-    virtual void loadLevelsFinished(cocos2d::CCArray* p0, char const* p1, int p2) {
+    virtual void loadLevelsFinished(cocos2d::CCArray* p0, const char* p1, int p2) {
         GauntletLayer::loadLevelsFinished(p0, p1, p2);
 
         if (auto menu = getChildByIDRecursive("levels-menu")) {

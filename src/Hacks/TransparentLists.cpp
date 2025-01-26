@@ -1,3 +1,5 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCLayerColor.hpp>
 #include <Geode/modify/CommentCell.hpp>
@@ -6,7 +8,6 @@
 #include <Geode/modify/LevelCell.hpp>
 #include <Geode/modify/LevelListCell.hpp>
 #include <Geode/modify/MapPackCell.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -77,7 +78,7 @@ class $modify(GJScoreCell) {
 };
 
 class $modify(GJCommentListLayer) {
-    bool init(BoomListView* p0, char const* p1, cocos2d::ccColor4B p2, float p3, float p4, int p5) {
+    bool init(BoomListView* p0, const char* p1, cocos2d::ccColor4B p2, float p3, float p4, int p5) {
         return GJCommentListLayer::init(p0, p1, ccc4(0, 0, 0, 0), p3, p4, p5);
     }
 

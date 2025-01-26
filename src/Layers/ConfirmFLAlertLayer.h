@@ -1,23 +1,16 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/TextAlertPopup.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
 class ConfirmFLAlertLayer : public FLAlertLayer {
 public:
-    bool init(FLAlertLayerProtocol* delegate,
-              char const* title,
-              char const* confLabel,
-              bool confEnabled,
-              SEL_MenuHandler confChanged,
-              gd::string desc,
-              char const* btn1,
-              char const* btn2,
-              float width,
-              bool scroll,
-              float height,
-              float textScale) {
+    bool init(
+        FLAlertLayerProtocol* delegate, const char* title, const char* confLabel, bool confEnabled, SEL_MenuHandler confChanged,
+        gd::string desc, const char* btn1, const char* btn2, float width, bool scroll, float height, float textScale
+    ) {
         if (!FLAlertLayer::init(delegate, title, desc, btn1, btn2, width, scroll, height, textScale))
             return false;
 
@@ -46,18 +39,10 @@ public:
         return true;
     }
 
-    static ConfirmFLAlertLayer* create(FLAlertLayerProtocol* delegate,
-                                       char const* title,
-                                       char const* confLabel,
-                                       bool confEnabled,
-                                       SEL_MenuHandler confChanged,
-                                       gd::string desc,
-                                       char const* btn1,
-                                       char const* btn2,
-                                       float width,
-                                       bool scroll,
-                                       float height,
-                                       float textScale) {
+    static ConfirmFLAlertLayer* create(
+        FLAlertLayerProtocol* delegate, const char* title, const char* confLabel, bool confEnabled, SEL_MenuHandler confChanged,
+        gd::string desc, const char* btn1, const char* btn2, float width, bool scroll, float height, float textScale
+    ) {
         ConfirmFLAlertLayer* pRet = new ConfirmFLAlertLayer();
         if (pRet && pRet->init(delegate, title, confLabel, confEnabled, confChanged, desc, btn1, btn2, width, scroll, height, textScale)) {
             pRet->autorelease();

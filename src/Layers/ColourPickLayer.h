@@ -24,7 +24,7 @@ class ColourPickLayer : public SillyBaseLayer, public ColorPickPopupDelegate
         static ColourPickLayer* create(int icon)
         {
             IconOptionsLayer* pRet = new ColourPickLayer();
-            
+
             pRet->icon = icon;
 
             if (pRet && pRet->initWithSizeAndName(ccp(350, 180), "Edit ")) {

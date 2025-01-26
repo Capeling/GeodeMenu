@@ -1,4 +1,5 @@
 #include "LanguageSelectNode.hpp"
+
 #include "../Utils/TranslationManager.hpp"
 #include "../Utils/UnspeedhackedAction.hpp"
 
@@ -22,12 +23,14 @@ bool LanguageSelectNode::init() {
     node->runAction(UnspeedhackedAction::create(CCEaseElasticOut::create(CCScaleTo::create(0.5f, 1), 0.6f)));
 
     auto leftBtn = CCMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(LanguageSelectNode::onLeft));
+        CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(LanguageSelectNode::onLeft)
+    );
     leftBtn->setZOrder(420);
     node->addChildAtPosition(leftBtn, Anchor::BottomLeft, ccp(-190, 0));
 
     auto rightBtn = CCMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(LanguageSelectNode::onRight));
+        CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(LanguageSelectNode::onRight)
+    );
     rightBtn->getNormalImage()->setScaleX(-1);
     rightBtn->setZOrder(420);
     node->addChildAtPosition(rightBtn, Anchor::BottomLeft, ccp(190, 0));
@@ -71,9 +74,11 @@ void LanguageSelectNode::goToPage(int page) {
 
     if (page == 0)
         layer = TranslationCreditsLayer::create(
-            matjson::parse("{ \"display_name_english\": \"Default\", \"display_name_native\": \"English\", \"contributors\": [] }")
+            matjson::parse("{ \"display_name_english\": \"Default\", \"display_name_native\": "
+                           "\"English\", \"contributors\": [] }")
                 .unwrapOr("{}"),
-            "none");
+            "none"
+        );
     else {
         log::info("loading lang: {}", langs[page - 1].filename());
         layer = TranslationCreditsLayer::create(file::readJson(langs[page - 1]).unwrapOr("{}"), langs[page - 1]);
@@ -96,8 +101,7 @@ void LanguageSelectNode::goToPage(int page) {
 
     layer->background->setColor(c);
 
-    for (auto child :
-         CCArrayExt<CCSprite*>(layer->ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren())) {
+    for (auto child : CCArrayExt<CCSprite*>(layer->ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren())) {
         child->setColor(ccc3(c.r * 0.6f, c.g * 0.6f, c.b * 0.6f));
     }
 }

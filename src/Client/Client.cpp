@@ -1,8 +1,10 @@
 #include "Client.h"
-#include <Geode/modify/CCEGLView.hpp>
+
 #include "../UI/TransLabelBMFont.hpp"
 #include "../Utils/LaunchArgs.hpp"
 #include "../Utils/TranslationManager.hpp"
+
+#include <Geode/modify/CCEGLView.hpp>
 #include <regex>
 
 Client* Client::get() {
@@ -102,7 +104,9 @@ void Client::initImGui() {
         window->onEnterTransitionDidFinish();
     }
 
-    Loader::get()->queueInMainThread([this] { toggleWindowVisibility(WindowTransitionType::Vertical, true); });
+    Loader::get()->queueInMainThread([this] {
+        toggleWindowVisibility(WindowTransitionType::Vertical, true);
+    });
 }
 
 void Client::drawImGui() {
@@ -139,7 +143,9 @@ void Client::drawImGui() {
 
         // ImGui::SetNextWindowPos(ImVec2(ImGui::GetMousePos().x + 12.5f, ImGui::GetMousePos().y));
 
-        // ImGui::Begin("Description Window", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoBackground);
+        // ImGui::Begin("Description Window", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoFocusOnAppearing
+        // | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize
+        // | ImGuiWindowFlags_Tooltip | ImGuiWindowFlags_NoBackground);
 
         // ImGui::SetCursorPos(ImVec2(ImGui::GetMousePos().x + 12.5f, ImGui::GetMousePos().y));
 
@@ -184,8 +190,9 @@ void Client::sortWindows(bool instant) {
     std::map<float, float> yMap;
     bool stacking = false;
 
-    std::sort(
-        Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) { return a->priority < b->priority; });
+    std::sort(Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) {
+        return a->priority < b->priority;
+    });
 
     for (auto window : windows) {
         if (!yMap.contains(x))
@@ -239,7 +246,9 @@ void Client::toggleWindowVisibility(WindowTransitionType type, bool instant) {
 
     std::vector<Window*> windows = this->windows;
 
-    std::sort(windows.begin(), windows.end(), [](Window* a, Window* b) { return a->getPosition().x < b->getPosition().x; });
+    std::sort(windows.begin(), windows.end(), [](Window* a, Window* b) {
+        return a->getPosition().x < b->getPosition().x;
+    });
 
     bool verticalUp;
     float lastX = 0;
@@ -262,18 +271,19 @@ void Client::toggleWindowVisibility(WindowTransitionType type, bool instant) {
                     window->setPosition(ccp(
                         window->actualWindowPos.x,
                         window->actualWindowPos.y +
-                            (!isWindowOpen ? 0
-                                           : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) * (verticalUp ? 1 : -1))));
+                            (!isWindowOpen ? 0 : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) * (verticalUp ? 1 : -1))
+                    ));
                 }
 
                 verticalMove = CCEaseInOut::create(
                     CCMoveTo::create(
                         instant ? 0 : 0.5f,
                         ccp(window->actualWindowPos.x,
-                            window->actualWindowPos.y + (isWindowOpen ? 0
-                                                                      : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) *
-                                                                            (verticalUp ? 1 : -1)))),
-                    2);
+                            window->actualWindowPos.y +
+                                (isWindowOpen ? 0 : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) * (verticalUp ? 1 : -1)))
+                    ),
+                    2
+                );
                 verticalMove->setTag(69);
 
                 window->runAction(verticalMove);
@@ -294,8 +304,8 @@ void Client::setUIScale(float scale) {
     ImGuiCocos::get().setUIScale(scale);
 
     if (!font) {
-        font = ImGui::GetIO().Fonts->AddFontFromFileTTF((Mod::get()->getResourcesDir() / "Poppins-Regular.ttf").string().c_str(),
-                                                        16.0f * scale);
+        font =
+            ImGui::GetIO().Fonts->AddFontFromFileTTF((Mod::get()->getResourcesDir() / "Poppins-Regular.ttf").string().c_str(), 16.0f * scale);
         ImGui::GetIO().FontDefault = font;
     }
 
@@ -306,11 +316,14 @@ void Client::setUIScale(float scale) {
         window->setPosition(window->getPosition() / (scale / oldScale));
     }
 
-    Loader::get()->queueInMainThread(
-        [this, oldScale, scale] { Loader::get()->queueInMainThread([this, oldScale, scale] { sortWindows(false); }); });
+    Loader::get()->queueInMainThread([this, oldScale, scale] {
+        Loader::get()->queueInMainThread([this, oldScale, scale] {
+            sortWindows(false);
+        });
+    });
 }
 
-#define THEME_COLOUR(__name__)                                                                                                             \
+#define THEME_COLOUR(__name__) \
     style->Colors[ImGuiCol_##__name__] = ccc4ToVec(getThemeColour(#__name__, vecToCCC4(style->Colors[ImGuiCol_##__name__])))
 
 ccColor4B Client::getThemeColour(std::string key, ccColor4B def) {
@@ -427,7 +440,7 @@ Module* Client::GetModule(std::string id) {
         }
     }
 
-    //geode::prelude::log::info("missing module :( {}", id);
+    // geode::prelude::log::info("missing module :( {}", id);
 
     return nullptr;
 }

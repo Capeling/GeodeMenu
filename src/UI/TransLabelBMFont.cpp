@@ -1,6 +1,8 @@
 #include "TransLabelBMFont.hpp"
+
 #include "../Utils/TranslationManager.hpp"
 #include "../Utils/Utils.hpp"
+
 #include <regex>
 
 /*
@@ -14,8 +16,8 @@
 class CachedLabelTTF : public CCLabelTTF
 {
     public:
-        static inline std::unordered_map<std::string, std::unordered_map<const char*, CCTexture2D*>> textures = {};
-        std::string font;
+        static inline std::unordered_map<std::string, std::unordered_map<const char*, CCTexture2D*>>
+textures = {}; std::string font;
 
         void setValues(std::string font, float fontSize)
         {
@@ -62,7 +64,7 @@ CCLabelTTF* TransLabelBMFont::createTTF(std::string font, float fontSize) {
     if (ttf->CCSprite::init())
     {
         ttf->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(SHADER_PROGRAM));
-        
+
         ttf->setValues(font, fontSize);
     }
 

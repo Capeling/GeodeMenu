@@ -1,7 +1,7 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/TextAlertPopup.hpp>
 #include "../Client/Client.h"
 
+#include <Geode/Geode.hpp>
+#include <Geode/modify/TextAlertPopup.hpp>
 #include <Geode/ui/TextInput.hpp>
 
 using namespace geode::prelude;
@@ -66,7 +66,7 @@ public:
 
         ss << "Description: <cr>";
         ss << GJReplayManager::replay.description;
-        //ss << "</c>\n";
+        // ss << "</c>\n";
 
         FLAlertLayer::create("Macro Info", ss.str(), "OK")->show();
     }
@@ -120,7 +120,7 @@ public:
             return false;
 
         this->runAction(CCFadeTo::create(1, 100));
-        //this->setTouchEnabled(true);
+        // this->setTouchEnabled(true);
         this->setKeypadEnabled(true);
 
         auto l = CCMenu::create();
@@ -167,14 +167,16 @@ public:
                 gradient->setScaleY(-1);
 
             auto darken = CCScale9Sprite::createWithSpriteFrameName(
-                (std::string("thesillydoggo.gradientpages/") + std::string("square-fill.png")).c_str());
+                (std::string("thesillydoggo.gradientpages/") + std::string("square-fill.png")).c_str()
+            );
             darken->setID("darken"_spr);
             darken->setContentSize(size - ccp(15, 15));
             darken->setZOrder(0);
             darken->setPosition(size / 2);
 
             auto outline = CCScale9Sprite::createWithSpriteFrameName(
-                (std::string("thesillydoggo.gradientpages/") + std::string("square-outline.png")).c_str());
+                (std::string("thesillydoggo.gradientpages/") + std::string("square-outline.png")).c_str()
+            );
             outline->setPosition(size / 2);
             outline->setContentSize(size);
             outline->setZOrder(1);
@@ -211,7 +213,8 @@ public:
         l->addChild(inp);
 
         errorLbl = CCLabelBMFont::create(
-            GJReplayManager::replay.inputs.size() == 0 ? "Macro cannot be empty" : "Macro name cannot be empty", "bigFont.fnt");
+            GJReplayManager::replay.inputs.size() == 0 ? "Macro cannot be empty" : "Macro name cannot be empty", "bigFont.fnt"
+        );
         errorLbl->setColor(ccc3(255, 0, 0));
         errorLbl->setOpacity(100);
         errorLbl->setPosition(l->getContentSize() / 2 + ccp(0, -25));
@@ -230,7 +233,8 @@ public:
         l->addChild(ok);
 
         auto info = CCMenuItemSpriteExtra::create(
-            CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(SaveMacroPopup::onMacroInfo));
+            CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(SaveMacroPopup::onMacroInfo)
+        );
         l->addChildAtPosition(info, Anchor::TopRight, ccp(-10 - 6, -10 - 8));
 
         this->addChild(l);

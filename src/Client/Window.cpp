@@ -1,5 +1,5 @@
-#include "Types/SetValueModule.hpp"
 #include "Client.h"
+#include "Types/SetValueModule.hpp"
 
 Window::Window() {
     static int i = 0;
@@ -43,7 +43,7 @@ ImVec2 Window::getDesiredWindowSize() {
 
 const CCPoint& Window::getPosition() {
     return CCNode::getPosition();
-    //return ccp(windowPos.x, windowPos.y);
+    // return ccp(windowPos.x, windowPos.y);
 }
 
 void Window::setPosition(const CCPoint& position) {
@@ -80,7 +80,6 @@ int Window::getIndex(std::vector<float> v, float K) {
 
     // If element was found
     if (it != v.end()) {
-
         // calculating the index
         // of K
         int index = it - v.begin();

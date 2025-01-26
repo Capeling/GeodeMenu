@@ -1,4 +1,5 @@
 #include "ManageKeybindsLayer.hpp"
+
 #include "../Client/Windows/IconEffects.hpp"
 #include "../Keybinds/RecordKeyStruct.hpp"
 
@@ -29,7 +30,7 @@ void ManageKeybindsLayer::customSetup() {
 
     for (auto child : CCArrayExt<CCNodeRGBA*>(border->getChildren())) {
         child->setColor(ccc3(0, 0, 0));
-        //child->setOpacity(100);
+        // child->setOpacity(100);
     }
 
     baseLayer->addChildAtPosition(border, Anchor::Center, ccp(0, 6));
@@ -70,7 +71,7 @@ void ManageKeybindsLayer::customSetup() {
         label->setAnchorPoint(ccp(0, 0.5f));
         label->setPosition(ccp(7.5f, CELL_HEIGHT / 2));
         label->limitLabelWidth(100, 0.6f, 0);
-        //label->setOpacity(175);
+        // label->setOpacity(175);
         bar->addChild(label);
 
         scroll->m_contentLayer->addChild(bar);
@@ -103,7 +104,8 @@ void ManageKeybindsLayer::customSetup() {
                 bnd->limitLabelWidth(70, 1, 0);
 
                 auto del = CCMenuItemSpriteExtra::create(
-                    CCSprite::createWithSpriteFrameName("GJ_deleteIcon_001.png"), this, menu_selector(ManageKeybindsLayer::onDelete));
+                    CCSprite::createWithSpriteFrameName("GJ_deleteIcon_001.png"), this, menu_selector(ManageKeybindsLayer::onDelete)
+                );
                 del->getNormalImage()->setScale(0.7f);
                 del->setPositionX(10);
                 del->setVisible(module->keybind.key != enumKeyCodes::KEY_Unknown);
@@ -154,19 +156,21 @@ void ManageKeybindsLayer::onSet(CCObject* sender) {
 }
 
 void ManageKeybindsLayer::onDelete(CCObject* sender) {
-    auto popup = geode::createQuickPopup(as<Module*>(as<CCNode*>(sender)->getUserData())->name.c_str(),
-                                         "Are you sure you want to <cr>delete</c>\nthis bind?",
-                                         "Cancel",
-                                         "Delete",
-                                         [this, sender](FLAlertLayer*, bool right) {
-                                             if (right) {
-                                                 as<Module*>(as<CCNode*>(sender)->getUserData())->keybind = KeyStruct();
-                                                 as<Module*>(as<CCNode*>(sender)->getUserData())->save();
-                                                 as<CCNode*>(sender)->setVisible(false);
-                                                 as<CCNode*>(as<CCNode*>(sender)->getUserObject("label"))->setVisible(false);
-                                                 as<CCNode*>(as<CCNode*>(sender)->getUserObject("set"))->setVisible(true);
-                                             }
-                                         });
+    auto popup = geode::createQuickPopup(
+        as<Module*>(as<CCNode*>(sender)->getUserData())->name.c_str(),
+        "Are you sure you want to <cr>delete</c>\nthis bind?",
+        "Cancel",
+        "Delete",
+        [this, sender](FLAlertLayer*, bool right) {
+            if (right) {
+                as<Module*>(as<CCNode*>(sender)->getUserData())->keybind = KeyStruct();
+                as<Module*>(as<CCNode*>(sender)->getUserData())->save();
+                as<CCNode*>(sender)->setVisible(false);
+                as<CCNode*>(as<CCNode*>(sender)->getUserObject("label"))->setVisible(false);
+                as<CCNode*>(as<CCNode*>(sender)->getUserObject("set"))->setVisible(true);
+            }
+        }
+    );
 
     popup->m_button2->updateBGImage("GJ_button_06.png");
 }

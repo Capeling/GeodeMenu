@@ -1,4 +1,5 @@
 #include "FontModule.hpp"
+
 #include "../../Layers/ChooseFontPopup.hpp"
 
 FontModule::FontModule(std::string id) {
@@ -40,7 +41,8 @@ void FontModule::onChooseFont(CCObject* sender) {
 }
 
 std::string FontModule::getSelectedFont() {
-    // if the font does not exist, return the default which probably already exists. if it doesn't exist gd would've crashed earlier
+    // if the font does not exist, return the default which probably already exists. if it doesn't
+    // exist gd would've crashed earlier
     if (!CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false)))
         return "bigFont.fnt";
 

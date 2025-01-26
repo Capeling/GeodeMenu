@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCDirector.hpp>
 #include <Geode/modify/CCScheduler.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

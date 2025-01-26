@@ -1,12 +1,13 @@
-//#define FREEMOVE
+// #define FREEMOVE
 
 #ifdef FREEMOVE
 
-#    include <Geode/Geode.hpp>
-#    include <Geode/modify/CCKeyboardDispatcher.hpp>
-#    include <Geode/modify/GJBaseGameLayer.hpp>
-#    include <Geode/modify/PlayerObject.hpp>
-#    include "../Client/Client.h"
+# include "../Client/Client.h"
+
+# include <Geode/Geode.hpp>
+# include <Geode/modify/CCKeyboardDispatcher.hpp>
+# include <Geode/modify/GJBaseGameLayer.hpp>
+# include <Geode/modify/PlayerObject.hpp>
 
 using namespace geode::prelude;
 

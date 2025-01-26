@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
-#include "../Client/Client.h"
 
 #ifdef QOLMOD_ALL_MODES_PLATFORMER
 
@@ -22,7 +23,7 @@ class $modify(GJBaseGameLayer) {
                             if (p0->getObjectRect().intersectsRect(obj->getObjectRect())) {
                                 if (this->canBeActivatedByPlayer(p0, as<EffectGameObject*>(obj))) {
                                     this->playerWillSwitchMode(p0, obj);
-#    ifdef GEODE_IS_WINDOWS
+# ifdef GEODE_IS_WINDOWS
                                     p0->switchedToMode(obj->m_objectType);
 
                                     if (obj->m_objectType == GameObjectType::SwingPortal)
@@ -30,9 +31,9 @@ class $modify(GJBaseGameLayer) {
                                     else
                                         p0->toggleDartMode(true, false);
 
-#    else
+# else
                                     this->switchToFlyMode(p0, obj, false, as<int>(obj->m_objectType));
-#    endif
+# endif
                                     obj->playShineEffect();
                                 }
                             }

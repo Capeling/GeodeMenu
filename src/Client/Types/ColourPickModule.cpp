@@ -1,4 +1,5 @@
 #include "ColourPickModule.hpp"
+
 #include "../../UI/TransLabelBMFont.hpp"
 
 void ColourModule::makeAndroid(CCNode* menu, CCPoint pos) {
@@ -26,7 +27,7 @@ void ColourModule::onPickColourAndroid(CCObject* sender) {
     men->show();
 }
 
-void ColourModule::updateColor(cocos2d::ccColor4B const& color) {
+void ColourModule::updateColor(const cocos2d::ccColor4B& color) {
     colour = ccc3(color.r, color.g, color.b);
     btnSpr->setColor(colour);
     save();

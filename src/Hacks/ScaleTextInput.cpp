@@ -1,6 +1,7 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJScaleControl.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -23,7 +24,7 @@ class $modify(InputScaleControl, GJScaleControl) {
             auto wrappedValue = unscaleFloat(value, m_lowerBound, m_upperBound);
 
             m_sliderXY->setValue(clamp<float>(wrappedValue, 0, 1));
-            //this->sliderChanged(m_sliderXY->m_touchLogic);
+            // this->sliderChanged(m_sliderXY->m_touchLogic);
 
             if (EditorUI::get()) {
                 EditorUI::get()->scaleXYChanged(value, value, m_scaleLocked);
@@ -39,7 +40,7 @@ class $modify(InputScaleControl, GJScaleControl) {
             auto wrappedValue = unscaleFloat(value, m_lowerBound, m_upperBound);
 
             m_sliderX->setValue(clamp<float>(wrappedValue, 0, 1));
-            //this->sliderChanged(m_sliderX->m_touchLogic);
+            // this->sliderChanged(m_sliderX->m_touchLogic);
 
             if (EditorUI::get()) {
                 EditorUI::get()->scaleXChanged(value, m_scaleLocked);
@@ -55,7 +56,7 @@ class $modify(InputScaleControl, GJScaleControl) {
             auto wrappedValue = unscaleFloat(value, m_lowerBound, m_upperBound);
 
             m_sliderY->setValue(clamp<float>(wrappedValue, 0, 1));
-            //this->sliderChanged(m_sliderY->m_touchLogic);
+            // this->sliderChanged(m_sliderY->m_touchLogic);
 
             if (EditorUI::get()) {
                 EditorUI::get()->scaleYChanged(value, m_scaleLocked);
@@ -75,19 +76,25 @@ class $modify(InputScaleControl, GJScaleControl) {
         scaleXYInput->setScale(0.6f);
         scaleXYInput->setPosition(ccp(32, 28));
         scaleXYInput->setFilter("1234567890.");
-        scaleXYInput->setCallback([this](const std::string& str) { updateScaleXY(str); });
+        scaleXYInput->setCallback([this](const std::string& str) {
+            updateScaleXY(str);
+        });
 
         auto scaleXInput = TextInput::create(70, "Scale");
         scaleXInput->setScale(0.6f);
         scaleXInput->setPosition(ccp(32, 28));
         scaleXInput->setFilter("1234567890.");
-        scaleXInput->setCallback([this](const std::string& str) { updateScaleX(str); });
+        scaleXInput->setCallback([this](const std::string& str) {
+            updateScaleX(str);
+        });
 
         auto scaleYInput = TextInput::create(70, "Scale");
         scaleYInput->setScale(0.6f);
         scaleYInput->setPosition(ccp(32, 28));
         scaleYInput->setFilter("1234567890.");
-        scaleYInput->setCallback([this](const std::string& str) { updateScaleY(str); });
+        scaleYInput->setCallback([this](const std::string& str) {
+            updateScaleY(str);
+        });
 
         auto scaleXLabel = CCLabelBMFont::create("ScaleX:", "bigFont.fnt");
         scaleXLabel->setScale(0.5f);
@@ -173,7 +180,7 @@ class $modify(InputScaleControl, GJScaleControl) {
 
         m_fields->scaleYInput->setString(fmt::format("{:.2f}", p0));
     }
-    
+
     void updateLabelXY(float p0)
     {
         GJScaleControl::updateLabelXY(p0);

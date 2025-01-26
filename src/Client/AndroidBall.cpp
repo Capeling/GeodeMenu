@@ -1,4 +1,5 @@
 #include "AndroidBall.h"
+
 #include "../Utils/UnspeedhackedAction.hpp"
 
 AndroidBall* AndroidBall::get() {
@@ -23,11 +24,11 @@ bool AndroidBall::init() {
     menu->setPosition(position);
     menu->setContentSize(ccp(0, 0));
 
-    //l = CCLabelBMFont::create(">_", "bigFont.fnt");
-    //l->setAnchorPoint(ccp(0.5f, 0.35f));
+    // l = CCLabelBMFont::create(">_", "bigFont.fnt");
+    // l->setAnchorPoint(ccp(0.5f, 0.35f));
 
-    btnOverlay = CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr
-                                                                           : "qolmodButtonOverlay.png"_spr);
+    btnOverlay =
+        CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr : "qolmodButtonOverlay.png"_spr);
 
     btn = CCSprite::createWithSpriteFrameName("qolmodButtonBG.png"_spr);
     btn->addChildAtPosition(btnOverlay, Anchor::Center);
@@ -128,8 +129,8 @@ void AndroidBall::update(float dt) {
     UpdateVisible(false);
 }
 
-#define TYPE_CHECK(__type__)                                                                                                               \
-    if (getParent()->getChildByType<__type__>(0))                                                                                          \
+#define TYPE_CHECK(__type__)                      \
+    if (getParent()->getChildByType<__type__>(0)) \
     return true
 
 bool AndroidBall::editorShouldBeVisible() {

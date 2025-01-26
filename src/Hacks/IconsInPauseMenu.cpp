@@ -1,10 +1,11 @@
+#include "../Client/Client.h"
+#include "../UI/BoundingBoxClipNode.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCLayer.hpp>
 #include <Geode/modify/CharacterColorPage.hpp>
 #include <Geode/modify/GJGarageLayer.hpp>
 #include <Geode/modify/PauseLayer.hpp>
-#include "../UI/BoundingBoxClipNode.hpp"
-#include "../Client/Client.h"
 
 class $modify(IconPauseLayer, PauseLayer) {
     virtual void customSetup() {

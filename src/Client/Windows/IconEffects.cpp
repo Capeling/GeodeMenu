@@ -40,13 +40,15 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
             case 2:
                 return gameManager->colorForIdx(gameManager->m_playerGlowColor.value());
             case 3:
-                return gameManager->colorForIdx(sameDual
-                                                    ? gameManager->m_playerColor2.value()
-                                                    : (player2 ? gameManager->m_playerColor.value() : gameManager->m_playerColor2.value()));
+                return gameManager->colorForIdx(
+                    sameDual ? gameManager->m_playerColor2.value() :
+                               (player2 ? gameManager->m_playerColor.value() : gameManager->m_playerColor2.value())
+                );
             default:
-                return gameManager->colorForIdx(sameDual
-                                                    ? gameManager->m_playerColor.value()
-                                                    : (player2 ? gameManager->m_playerColor2.value() : gameManager->m_playerColor.value()));
+                return gameManager->colorForIdx(
+                    sameDual ? gameManager->m_playerColor.value() :
+                               (player2 ? gameManager->m_playerColor2.value() : gameManager->m_playerColor.value())
+                );
         }
     }
 
@@ -64,27 +66,29 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
         ccColor3B out = Mod::get()->getSavedValue<ccColor3B>(fadeOut, {255, 255, 255});
 
         return ColourUtility::lerpColour(in, out, (sinf(v * 3) + 1) / 2);
-        //fade
+        // fade
     }
 
     if (sel == 4) {
-        //custom colour
+        // custom colour
     }
 
     return {0, 0, 0};
 }
 
-constexpr std::array mods = {"rooot.custom-gamemode-colors",
-                             "gdemerald.custom_icon_colors",
-                             "capeling.coloured-wave-trail",
-                             "weebify.separate_dual_icons",
-                             "naxrin.progress_bar_color",
-                             "naxrin.rgb_icons",
-                             "asaki_zuki.same_dual_color",
-                             "saumondeluxe.rainbow_icon",
-                             "terma.ambienticons",
-                             "acaruso.pride",
-                             "the_bearodactyl.gay-wave-trail"};
+constexpr std::array mods = {
+    "rooot.custom-gamemode-colors",
+    "gdemerald.custom_icon_colors",
+    "capeling.coloured-wave-trail",
+    "weebify.separate_dual_icons",
+    "naxrin.progress_bar_color",
+    "naxrin.rgb_icons",
+    "asaki_zuki.same_dual_color",
+    "saumondeluxe.rainbow_icon",
+    "terma.ambienticons",
+    "acaruso.pride",
+    "the_bearodactyl.gay-wave-trail"
+};
 
 bool EffectUI::getIncompatibleModLoaded() {
     for (auto mod : mods) {

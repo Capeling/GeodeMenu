@@ -4,9 +4,9 @@
 using namespace geode::prelude;
 
 namespace QOLModKeybinds {
-bool hasSetupKeybinds;
+    bool hasSetupKeybinds;
 
-bool isKeybindsLoaded();
+    bool isKeybindsLoaded();
 
-void setupKeybinds();
+    void setupKeybinds();
 }; // namespace QOLModKeybinds

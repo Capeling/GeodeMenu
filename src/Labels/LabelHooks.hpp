@@ -1,10 +1,11 @@
 #pragma once
 
+#include "LabelLayer.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/UILayer.hpp>
-#include "LabelLayer.hpp"
 
 using namespace geode::prelude;
 

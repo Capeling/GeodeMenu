@@ -1,7 +1,8 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
 #include "../Module.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
@@ -23,5 +24,5 @@ public:
 
     void makeAndroid(CCNode* menu, CCPoint pos);
 
-    virtual void updateColor(cocos2d::ccColor4B const& color);
+    virtual void updateColor(const cocos2d::ccColor4B& color);
 };

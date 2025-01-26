@@ -1,7 +1,9 @@
 #include "RecordKeyStruct.hpp"
-#include <Geode/ui/GeodeUI.hpp>
-#include "../UI/BlurLayer.hpp"
+
 #include "../Client/Client.h"
+#include "../UI/BlurLayer.hpp"
+
+#include <Geode/ui/GeodeUI.hpp>
 
 bool RecordKeyStruct::init(std::function<void(KeyStruct)> obj) {
     if (!CCLayerColor::init())

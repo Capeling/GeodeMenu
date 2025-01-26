@@ -1,4 +1,5 @@
 #include "LabelEventCell.hpp"
+
 #include "../Layers/EditLabelPopup.hpp"
 
 bool LabelEventCell::initWithEvent(LabelEvent* event) {
@@ -218,23 +219,25 @@ void LabelEventCell::onSetColour(CCObject* sender) {
     popup->show();
 }
 
-void LabelEventCell::updateColor(cocos2d::ccColor4B const& color) {
+void LabelEventCell::updateColor(const cocos2d::ccColor4B& color) {
     event->colour = ccc4(color.r, color.g, color.b, color.a);
     setColourBG->setColor(ccc3(event->colour.r, event->colour.g, event->colour.b));
 }
 
 void LabelEventCell::onDelete(CCObject* sender) {
-    geode::createQuickPopup("Delete Event",
-                            "Are you sure you want to <cr>delete</c> this <cc>event</c>?",
-                            "Cancel",
-                            "Delete",
-                            [this](FLAlertLayer* alert, bool right) {
-                                if (right) {
-                                    std::erase(as<LabelModule*>(module)->events, *event);
+    geode::createQuickPopup(
+        "Delete Event",
+        "Are you sure you want to <cr>delete</c> this <cc>event</c>?",
+        "Cancel",
+        "Delete",
+        [this](FLAlertLayer* alert, bool right) {
+            if (right) {
+                std::erase(as<LabelModule*>(module)->events, *event);
 
-                                    as<EditLabelPopup*>(layer)->updateList();
-                                }
-                            });
+                as<EditLabelPopup*>(layer)->updateList();
+            }
+        }
+    );
 }
 
 LabelEventCell* LabelEventCell::createWithEvent(LabelEvent* event) {

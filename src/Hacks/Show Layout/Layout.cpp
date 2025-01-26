@@ -197,17 +197,10 @@ void LayoutPlayLayer::onQuit() {
     PlayLayer::onQuit();
 }
 
-void LayoutBaseGameLayer::updateColor(cocos2d::ccColor3B& color,
-                                      float fadeTime,
-                                      int colorID,
-                                      bool blending,
-                                      float opacity,
-                                      cocos2d::ccHSVValue& copyHSV,
-                                      int colorIDToCopy,
-                                      bool copyOpacity,
-                                      EffectGameObject* callerObject,
-                                      int unk1,
-                                      int unk2) {
+void LayoutBaseGameLayer::updateColor(
+    cocos2d::ccColor3B& color, float fadeTime, int colorID, bool blending, float opacity, cocos2d::ccHSVValue& copyHSV, int colorIDToCopy,
+    bool copyOpacity, EffectGameObject* callerObject, int unk1, int unk2
+) {
     if (colorID <= 999)
         color = ccWHITE;
 
@@ -233,8 +226,7 @@ void LayoutBaseGameLayer::updateColor(cocos2d::ccColor3B& color,
         opacity = 0;
     }
 
-    GJBaseGameLayer::updateColor(
-        color, fadeTime, colorID, blending, opacity, copyHSV, colorIDToCopy, copyOpacity, callerObject, unk1, unk2);
+    GJBaseGameLayer::updateColor(color, fadeTime, colorID, blending, opacity, copyHSV, colorIDToCopy, copyOpacity, callerObject, unk1, unk2);
 }
 
 void LayoutBaseGameLayer::createBackground(int p0) {

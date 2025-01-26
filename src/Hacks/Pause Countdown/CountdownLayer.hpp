@@ -1,5 +1,6 @@
-#include <Geode/Geode.hpp>
 #include "../../Client/Client.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 

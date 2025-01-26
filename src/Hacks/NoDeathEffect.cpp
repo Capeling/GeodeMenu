@@ -1,8 +1,9 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCActionManager.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -38,7 +39,8 @@ class $modify(PlayLayer) {
                     auto act = CCSequence::create(
                         CCDelayTime::create(as<InputModule*>(Client::GetModule("custom-respawn-time")->options[0])->getFloatValue()),
                         CCCallFunc::create(this, callfunc_selector(PlayLayer::delayedResetLevel)),
-                        nullptr);
+                        nullptr
+                    );
                     act->setTag(0x10);
 
                     this->runAction(act);

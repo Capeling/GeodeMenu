@@ -1,8 +1,9 @@
+#include "../../Client/Client.h"
+#include "TouchTrail.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCMotionStreak.hpp>
 #include <Geode/modify/CCTouchDispatcher.hpp>
-#include "TouchTrail.hpp"
-#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 

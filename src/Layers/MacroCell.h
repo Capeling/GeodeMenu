@@ -17,11 +17,9 @@ class MacroCell : public CCLayerColor
             {
                 geode::createQuickPopup(
                     "Overwrite Macro?",
-                    "Are you sure you want to load this <cl>macro</c>? This <cr>will</c> overwrite any non saved macro!",
-                    "Cancel", "Load",
-                    [name, this](auto, bool btn2) {
-                        if (btn2) {
-                            
+                    "Are you sure you want to load this <cl>macro</c>? This <cr>will</c> overwrite
+any non saved macro!", "Cancel", "Load", [name, this](auto, bool btn2) { if (btn2) {
+
                             std::stringstream ss;
                             ss << name;
                             ss << ".gdr";
@@ -36,14 +34,16 @@ class MacroCell : public CCLayerColor
                             {
                                 GJReplayManager::replay = MyReplay::importDataS(v.value());
 
-                                CCScene::get()->addChild(TextAlertPopup::create("Successfully loaded '" + name + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
+                                CCScene::get()->addChild(TextAlertPopup::create("Successfully loaded
+'" + name + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
 
 
                                 this->getParent()->getParent()->getParent()->getParent()->removeFromParent();
                                 return;
                             }
 
-                            CCScene::get()->addChild(TextAlertPopup::create("Error loading '" + name + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
+                            CCScene::get()->addChild(TextAlertPopup::create("Error loading '" + name
++ ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
                             this->getParent()->getParent()->getParent()->getParent()->removeFromParent();
 
                         }
@@ -67,13 +67,15 @@ class MacroCell : public CCLayerColor
             {
                 GJReplayManager::replay = MyReplay::importDataS(v.value());
 
-                CCScene::get()->addChild(TextAlertPopup::create("Successfully loaded '" + name + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
+                CCScene::get()->addChild(TextAlertPopup::create("Successfully loaded '" + name +
+".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
 
                 this->getParent()->getParent()->getParent()->getParent()->removeFromParent();
                 return;
             }
 
-            CCScene::get()->addChild(TextAlertPopup::create("Error loading '" + name + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
+            CCScene::get()->addChild(TextAlertPopup::create("Error loading '" + name + ".gdr'",
+0.5f, 0.6f, 150, ""), 9999999);
             this->getParent()->getParent()->getParent()->getParent()->removeFromParent();
         }
 
@@ -108,7 +110,7 @@ class MacroCell : public CCLayerColor
             btn->setScale(0.75f);
             auto load = CCMenuItemSpriteExtra::create(btn, this, menu_selector(MacroCell::onLoad));
             menu->addChildAtPosition(load, Anchor::Right, ccp(-35, 0));
-    
+
             return true;
         }
 

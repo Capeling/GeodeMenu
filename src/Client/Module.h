@@ -1,10 +1,11 @@
 #pragma once
 
-#include <Geode/ui/TextInput.hpp>
-#include <imgui-cocos.hpp>
 #include "../Keybinds/KeyStruct.hpp"
 #include "../UI/UIComponent.hpp"
 #include "ColourUtility.h"
+
+#include <Geode/ui/TextInput.hpp>
+#include <imgui-cocos.hpp>
 
 using namespace geode::prelude;
 
@@ -117,5 +118,6 @@ public:
     }
 
     void save() {}
+
     void load() {}
 };

@@ -1,11 +1,12 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/TextAlertPopup.hpp>
+#include "../Client/Client.h"
 #include "../UI/BlurLayer.hpp"
 #include "../UI/QOLModMenuBG.hpp"
 #include "../UI/TransLabelBMFont.hpp"
-#include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/TextAlertPopup.hpp>
 
 using namespace geode::prelude;
 

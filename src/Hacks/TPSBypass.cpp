@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+#include "../Utils/OffsetManager.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
-#include "../Utils/OffsetManager.hpp"
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -31,11 +32,11 @@ void updateTPSPatches(bool tpsEnabled) {
 
     if (tpsEnabled) {
         if (auto offset = OffsetManager::get()->offsetForType(PatchType::PhysicsBypass); offset != 0x80085) {
-#    ifdef GEODE_IS_WINDOWS
+# ifdef GEODE_IS_WINDOWS
             auto array = geode::toBytes<float>(1.0f / tps);
-#    else
+# else
             auto array = geode::toBytes<double>(1.0f / tps);
-#    endif
+# endif
 
             patches.push_back(createPatchSafe(reinterpret_cast<void*>(geode::base::get() + offset), array));
         }

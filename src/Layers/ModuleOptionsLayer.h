@@ -1,10 +1,10 @@
 #pragma once
 
+#include "../Client/Module.h"
+#include "SillyBaseLayer.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/TextAlertPopup.hpp>
-#include "../Client/Module.h"
-
-#include "SillyBaseLayer.h"
 
 using namespace geode::prelude;
 

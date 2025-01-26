@@ -1,6 +1,7 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCParticleSystem.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -25,10 +26,12 @@ void myParticleUpdate(CCParticleSystem* ins, float dt) {
 
 $execute {
     auto hook = Mod::get()
-                    ->hook(reinterpret_cast<void*>(geode::addresser::getVirtual(&CCParticleSystem::update)),
-                           &myParticleUpdate,
-                           "cocos2d::CCParticleSystem::update",
-                           tulip::hook::TulipConvention::Thiscall)
+                    ->hook(
+                        reinterpret_cast<void*>(geode::addresser::getVirtual(&CCParticleSystem::update)),
+                        &myParticleUpdate,
+                        "cocos2d::CCParticleSystem::update",
+                        tulip::hook::TulipConvention::Thiscall
+                    )
                     .unwrap();
 
     Loader::get()->queueInMainThread([hook] {

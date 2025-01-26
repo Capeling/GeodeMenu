@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJScaleControl.hpp>
 #include <Geode/modify/SliderTouchLogic.hpp>
-#include "../Client/Client.h"
 
 class $modify(SliderTouchLogic) {
     virtual void ccTouchMoved(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1) {

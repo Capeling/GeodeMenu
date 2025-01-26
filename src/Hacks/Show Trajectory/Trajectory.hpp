@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/PlayerObject.hpp>
-#include "../../Client/Client.h"
 
 class $modify(TrajectoryPlayerObject, PlayerObject) {
     void playSpiderDashEffect(cocos2d::CCPoint from, cocos2d::CCPoint to);

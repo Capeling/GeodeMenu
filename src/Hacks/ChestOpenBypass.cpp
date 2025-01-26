@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GameStatsManager.hpp>
 #include <Geode/modify/SecretRewardsLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

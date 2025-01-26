@@ -61,9 +61,10 @@ void SteppedBaseGameLayer::update(float dt) {
 void SteppedBaseGameLayer::stepFrame() {
     m_fields->steppingUpdate = true;
 
-    GJBaseGameLayer::update(1.0f / (Client::GetModuleEnabled("tps-bypass")
-                                        ? as<InputModule*>(Client::GetModule("tps-bypass")->options[0])->getFloatValue()
-                                        : 240.0f));
+    GJBaseGameLayer::update(
+        1.0f /
+        (Client::GetModuleEnabled("tps-bypass") ? as<InputModule*>(Client::GetModule("tps-bypass")->options[0])->getFloatValue() : 240.0f)
+    );
 
     m_fields->steppingUpdate = false;
 }
@@ -89,15 +90,18 @@ bool SteppedUILayer::init(GJBaseGameLayer* bgl) {
     menu->setPosition(ccp(135 / 2, 40 / 2) + ccp(25, 25));
 
     m_fields->pause = RepeatableMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_pauseBtn_001.png"), this, menu_selector(SteppedUILayer::onTogglePaused));
+        CCSprite::createWithSpriteFrameName("GJ_pauseBtn_001.png"), this, menu_selector(SteppedUILayer::onTogglePaused)
+    );
     m_fields->pause->getNormalImage()->setScale(0.8f);
 
     m_fields->prev = RepeatableMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onPreviousFrame));
+        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onPreviousFrame)
+    );
     m_fields->prev->getNormalImage()->setScale(0.8f);
 
     auto next = RepeatableMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onStepFrame));
+        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onStepFrame)
+    );
     next->getNormalImage()->setScale(0.8f);
     as<CCSprite*>(next->getNormalImage())->setFlipX(true);
 
@@ -167,12 +171,14 @@ void SteppedUILayer::updateUI() {
 
     as<CCSprite*>(m_fields->pause->getNormalImage())
         ->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(
-            as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->paused ? "GJ_playEditorBtn_001.png" : "GJ_pauseEditorBtn_001.png"));
+            as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->paused ? "GJ_playEditorBtn_001.png" : "GJ_pauseEditorBtn_001.png"
+        ));
 
     m_fields->menu->setVisible(Client::GetModuleEnabled("frame-stepper"));
 
-    auto position = ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
-                        Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
+    auto position =
+        ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
+            Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
     auto scale = Mod::get()->getSavedValue<float>("frame-stepper-scale", 1);
 
     m_fields->menu->setPosition(position);

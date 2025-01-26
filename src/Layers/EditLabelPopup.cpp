@@ -1,37 +1,39 @@
 #include "EditLabelPopup.hpp"
+
+#include "../Client/AndroidUI.h"
 #include "../UI/LabelEventCell.hpp"
 #include "BetterMDPopup.hpp"
 #include "ChooseFontPopup.hpp"
-#include "../Client/AndroidUI.h"
 
-// static ButtonSprite* create(char const* caption, int width, int p2, float scale, bool absolute, char const* font, char const* bg, float height);
-#define ANCHOR_BTN(__anchor, __text)                                                                                                       \
-    off = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_04.png", 30);                                        \
-    off->setContentWidth(30);                                                                                                              \
-    off->m_BGSprite->setPositionX(15);                                                                                                     \
-    off->m_BGSprite->setContentWidth(30);                                                                                                  \
-    off->m_label->setPositionX(15);                                                                                                        \
-    off->m_label->setScale(0.4f);                                                                                                          \
-    on = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_01.png", 30);                                         \
-    on->setContentWidth(30);                                                                                                               \
-    on->m_BGSprite->setPositionX(15);                                                                                                      \
-    on->m_BGSprite->setContentWidth(30);                                                                                                   \
-    on->m_label->setPositionX(15);                                                                                                         \
-    on->m_label->setScale(0.4f);                                                                                                           \
-    toggler = CCMenuItemToggler::create(off, on, this, menu_selector(EditLabelPopup::onChangeAnchor));                                     \
-    toggler->setEnabled(module->getSide() != LabelAnchor::__anchor);                                                                       \
-    toggler->toggle(module->getSide() == LabelAnchor::__anchor);                                                                           \
-    toggler->setTag(as<int>(LabelAnchor::__anchor));                                                                                       \
-    toggles.emplace(LabelAnchor::__anchor, toggler);                                                                                       \
+// static ButtonSprite* create(char const* caption, int width, int p2, float scale, bool absolute,
+// char const* font, char const* bg, float height);
+#define ANCHOR_BTN(__anchor, __text)                                                                   \
+    off = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_04.png", 30);    \
+    off->setContentWidth(30);                                                                          \
+    off->m_BGSprite->setPositionX(15);                                                                 \
+    off->m_BGSprite->setContentWidth(30);                                                              \
+    off->m_label->setPositionX(15);                                                                    \
+    off->m_label->setScale(0.4f);                                                                      \
+    on = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_01.png", 30);     \
+    on->setContentWidth(30);                                                                           \
+    on->m_BGSprite->setPositionX(15);                                                                  \
+    on->m_BGSprite->setContentWidth(30);                                                               \
+    on->m_label->setPositionX(15);                                                                     \
+    on->m_label->setScale(0.4f);                                                                       \
+    toggler = CCMenuItemToggler::create(off, on, this, menu_selector(EditLabelPopup::onChangeAnchor)); \
+    toggler->setEnabled(module->getSide() != LabelAnchor::__anchor);                                   \
+    toggler->toggle(module->getSide() == LabelAnchor::__anchor);                                       \
+    toggler->setTag(as<int>(LabelAnchor::__anchor));                                                   \
+    toggles.emplace(LabelAnchor::__anchor, toggler);                                                   \
     anchorMenu->addChild(toggler);
 
 void EditLabelPopup::customSetup() {
-    auto leftBtn = CCMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
+    auto leftBtn =
+        CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
     leftBtn->setTag(-1);
 
-    auto rightBtn = CCMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
+    auto rightBtn =
+        CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
     rightBtn->getNormalImage()->setScaleX(-1);
     rightBtn->setTag(1);
 
@@ -69,14 +71,18 @@ void EditLabelPopup::customSetup() {
     xInp->setScale(0.7f);
     xInp->setCommonFilter(CommonFilter::Float);
     xInp->setAnchorPoint(ccp(0, 0));
-    xInp->setCallback([this, xInp](const std::string& str) { module->offset.x = numFromString<float>(str).unwrapOr(module->offset.x); });
+    xInp->setCallback([this, xInp](const std::string& str) {
+        module->offset.x = numFromString<float>(str).unwrapOr(module->offset.x);
+    });
 
     auto yInp = TextInput::create(45 / 0.7f, "Y");
     yInp->setString(fmt::format("{}", module->offset.y));
     yInp->setScale(0.7f);
     yInp->setCommonFilter(CommonFilter::Float);
     yInp->setAnchorPoint(ccp(1, 0));
-    yInp->setCallback([this, yInp](const std::string& str) { module->offset.y = numFromString<float>(str).unwrapOr(module->offset.y); });
+    yInp->setCallback([this, yInp](const std::string& str) {
+        module->offset.y = numFromString<float>(str).unwrapOr(module->offset.y);
+    });
 
     anchorBG->addChildAtPosition(xInp, Anchor::BottomLeft, ccp(7.5f, 2.5f));
     anchorBG->addChildAtPosition(yInp, Anchor::BottomRight, ccp(-7.5f, 2.5f));
@@ -121,7 +127,9 @@ void EditLabelPopup::customSetup() {
     nameInp->setCommonFilter(CommonFilter::Any);
     nameInp->setString(module->name);
     nameInp->setScale(0.7f);
-    nameInp->setCallback([this, nameInp](const std::string& str) { module->name = str; });
+    nameInp->setCallback([this, nameInp](const std::string& str) {
+        module->name = str;
+    });
 
     generalBG->addChildAtPosition(nameInp, Anchor::Top, ccp(0, -35));
 
@@ -138,8 +146,9 @@ void EditLabelPopup::customSetup() {
     scaleInp->setCommonFilter(CommonFilter::Float);
     scaleInp->setString(fmt::format("{:.02f}", module->getScale()));
     scaleInp->setScale(0.7f);
-    scaleInp->setCallback(
-        [this, scaleInp](const std::string& str) { module->setScale(numFromString<float>(str).unwrapOr(module->getScale())); });
+    scaleInp->setCallback([this, scaleInp](const std::string& str) {
+        module->setScale(numFromString<float>(str).unwrapOr(module->getScale()));
+    });
 
     generalBG->addChildAtPosition(scaleInp, Anchor::Top, ccp(0, -35 - 47));
 
@@ -156,18 +165,20 @@ void EditLabelPopup::customSetup() {
     opacityInp->setCommonFilter(CommonFilter::Float);
     opacityInp->setString(fmt::format("{:.02f}", module->getOpacity()));
     opacityInp->setScale(0.7f);
-    opacityInp->setCallback(
-        [this, opacityInp](const std::string& str) { module->setOpacity(numFromString<float>(str).unwrapOr(module->getOpacity())); });
+    opacityInp->setCallback([this, opacityInp](const std::string& str) {
+        module->setOpacity(numFromString<float>(str).unwrapOr(module->getOpacity()));
+    });
 
     generalBG->addChildAtPosition(opacityInp, Anchor::Top, ccp(0, -35 - 47 - 47));
 
     auto fontMenu = CCMenu::create();
     fontMenu->setContentSize(CCPointZero);
 
-    auto fontBtn =
-        CCMenuItemSpriteExtra::create(ButtonSprite::create("Change Font", 100, 0, 1.0f, false, "bigFont.fnt", "GJ_button_05.png", 23),
-                                      this,
-                                      menu_selector(EditLabelPopup::onFont));
+    auto fontBtn = CCMenuItemSpriteExtra::create(
+        ButtonSprite::create("Change Font", 100, 0, 1.0f, false, "bigFont.fnt", "GJ_button_05.png", 23),
+        this,
+        menu_selector(EditLabelPopup::onFont)
+    );
     fontMenu->addChild(fontBtn);
     fontMenu->setScale(0.875f);
 
@@ -222,11 +233,13 @@ void EditLabelPopup::customSetup() {
     colourToggleMenu->addChild(noclipToggle);
     colourToggleMenu->addChild(noclipLabel);
 
-    // ButtonSprite * create(const char *caption, int width, bool absolute, const char *font, const char *texture, float height, float scale)
-    auto exportBtn =
-        CCMenuItemSpriteExtra::create(ButtonSprite::create("Export To File", 100, false, "bigFont.fnt", "GJ_button_05.png", 30, 1.0f),
-                                      this,
-                                      menu_selector(EditLabelPopup::onExportToFile));
+    // ButtonSprite * create(const char *caption, int width, bool absolute, const char *font, const
+    // char *texture, float height, float scale)
+    auto exportBtn = CCMenuItemSpriteExtra::create(
+        ButtonSprite::create("Export To File", 100, false, "bigFont.fnt", "GJ_button_05.png", 30, 1.0f),
+        this,
+        menu_selector(EditLabelPopup::onExportToFile)
+    );
     exportBtn->setPosition(ccp((colourBG->getContentWidth() - 15 * 2) / 2, -120));
     exportBtn->getNormalImage()->setScale(0.85f);
     colourToggleMenu->addChild(exportBtn);
@@ -241,19 +254,26 @@ void EditLabelPopup::customSetup() {
     anchorInfo->setPosition(ccp(333, 208));
 
     auto offsetInfo = InfoAlertButton::create(
-        "Offset Info", "Offset in <cl>cocos units</c> from the anchor point, will not affect other labels in layout", 0.4f);
+        "Offset Info",
+        "Offset in <cl>cocos units</c> from the anchor point, will not affect other labels in "
+        "layout",
+        0.4f
+    );
     offsetInfo->setPosition(ccp(330, 78));
 
     auto nameInfo =
         InfoAlertButton::create("Display Name", "A name for your label, only shown in the <cc>ui</c> to differentiate your labels", 0.4f);
     nameInfo->setPosition(ccp(122, 208));
 
-    auto colourInfo =
-        InfoAlertButton::create("Colour Info",
-                                "<cc>Cheat Indicator</c> - Makes the label be the colour of the cheat indicator\nsuch as <cr>red</c> for "
-                                "cheating and <cg>green</c> for safe\n\nLabel Events are currently broken with cheat indicator enabled, "
-                                "sorry\n<cc>Noclip Only</c> - Only shows the label if the noclip mod is enabled",
-                                0.4f);
+    auto colourInfo = InfoAlertButton::create(
+        "Colour Info",
+        "<cc>Cheat Indicator</c> - Makes the label be the colour of the cheat indicator\nsuch as "
+        "<cr>red</c> for "
+        "cheating and <cg>green</c> for safe\n\nLabel Events are currently broken with cheat "
+        "indicator enabled, "
+        "sorry\n<cc>Noclip Only</c> - Only shows the label if the noclip mod is enabled",
+        0.4f
+    );
     colourInfo->setPosition(ccp(216, 208));
 
     infoMenu->addChild(anchorInfo);
@@ -273,7 +293,8 @@ void EditLabelPopup::customSetup() {
     infoMenu->setPosition(CCPointZero);
 
     auto formatInfo = CCMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(EditLabelPopup::onFormatInfo));
+        CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(EditLabelPopup::onFormatInfo)
+    );
     formatInfo->getNormalImage()->setScale(0.8f);
     formatInfo->setPosition(size + ccp(-16, -16));
 
@@ -284,7 +305,9 @@ void EditLabelPopup::customSetup() {
     auto formatInp = TextInput::create(formatSize.x, "Format");
     formatInp->setString(module->format);
     formatInp->setCommonFilter(CommonFilter::Any);
-    formatInp->setCallback([this](const std::string& str) { module->format = str; });
+    formatInp->setCallback([this](const std::string& str) {
+        module->format = str;
+    });
 
     baseLayer->addChildAtPosition(leftBtn, Anchor::Left, ccp(-25, 0));
     baseLayer->addChildAtPosition(rightBtn, Anchor::Right, ccp(25, 0));
@@ -333,8 +356,7 @@ void EditLabelPopup::customSetup() {
     dropdown->faggot = true;
     dropdown->send = this;
 
-    rightBG->addChildAtPosition(
-        dropdown, Anchor::Top, (-dropdown->getContentSize() * 0.5f) + ccp(0, -dropdown->getContentHeight() * 0.5f - 5));
+    rightBG->addChildAtPosition(dropdown, Anchor::Top, (-dropdown->getContentSize() * 0.5f) + ccp(0, -dropdown->getContentHeight() * 0.5f - 5));
 
     scroll = ScrollLayer::create(leftBG->getContentSize());
     scroll->setPosition(leftBG->getPosition() + leftBG->getContentSize() * ccp(0, -0.5f));

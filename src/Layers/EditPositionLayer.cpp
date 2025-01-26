@@ -128,8 +128,9 @@ void EditPositionLayer::onReset(CCObject*) {
         Mod::get()->setSavedValue<float>("startpos-scale", 1);
         Mod::get()->setSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
-        position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
-                       Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        position =
+            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
@@ -143,13 +144,14 @@ void EditPositionLayer::onReset(CCObject*) {
         Mod::get()->setSavedValue<float>("frame-stepper-scale", 1);
         Mod::get()->setSavedValue<float>("frame-stepper-opacity", 255.0f / 255.0f);
 
-        position = ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
-                       Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
+        position =
+            ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
+                Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
         scale = Mod::get()->getSavedValue<float>("frame-stepper-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("frame-stepper-opacity", 255.0f / 255.0f);
 
         scaleSlider->setValue(unscaleValue(1));
-        //opacitySlider->setValue(255.0f / 255.0f);
+        // opacitySlider->setValue(255.0f / 255.0f);
     }
 }
 
@@ -165,8 +167,9 @@ void EditPositionLayer::update(float dt) {
 
 CCMenu* EditPositionLayer::getNodeForType() {
     if (type == EditPositionType::StartposSwitcher) {
-        position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
-                       Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        position =
+            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
@@ -191,8 +194,9 @@ CCMenu* EditPositionLayer::getNodeForType() {
     }
 
     if (type == EditPositionType::FrameStepper) {
-        position = ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
-                       Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
+        position =
+            ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
+                Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
         scale = Mod::get()->getSavedValue<float>("frame-stepper-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("frame-stepper-opacity", 255.0f / 255.0f);
 
@@ -232,13 +236,16 @@ CCMenu* EditPositionLayer::getNodeForType() {
         menu->addChildAtPosition(right, Anchor::Center);
         menu->addChildAtPosition(label, Anchor::Center);
 
-        auto area = TextArea::create("Keybinds are:\n<cl>N</c> : Previous Frame\n<cl>M</c> : Step Frame\n<cl>B</c> : Toggle Paused",
-                                     "chatFont.fnt",
-                                     1.0f,
-                                     1000,
-                                     ccp(0.5f, 0.5f),
-                                     20,
-                                     false);
+        auto area = TextArea::create(
+            "Keybinds are:\n<cl>N</c> : Previous Frame\n<cl>M</c> : Step Frame\n<cl>B</c> : Toggle "
+            "Paused",
+            "chatFont.fnt",
+            1.0f,
+            1000,
+            ccp(0.5f, 0.5f),
+            20,
+            false
+        );
         area->setPosition(ccp(CCDirector::get()->getWinSize().width / 2, CCDirector::get()->getWinSize().height - 120));
         this->addChild(area, 12);
 

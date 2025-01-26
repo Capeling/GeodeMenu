@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../idkwhattocallthis.hpp"
 #include "../Window.h"
+#include "../idkwhattocallthis.hpp"
 
 class Speedhack : public Window {
 public:

@@ -1,12 +1,13 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EffectGameObject.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
 #ifndef GEODE_IS_ANDROID
-#    define APPLY_SHAKE_INLINE
+# define APPLY_SHAKE_INLINE
 #endif
 
 class $modify(GJBaseGameLayer) {

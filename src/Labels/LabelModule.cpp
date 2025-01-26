@@ -1,4 +1,5 @@
 #include "LabelModule.hpp"
+
 #include "../Hacks/SafeMode/SafeMode.hpp"
 #include "LabelLayer.hpp"
 #include "Labels.h"
@@ -16,9 +17,9 @@ void LabelModule::setFont(std::string newFont) {
 }
 
 std::string LabelModule::getFont() {
-    return CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false))
-               ? font
-               : "bigFont.fnt";
+    return CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false)) ?
+        font :
+        "bigFont.fnt";
 }
 
 void LabelModule::setScale(float newScale) {

@@ -1,9 +1,10 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/AchievementNotifier.hpp>
 #include <Geode/modify/AppDelegate.hpp>
 #include <Geode/modify/CCSprite.hpp>
 #include <Geode/modify/LoadingLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

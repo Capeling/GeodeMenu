@@ -57,8 +57,7 @@ void GrabNodeLayer::registerWithTouchDispatcher(void) {
 
 bool GrabNodeLayer::ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent) {
     if (nodeToGrab && cocos::nodeIsVisible(this)) {
-        auto bbox =
-            CCRect(convertToWorldSpace(CCPointZero), convertToWorldSpace(getScaledContentSize()) - convertToWorldSpace(CCPointZero));
+        auto bbox = CCRect(convertToWorldSpace(CCPointZero), convertToWorldSpace(getScaledContentSize()) - convertToWorldSpace(CCPointZero));
 
         if (pTouch->getLocation() > bbox.origin && pTouch->getLocation() < bbox.origin + bbox.size) {
             isDragging = true;

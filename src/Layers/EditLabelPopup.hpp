@@ -1,10 +1,11 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
+#include "../Client/Module.h"
 #include "../Hacks/SafeMode/SafeMode.hpp"
 #include "../Labels/LabelCommon.hpp"
-#include "../Client/Module.h"
 #include "SillyBaseLayer.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 

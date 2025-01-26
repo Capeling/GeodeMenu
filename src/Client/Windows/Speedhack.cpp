@@ -100,7 +100,8 @@ void Speedhack::cocosCreate(CCMenu* menu) {
         modules[i]->makeAndroid(
             menu,
             (ccp(menu->getContentSize().width / 2, menu->getContentSize().height - 110 - (30 * i)) - ccp(180 / 2, 0) + ccp(20, 0)) +
-                ccp(0, 27.5f));
+                ccp(0, 27.5f)
+        );
     }
 
     auto trash =
@@ -140,7 +141,9 @@ void Speedhack::cocosCreate(CCMenu* menu) {
 }
 
 void Speedhack::updatePresets() {
-    std::sort(presets.begin(), presets.end(), [](float a, float b) { return a < b; });
+    std::sort(presets.begin(), presets.end(), [](float a, float b) {
+        return a < b;
+    });
 
     presetMenu->removeAllChildren();
     presetBtns.clear();

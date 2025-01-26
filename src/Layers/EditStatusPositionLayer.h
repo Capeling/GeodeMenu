@@ -68,8 +68,8 @@ class EditStatusPositionLayer : public FLAlertLayer
             bb->setScale(1.0f / (bb->getContentSize().width / max));
             bb->setScale(0.5f);
 
-            auto btn = CCMenuItemSpriteExtra::create(bb, this, menu_selector(EditStatusPositionLayer::onChange));
-            btn->setID(id);
+            auto btn = CCMenuItemSpriteExtra::create(bb, this,
+menu_selector(EditStatusPositionLayer::onChange)); btn->setID(id);
 
             if (v == 0)
                 left->addChild(btn);
@@ -111,9 +111,8 @@ class EditStatusPositionLayer : public FLAlertLayer
             {
                 auto size = panel->getContentSize();
 
-                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
-                gradient->setContentSize(size);
-                gradient->setZOrder(-1);
+                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255,
+255, 255)); gradient->setContentSize(size); gradient->setZOrder(-1);
                 gradient->setID("gradient"_spr);
 
                 if (Mod::get()->getSettingValue<bool>("use-custom-colours"))
@@ -133,18 +132,18 @@ class EditStatusPositionLayer : public FLAlertLayer
                 if (Mod::get()->getSettingValue<bool>("reverse-order"))
                 gradient->setScaleY(-1);
 
-                auto darken = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-fill.png")).c_str());
-                darken->setID("darken"_spr);
-                darken->setContentSize(size - ccp(15, 15));
-                darken->setZOrder(0);
-                darken->setPosition(size / 2);
+                auto darken =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-fill.png")).c_str()); darken->setID("darken"_spr); darken->setContentSize(size -
+ccp(15, 15)); darken->setZOrder(0); darken->setPosition(size / 2);
 
-                auto outline = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-outline.png")).c_str());
-                outline->setPosition(size / 2);
+                auto outline =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-outline.png")).c_str()); outline->setPosition(size / 2);
                 outline->setContentSize(size);
                 outline->setZOrder(1);
                 outline->setID("outline"_spr);
-                
+
                 gradient->addChild(darken);
                 gradient->addChild(outline);
 
@@ -162,8 +161,8 @@ class EditStatusPositionLayer : public FLAlertLayer
             title->setScale(0.5f);
             l->addChild(title);
 
-            auto subtitle = CCLabelBMFont::create("Tap on a button to cycle its position", "chatFont.fnt");
-            subtitle->setPosition(l->getContentSize() / 2 + ccp(0, 120 - 14));
+            auto subtitle = CCLabelBMFont::create("Tap on a button to cycle its position",
+"chatFont.fnt"); subtitle->setPosition(l->getContentSize() / 2 + ccp(0, 120 - 14));
             subtitle->setOpacity(100);
             subtitle->setScale(0.65f);
             l->addChild(subtitle);
@@ -175,7 +174,7 @@ class EditStatusPositionLayer : public FLAlertLayer
             l->addChild(spr, 2);
 
             auto plr = SimplePlayer::create(GameManager::get()->m_playerFrame);
-            
+
             plr->setColor(GameManager::get()->colorForIdx(GameManager::get()->m_playerColor));
             plr->setSecondColor(GameManager::get()->colorForIdx(GameManager::get()->m_playerColor2));
             if (GameManager::get()->m_playerGlow)
@@ -206,23 +205,23 @@ class EditStatusPositionLayer : public FLAlertLayer
             lay->setPosition(l->getContentSize() / 2);
             l->addChild(lay, 1);
 
-            auto ok = CCMenuItemSpriteExtra::create(ButtonSprite::create("OK"), this, menu_selector(EditStatusPositionLayer::onClose));
-            ok->setPosition(l->getContentSize() / 2 + ccp(0, -82 - 31.5f));
-            l->addChild(ok, 5);
+            auto ok = CCMenuItemSpriteExtra::create(ButtonSprite::create("OK"), this,
+menu_selector(EditStatusPositionLayer::onClose)); ok->setPosition(l->getContentSize() / 2 + ccp(0,
+-82 - 31.5f)); l->addChild(ok, 5);
 
             left = CCMenu::create();
             left->setID("left");
             left->ignoreAnchorPointForPosition(false);
-            left->setPosition(l->getContentSize() / 2 + ccp(-0.5f * spr->getScaledContentSize().width / 2, 0));
-            left->setContentSize(ccp(spr->getScaledContentSize().width / 2, spr->getScaledContentSize().height));
-            l->addChild(left, 5);
+            left->setPosition(l->getContentSize() / 2 + ccp(-0.5f *
+spr->getScaledContentSize().width / 2, 0)); left->setContentSize(ccp(spr->getScaledContentSize().width
+/ 2, spr->getScaledContentSize().height)); l->addChild(left, 5);
 
             right = CCMenu::create();
             right->setID("right");
             right->ignoreAnchorPointForPosition(false);
-            right->setPosition(l->getContentSize() / 2 + ccp(0.5f * spr->getScaledContentSize().width / 2, 0));
-            right->setContentSize(ccp(spr->getScaledContentSize().width / 2, spr->getScaledContentSize().height));
-            l->addChild(right, 5);
+            right->setPosition(l->getContentSize() / 2 + ccp(0.5f *
+spr->getScaledContentSize().width / 2, 0)); right->setContentSize(ccp(spr->getScaledContentSize().width
+/ 2, spr->getScaledContentSize().height)); l->addChild(right, 5);
 
             addStatus("Testmode", "testmode");
             addStatus("FPS Counter", "fps");
@@ -235,10 +234,10 @@ class EditStatusPositionLayer : public FLAlertLayer
             this->addChild(l);
 
             l->setScale(0.1f);
-            l->runAction(CCEaseElasticOut::create(CCScaleTo::create(1, 1))); 
+            l->runAction(CCEaseElasticOut::create(CCScaleTo::create(1, 1)));
 
             handleTouchPriority(this);
-    
+
             return true;
         }
 

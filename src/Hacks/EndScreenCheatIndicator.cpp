@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+#include "SafeMode/SafeMode.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/EndLevelLayer.hpp>
-#include "SafeMode/SafeMode.hpp"
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

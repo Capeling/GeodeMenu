@@ -1,8 +1,9 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#    include "SetBindSetting.hpp"
-#    include "KeyInfoPopup.hpp"
-#    include "RecordKeyPopup.hpp"
+# include "SetBindSetting.hpp"
+
+# include "KeyInfoPopup.hpp"
+# include "RecordKeyPopup.hpp"
 
 bool SetBindNode::init(SetBindValue* value, float width) {
     if (!SettingNode::init(value))
@@ -46,8 +47,7 @@ bool SetBindNode::init(SetBindValue* value, float width) {
         btns.insert(std::pair<int, CCNode*>(btn, lblBtn));
     }
 
-    menu->setLayout(
-        AxisLayout::create()->setAxis(Axis::Row)->setAutoScale(false)->setAxisReverse(true)->setAxisAlignment(AxisAlignment::End));
+    menu->setLayout(AxisLayout::create()->setAxis(Axis::Row)->setAutoScale(false)->setAxisReverse(true)->setAxisAlignment(AxisAlignment::End));
 
     this->addChildAtPosition(label, Anchor::Left, ccp(15, 0));
     this->addChildAtPosition(menu, Anchor::Right, ccp(-10, 0));
@@ -102,7 +102,7 @@ std::string SetBindNode::nameForKey(int key) {
     if (key == -1)
         return "Unknown";
 
-#    ifndef GEODE_IS_IOS
+# ifndef GEODE_IS_IOS
 
     auto k = CCKeyboardDispatcher::get()->keyToString(as<enumKeyCodes>(key));
 
@@ -111,11 +111,11 @@ std::string SetBindNode::nameForKey(int key) {
 
     return std::string(k);
 
-#    else
+# else
 
     return "";
 
-#    endif
+# endif
 }
 
 SettingNode* SetBindValue::createNode(float width) {

@@ -1,9 +1,11 @@
 #include "TransAlertLayer.hpp"
+
 #include "../Utils/TranslationManager.hpp"
 #include "TransLabelBMFont.hpp"
+
 #include <regex>
 
-bool TransAlertLayer::init(char const* title, const gd::string& desc, char const* btn) {
+bool TransAlertLayer::init(const char* title, const gd::string& desc, const char* btn) {
     std::string desc2 = TranslationManager::get()->getTranslatedString(desc);
 
     auto label = CCLabelBMFont::create("l", "chatFont.fnt");
@@ -90,7 +92,7 @@ bool TransAlertLayer::init(char const* title, const gd::string& desc, char const
     return true;
 }
 
-TransAlertLayer* TransAlertLayer::create(char const* title, const gd::string& desc, char const* btn) {
+TransAlertLayer* TransAlertLayer::create(const char* title, const gd::string& desc, const char* btn) {
     auto pRet = new TransAlertLayer();
 
     if (pRet && pRet->init(title, desc, btn)) {

@@ -1,9 +1,10 @@
 #ifndef __APPLE__
 
-#    include <Geode/Geode.hpp>
-#    include <Geode/modify/SecretLayer2.hpp>
-#    include "Client/AndroidBall.h"
-#    include <random>
+# include "Client/AndroidBall.h"
+
+# include <Geode/Geode.hpp>
+# include <Geode/modify/SecretLayer2.hpp>
+# include <random>
 
 using namespace geode::prelude;
 

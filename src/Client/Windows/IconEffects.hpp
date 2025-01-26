@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Geode/modify/GJBaseGameLayer.hpp>
-#include <Geode/modify/MenuLayer.hpp>
 #include "../../Layers/IconOptionsLayer.h"
 #include "../Client.h"
+
+#include <Geode/modify/GJBaseGameLayer.hpp>
+#include <Geode/modify/MenuLayer.hpp>
 
 class EffectUI : public CCNode {
 public:
@@ -217,7 +218,7 @@ public:
         auto chBtn = CCMenuItemSpriteExtra::create(chSpr, menu, menu_selector(IconEffects::changeColour));
         chBtn->setID(std::to_string(type));
         chBtn->setPosition(dBtn->getPosition() + ccp(48, 0));
-        //chBtn->addChild(CCSprite::createWithSpriteFrameName("GJ_select_001.png"));
+        // chBtn->addChild(CCSprite::createWithSpriteFrameName("GJ_select_001.png"));
         menu->addChild(chBtn);
         chBtn->setTag(1);
         p.push_back(chBtn);

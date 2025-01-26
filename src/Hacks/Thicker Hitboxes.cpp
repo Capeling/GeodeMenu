@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCDrawNode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -76,7 +77,8 @@ class $modify(CCDrawNode) {
                 borderWidth = 1;
 
             return CCDrawNode::drawPolygon(
-                verts, count, fill->enabled ? c : fillColor, borderWidth * (thicker->enabled ? 2.2f : 1), borderColor);
+                verts, count, fill->enabled ? c : fillColor, borderWidth * (thicker->enabled ? 2.2f : 1), borderColor
+            );
         } else
             return CCDrawNode::drawPolygon(verts, count, fillColor, borderWidth, borderColor);
     }
@@ -84,8 +86,7 @@ class $modify(CCDrawNode) {
 
 #else
 
-bool myDrawPoly(
-    CCDrawNode* ins, CCPoint* verts, unsigned int count, const ccColor4F& fillColor, float borderWidth, ccColor4F& borderColor) {
+bool myDrawPoly(CCDrawNode* ins, CCPoint* verts, unsigned int count, const ccColor4F& fillColor, float borderWidth, ccColor4F& borderColor) {
     if (!thicker)
         thicker = Client::GetModule("show-hitboxes")->options[7];
 
@@ -145,10 +146,12 @@ bool myDrawPoly(
 }
 
 $execute {
-    (void) Mod::get()->hook(reinterpret_cast<void*>(geode::addresser::getNonVirtual(&CCDrawNode::drawPolygon)),
-                            &myDrawPoly,
-                            "cocos2d::CCDrawNode::drawPolygon",
-                            tulip::hook::TulipConvention::Thiscall);
+    (void) Mod::get()->hook(
+        reinterpret_cast<void*>(geode::addresser::getNonVirtual(&CCDrawNode::drawPolygon)),
+        &myDrawPoly,
+        "cocos2d::CCDrawNode::drawPolygon",
+        tulip::hook::TulipConvention::Thiscall
+    );
 }
 
 #endif
@@ -162,21 +165,21 @@ class $modify(GJBaseGameLayer) {
             ccp(squarePosition.x - squareSize.x / 2, squarePosition.y - squareSize.y / 2), // Bottom-left
             ccp(squarePosition.x + squareSize.x / 2, squarePosition.y - squareSize.y / 2), // Bottom-right
             ccp(squarePosition.x + squareSize.x / 2, squarePosition.y + squareSize.y / 2), // Top-right
-            ccp(squarePosition.x - squareSize.x / 2, squarePosition.y + squareSize.y / 2)  // Top-left
+            ccp(squarePosition.x - squareSize.x / 2, squarePosition.y + squareSize.y / 2) // Top-left
         };
 
         m_debugDrawNode->drawPolygon(squareVertices, 4, ccc4f(0, 0, 0, 0), 0.35f, ccc4f(-1, -1, -1, -1));
 
-        m_debugDrawNode->drawCircle(
-            squarePosition, po->getObjectRect().size.width / 2, ccc4f(0, 0, 0, 0), 0.35f, ccc4f(-1, -1, -1, -1), 64);
+        m_debugDrawNode->drawCircle(squarePosition, po->getObjectRect().size.width / 2, ccc4f(0, 0, 0, 0), 0.35f, ccc4f(-1, -1, -1, -1), 64);
 
         CCPoint squareSize2 = po->getObjectRect(0.25f, 0.25f).size;
 
         CCPoint squareVertices2[] = {
             ccp(squarePosition.x - squareSize2.x / 2, squarePosition.y - squareSize2.y / 2), // Bottom-left
-            ccp(squarePosition.x + squareSize2.x / 2, squarePosition.y - squareSize2.y / 2), // Bottom-right
+            ccp(squarePosition.x + squareSize2.x / 2,
+                squarePosition.y - squareSize2.y / 2), // Bottom-right
             ccp(squarePosition.x + squareSize2.x / 2, squarePosition.y + squareSize2.y / 2), // Top-right
-            ccp(squarePosition.x - squareSize2.x / 2, squarePosition.y + squareSize2.y / 2)  // Top-left
+            ccp(squarePosition.x - squareSize2.x / 2, squarePosition.y + squareSize2.y / 2) // Top-left
         };
 
         m_debugDrawNode->drawPolygon(squareVertices2, 4, ccc4f(0, 0, 0, 0), 0.35f, ccc4f(0, 0.25f, 1, 1));
@@ -188,8 +191,8 @@ class $modify(GJBaseGameLayer) {
         if (LevelEditorLayer::get() && !GameManager::get()->getGameVariable("0045"))
             return;
 
-        //if (!player)
-        //player = as<ColourModule*>(Client::GetModule("show-hitboxes")->options[4]);
+        // if (!player)
+        // player = as<ColourModule*>(Client::GetModule("show-hitboxes")->options[4]);
 
         drawForPlayer(m_player1);
 

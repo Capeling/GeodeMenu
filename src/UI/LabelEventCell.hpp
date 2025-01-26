@@ -1,7 +1,8 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
 #include "../Layers/EditLabelPopup.hpp"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
@@ -28,7 +29,7 @@ public:
     void onDelete(CCObject* sender);
     void onSetColour(CCObject* sender);
 
-    virtual void updateColor(cocos2d::ccColor4B const& color);
+    virtual void updateColor(const cocos2d::ccColor4B& color);
 
     static LabelEventCell* createWithEvent(LabelEvent* event);
 };

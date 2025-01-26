@@ -1,12 +1,13 @@
 #pragma once
 
+#include "AndroidUI.h"
+#include "Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/AchievementNotifier.hpp>
 #include <Geode/modify/AppDelegate.hpp>
 #include <Geode/modify/CCScene.hpp>
 #include <Geode/modify/CCTouchDispatcher.hpp>
-#include "AndroidUI.h"
-#include "Client.h"
 
 class AndroidBall : public CCLayer {
 public:

@@ -74,7 +74,7 @@ void IconOptionsLayer::onClose(CCObject* sender) {
     SillyBaseLayer::onClose(sender);
 }
 
-void IconOptionsLayer::updateColor(cocos2d::ccColor4B const& color) {
+void IconOptionsLayer::updateColor(const cocos2d::ccColor4B& color) {
     if (auto popup = CCScene::get()->getChildByType<ColorPickPopup>(0)) {
         auto col = ccc3(color.r, color.g, color.b);
 

@@ -59,10 +59,12 @@ void ChooseFontPopup::customSetup() {
         menu->setAnchorPoint(ccp(0, 0));
         menu->setScale(0.6f);
 
-        auto btn = CCMenuItemToggler::create(CCSprite::createWithSpriteFrameName("GJ_selectSongBtn_001.png"),
-                                             CCSprite::createWithSpriteFrameName("GJ_selectSongOnBtn_001.png"),
-                                             this,
-                                             menu_selector(ChooseFontPopup::onSelect));
+        auto btn = CCMenuItemToggler::create(
+            CCSprite::createWithSpriteFrameName("GJ_selectSongBtn_001.png"),
+            CCSprite::createWithSpriteFrameName("GJ_selectSongOnBtn_001.png"),
+            this,
+            menu_selector(ChooseFontPopup::onSelect)
+        );
         btn->setTag(i);
         btn->setID(font);
         menu->addChild(btn);

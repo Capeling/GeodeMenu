@@ -1,4 +1,5 @@
 #include "EditSafeZonePopup.hpp"
+
 #include "../Client/Windows/Labels.hpp"
 
 #define CORNER_SIZE 1.5f
@@ -141,10 +142,9 @@ void EditSafeZonePopup::onSliderChanged(CCObject* sender) {
 
 void EditSafeZonePopup::update(float dt) {
     bottomLeft->setPosition(Labels::get()->safeZone.origin);
-    bottomRight->setPosition(
-        ccp(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width, Labels::get()->safeZone.origin.y));
-    topLeft->setPosition(
-        ccp(Labels::get()->safeZone.origin.x, CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height));
+    bottomRight->setPosition(ccp(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width, Labels::get()->safeZone.origin.y)
+    );
+    topLeft->setPosition(ccp(Labels::get()->safeZone.origin.x, CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height));
     topRight->setPosition(CCDirector::get()->getWinSize() - Labels::get()->safeZone.size);
 }
 

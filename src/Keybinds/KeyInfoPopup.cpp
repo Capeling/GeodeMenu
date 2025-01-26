@@ -1,6 +1,6 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#    include "KeyInfoPopup.hpp"
+# include "KeyInfoPopup.hpp"
 
 KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node) {
     KeyInfoPopup* pRet = new KeyInfoPopup();
@@ -18,7 +18,7 @@ KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node) {
 }
 
 void KeyInfoPopup::customSetup() {
-#    ifndef GEODE_IS_IOS
+# ifndef GEODE_IS_IOS
 
     auto lbl = CCLabelBMFont::create(CCKeyboardDispatcher::get()->keyToString(as<enumKeyCodes>(key)), "bigFont.fnt");
 
@@ -42,12 +42,16 @@ void KeyInfoPopup::customSetup() {
 
     ok->setPositionX(ok->getPositionX() - removeBtn->getContentWidth() / 2);
 
-#    endif
+# endif
 }
 
 void KeyInfoPopup::onRemove(CCObject* sender) {
     geode::createQuickPopup(
-        "Delete bind", "Are you sure you want to <cr>delete</c> this bind?", "Cancel", "Delete", [this, sender](FLAlertLayer*, bool btn2) {
+        "Delete bind",
+        "Are you sure you want to <cr>delete</c> this bind?",
+        "Cancel",
+        "Delete",
+        [this, sender](FLAlertLayer*, bool btn2) {
             if (btn2) {
                 if (node->buttons.size() <= 1) {
                     this->onClose(nullptr);
@@ -64,7 +68,8 @@ void KeyInfoPopup::onRemove(CCObject* sender) {
 
                 this->onClose(nullptr);
             }
-        });
+        }
+    );
 }
 
 #endif

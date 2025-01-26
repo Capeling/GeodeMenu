@@ -1,18 +1,19 @@
 #include "Config.hpp"
+
 #include "../../Layers/LanguageSelectNode.hpp"
 #include "../AndroidBall.h"
 
-#define FADE_ICON(iconID, primary, secondary, glow, deathEffect)                                                                           \
-    plr = SimplePlayer::create(iconID);                                                                                                    \
-    plr->setContentSize(ccp(30, 30));                                                                                                      \
-    plr->setColor(GameManager::get()->colorForIdx(primary));                                                                               \
-    plr->setSecondColor(GameManager::get()->colorForIdx(secondary));                                                                       \
-    if (glow != -1)                                                                                                                        \
-        plr->setGlowOutline(GameManager::get()->colorForIdx(glow));                                                                        \
-    btn = CCMenuItemSpriteExtra::create(plr, this, menu_selector(Config::onRoxi));                                                         \
-    btn->setTag(deathEffect);                                                                                                              \
-    iconsMenu->addChild(btn);                                                                                                              \
-    plr->setAnchorPoint(CCPointZero);                                                                                                      \
+#define FADE_ICON(iconID, primary, secondary, glow, deathEffect)                   \
+    plr = SimplePlayer::create(iconID);                                            \
+    plr->setContentSize(ccp(30, 30));                                              \
+    plr->setColor(GameManager::get()->colorForIdx(primary));                       \
+    plr->setSecondColor(GameManager::get()->colorForIdx(secondary));               \
+    if (glow != -1)                                                                \
+        plr->setGlowOutline(GameManager::get()->colorForIdx(glow));                \
+    btn = CCMenuItemSpriteExtra::create(plr, this, menu_selector(Config::onRoxi)); \
+    btn->setTag(deathEffect);                                                      \
+    iconsMenu->addChild(btn);                                                      \
+    plr->setAnchorPoint(CCPointZero);                                              \
     iconsMenu->updateLayout(btn)
 
 void Config::cocosCreate(CCMenu* menu) {
@@ -64,10 +65,12 @@ void Config::cocosCreate(CCMenu* menu) {
     animTitle->setScale(0.55f);
     menuTab->addChildAtPosition(animTitle, Anchor::TopLeft, ccp(5, -4));
 
-    animDropdown = Dropdown::create({130, 25},
-                                    {"None", "From Top", "From Bottom", "From Left", "From Right", "Scale"},
-                                    menu_selector(Config::onDropdownChanged),
-                                    Mod::get()->getSavedValue<int>("anim-mode", 2));
+    animDropdown = Dropdown::create(
+        {130, 25},
+        {"None", "From Top", "From Bottom", "From Left", "From Right", "Scale"},
+        menu_selector(Config::onDropdownChanged),
+        Mod::get()->getSavedValue<int>("anim-mode", 2)
+    );
     animDropdown->setZOrder(42069);
     menuTab->addChildAtPosition(animDropdown, Anchor::TopLeft, ccp(5 + animTitle->getScaledContentSize().width + 2, -2 - 25));
 
@@ -234,7 +237,7 @@ void Config::cocosCreate(CCMenu* menu) {
     btnMenu->setScale(AndroidBall::clampf(Mod::get()->getSavedValue<float>("button-scale", 1), 0.2f, 1));
     btnMenu->setContentSize(ccp(0, 0));
 
-    //btnL = CCPastelLabelBMFont::create(">_", "bigFont.fnt");
+    // btnL = CCPastelLabelBMFont::create(">_", "bigFont.fnt");
     btnL = CCLabelBMFont::create(">_", "bigFont.fnt");
     btnL->setAnchorPoint(ccp(0.5f, 0.35f));
 
@@ -304,9 +307,10 @@ void Config::cocosCreate(CCMenu* menu) {
     createBtn(m, -6);
     createBtn(m, -1);
     createBtn(m, -2);
-    //createBtn(m, -3);
+    // createBtn(m, -3);
 
-    //m->addChild(CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_epicCoin3_001.png"), menu, menu_selector(Config::onChangeFile)));
+    // m->addChild(CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_epicCoin3_001.png"),
+    // menu, menu_selector(Config::onChangeFile)));
 
     m->setLayout(ColumnLayout::create()
                      ->setAxisReverse(true)
@@ -339,28 +343,32 @@ void Config::cocosCreate(CCMenu* menu) {
     SimplePlayer* plr;
     CCMenuItemSpriteExtra* btn;
 
-    FADE_ICON(296, 2, 12, 12, 14);   // roxi
-    FADE_ICON(373, 35, 43, 35, 1);   // jaid
-    FADE_ICON(70, 41, 12, 12, 1);    // gaypeling
-    FADE_ICON(459, 98, 83, 12, 20);  // catgirlsarehot (anh)
+    FADE_ICON(296, 2, 12, 12, 14); // roxi
+    FADE_ICON(373, 35, 43, 35, 1); // jaid
+    FADE_ICON(70, 41, 12, 12, 1); // gaypeling
+    FADE_ICON(459, 98, 83, 12, 20); // catgirlsarehot (anh)
     FADE_ICON(478, 37, 21, 105, 11); // i dont remember
-    FADE_ICON(104, 21, 3, 3, 11);    // ery
-    FADE_ICON(41, 11, 70, -1, 1);    // justin
+    FADE_ICON(104, 21, 3, 3, 11); // ery
+    FADE_ICON(41, 11, 70, -1, 1); // justin
     // FADE_ICON(77, 1, 5, -1, 8);     // baby (ninxout)
     FADE_ICON(335, 98, 41, 15, 19); // alphalaneous
 
     aboutTab->addChild(iconsMenu);
 
-    auto discord = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_discordIcon_001.png"),
-                                                 menu,
-                                                 menu_selector(Config::onLink)); // https://discord.gg/DfQSTEnQKK
+    auto discord = CCMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("gj_discordIcon_001.png"),
+        menu,
+        menu_selector(Config::onLink)
+    ); // https://discord.gg/DfQSTEnQKK
     discord->setPosition(ccp(menu->getContentSize().width, 0) + ccp(-10, 12));
     discord->setID("https://discord.gg/DfQSTEnQKK");
     aboutTab->addChild(discord);
 
-    auto yt = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_ytIcon_001.png"),
-                                            menu,
-                                            menu_selector(Config::onLink)); // https://www.youtube.com/@TheSillyDoggo
+    auto yt = CCMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("gj_ytIcon_001.png"),
+        menu,
+        menu_selector(Config::onLink)
+    ); // https://www.youtube.com/@TheSillyDoggo
     yt->setPosition(ccp(menu->getContentSize().width, 0) + ccp(-10, 12) + ccp(0, 35));
     yt->setID("https://www.youtube.com/@TheSillyDoggo");
     aboutTab->addChild(yt);
@@ -371,10 +379,12 @@ void Config::cocosCreate(CCMenu* menu) {
 }
 
 CCMenuItemToggler* Config::createTabButton(std::string name, int index) {
-    auto btn = CCMenuItemToggler::create(ButtonSprite::create(name.c_str(), "bigFont.fnt", "GJ_button_04.png"),
-                                         ButtonSprite::create(name.c_str(), "bigFont.fnt", "GJ_button_05.png"),
-                                         this->menu,
-                                         menu_selector(Config::onChangeTab));
+    auto btn = CCMenuItemToggler::create(
+        ButtonSprite::create(name.c_str(), "bigFont.fnt", "GJ_button_04.png"),
+        ButtonSprite::create(name.c_str(), "bigFont.fnt", "GJ_button_05.png"),
+        this->menu,
+        menu_selector(Config::onChangeTab)
+    );
     btn->setTag(index);
 
     if (index == selectedTab) {
@@ -413,7 +423,8 @@ void Config::onRoxi(CCObject* sender) {
 #ifndef GEODE_IS_MACOS
     if (killed == count)
         AchievementNotifier::sharedState()->notifyAchievement(
-            "Murderer!", "Kill all the players in the about section", "diffIcon_03_btn_001.png", true);
+            "Murderer!", "Kill all the players in the about section", "diffIcon_03_btn_001.png", true
+        );
 #endif
 }
 
@@ -447,16 +458,22 @@ void Config::changeTheme(CCObject* sender) {
 
     if (v == -1) {
         if (!Loader::get()->getInstalledMod("thesillydoggo.gradientpages")) {
-            return FLAlertLayer::create("Gradient Pages",
-                                        "The <cg>Gradient</c> Theme option requires the mod, <cl>Gradient Pages</c> to "
-                                        "be installed. Install <cl>Gradient Pages</c> to use gradient mode.",
-                                        "OK")
+            return FLAlertLayer::create(
+                       "Gradient Pages",
+                       "The <cg>Gradient</c> Theme option requires the mod, <cl>Gradient Pages</c> "
+                       "to "
+                       "be installed. Install <cl>Gradient Pages</c> to use gradient mode.",
+                       "OK"
+            )
                 ->show();
         } else if (!Loader::get()->getLoadedMod("thesillydoggo.gradientpages")) {
-            return FLAlertLayer::create("Gradient Pages",
-                                        "The <cg>Gradient</c> Theme option requires the mod, <cl>Gradient Pages</c> to "
-                                        "be enabled. Enable <cl>Gradient Pages</c> to use gradient mode.",
-                                        "OK")
+            return FLAlertLayer::create(
+                       "Gradient Pages",
+                       "The <cg>Gradient</c> Theme option requires the mod, <cl>Gradient Pages</c> "
+                       "to "
+                       "be enabled. Enable <cl>Gradient Pages</c> to use gradient mode.",
+                       "OK"
+            )
                 ->show();
         }
     }
@@ -558,16 +575,17 @@ void Config::onDropdownChanged(CCObject*) {
 }
 
 void Config::onLink(CCObject* sender) {
-    auto a = geode::createQuickPopup("Hold Up!",
-                                     "Links are spooky! Are you sure you want to go to\n<cy>" + std::string(as<CCNode*>(sender)->getID()) +
-                                         "</c>?",
-                                     "Cancel",
-                                     "Yes",
-                                     [](FLAlertLayer* a, bool btn2) {
-                                         if (btn2) {
-                                             CCApplication::get()->openURL(a->getID().c_str());
-                                         }
-                                     });
+    auto a = geode::createQuickPopup(
+        "Hold Up!",
+        "Links are spooky! Are you sure you want to go to\n<cy>" + std::string(as<CCNode*>(sender)->getID()) + "</c>?",
+        "Cancel",
+        "Yes",
+        [](FLAlertLayer* a, bool btn2) {
+            if (btn2) {
+                CCApplication::get()->openURL(a->getID().c_str());
+            }
+        }
+    );
 
     a->setID(as<CCNode*>(sender)->getID());
 }
@@ -603,9 +621,11 @@ void Config::onSliderChanged(CCObject* sender) {
     btnL->stopAllActions();
 
     btn->runAction(
-        CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f, Mod::get()->getSavedValue<int>("normal-opacity", 255)));
+        CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f, Mod::get()->getSavedValue<int>("normal-opacity", 255))
+    );
     btnL->runAction(
-        CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f, Mod::get()->getSavedValue<int>("normal-opacity", 255)));
+        CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f, Mod::get()->getSavedValue<int>("normal-opacity", 255))
+    );
 
     //"instant-fade"
 }

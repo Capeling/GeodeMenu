@@ -27,20 +27,18 @@ void RepeatableMenuItemSpriteExtra::update(float dt) {
 
             activate();
 
-            auto sequence = CCSequence::create(CCEaseBackOut::create(CCScaleBy::create(0.07f, 1.2f)),
-                                               CCDelayTime::create(0.02f),
-                                               CCScaleBy::create(0.1f, 1.0f / 1.2f),
-                                               nullptr);
+            auto sequence = CCSequence::create(
+                CCEaseBackOut::create(CCScaleBy::create(0.07f, 1.2f)), CCDelayTime::create(0.02f), CCScaleBy::create(0.1f, 1.0f / 1.2f), nullptr
+            );
 
             this->runAction(sequence);
         }
     }
 }
 
-RepeatableMenuItemSpriteExtra* RepeatableMenuItemSpriteExtra::create(cocos2d::CCNode* sprite,
-                                                                     cocos2d::CCNode* disabledSprite,
-                                                                     cocos2d::CCObject* target,
-                                                                     cocos2d::SEL_MenuHandler callback) {
+RepeatableMenuItemSpriteExtra* RepeatableMenuItemSpriteExtra::create(
+    cocos2d::CCNode* sprite, cocos2d::CCNode* disabledSprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback
+) {
     auto pRet = new RepeatableMenuItemSpriteExtra();
 
     if (pRet && pRet->init(sprite, disabledSprite, target, callback)) {
@@ -54,7 +52,8 @@ RepeatableMenuItemSpriteExtra* RepeatableMenuItemSpriteExtra::create(cocos2d::CC
     return nullptr;
 }
 
-RepeatableMenuItemSpriteExtra*
-RepeatableMenuItemSpriteExtra::create(cocos2d::CCNode* sprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback) {
+RepeatableMenuItemSpriteExtra* RepeatableMenuItemSpriteExtra::create(
+    cocos2d::CCNode* sprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback
+) {
     return create(sprite, nullptr, target, callback);
 }

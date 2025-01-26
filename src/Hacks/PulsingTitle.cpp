@@ -1,10 +1,11 @@
+#include "../Client/Client.h"
+#include "../Utils/defines.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCNode.hpp>
 #include <Geode/modify/CCScheduler.hpp>
 #include <Geode/modify/FMODLevelVisualizer.hpp>
 #include <Geode/modify/MenuLayer.hpp>
-#include "../Utils/defines.hpp"
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -12,21 +13,21 @@ using namespace geode::prelude;
 
 Module* pulseAll = nullptr;
 
-#    ifdef GEODE_IS_WINDOWS
-#        define offset 0x210
-#    endif
-#    ifdef GEODE_IS_ANDROID32
-#        define offset 0x16c
-#    endif
-#    ifdef GEODE_IS_ANDROID64
-#        define offset 0x1f8
-#    endif
-#    ifdef GEODE_IS_MACOS
-#        define offset 0x1c8
-#    endif
-#    ifdef GEODE_IS_IOS
-#        define offset 0x1c8
-#    endif
+# ifdef GEODE_IS_WINDOWS
+#  define offset 0x210
+# endif
+# ifdef GEODE_IS_ANDROID32
+#  define offset 0x16c
+# endif
+# ifdef GEODE_IS_ANDROID64
+#  define offset 0x1f8
+# endif
+# ifdef GEODE_IS_MACOS
+#  define offset 0x1c8
+# endif
+# ifdef GEODE_IS_IOS
+#  define offset 0x1c8
+# endif
 
 class MenuPulse : public CCNode {
 public:
@@ -51,11 +52,11 @@ public:
     }
 
     void update(float dt) {
-#    ifdef GEODE_IS_WINDOWS
+# ifdef GEODE_IS_WINDOWS
         MBO(bool, engine, 0x218) = true;
-#    else
+# else
         engine->enableMetering();
-#    endif
+# endif
 
         engine->update(dt);
 
@@ -85,5 +86,5 @@ class $modify(MenuLayer) {
     }
 };
 
-#    undef offset
+# undef offset
 #endif

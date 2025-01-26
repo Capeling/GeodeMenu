@@ -1,7 +1,8 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/HardStreak.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

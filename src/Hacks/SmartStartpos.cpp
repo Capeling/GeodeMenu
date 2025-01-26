@@ -1,9 +1,10 @@
 #ifndef GEODE_IS_MACOS
 
-#    include <Geode/Geode.hpp>
-#    include <Geode/modify/PlayLayer.hpp>
-#    include <Geode/modify/UILayer.hpp>
-#    include "../Client/Client.h"
+# include "../Client/Client.h"
+
+# include <Geode/Geode.hpp>
+# include <Geode/modify/PlayLayer.hpp>
+# include <Geode/modify/UILayer.hpp>
 
 using namespace geode::prelude;
 
@@ -21,18 +22,18 @@ class $modify(SmartPlayLayer, PlayLayer) {
     void addObject(GameObject* object) {
         PlayLayer::addObject(object);
 
-        switch (object->m_objectID) { //thanks prevter :3
-            case 10:                  // Blue Gravity Portal
-            case 11:                  // Yellow Gravity Portal
-            case 2926:                // Green Gravity Portal
+        switch (object->m_objectID) { // thanks prevter :3
+            case 10: // Blue Gravity Portal
+            case 11: // Yellow Gravity Portal
+            case 2926: // Green Gravity Portal
                 m_fields->gravityObjects.push_back(object);
                 break;
-            case 12:   // Cube Portal
-            case 13:   // Ship Portal
-            case 47:   // Ball Portal
-            case 111:  // UFO Portal
-            case 660:  // Wave Portal
-            case 745:  // Robot Portal
+            case 12: // Cube Portal
+            case 13: // Ship Portal
+            case 47: // Ball Portal
+            case 111: // UFO Portal
+            case 660: // Wave Portal
+            case 745: // Robot Portal
             case 1331: // Spider Portal
             case 1933: // SwingCopter Portal
                 m_fields->gamemodeObjects.push_back(object);
@@ -41,7 +42,7 @@ class $modify(SmartPlayLayer, PlayLayer) {
             case 287: // Blue Dual Portal
                 m_fields->dualObjects.push_back(object);
                 break;
-            case 99:  // Normal Size Portal
+            case 99: // Normal Size Portal
             case 101: // Mini Portal
                 m_fields->sizeObjects.push_back(object);
                 break;
@@ -49,10 +50,10 @@ class $modify(SmartPlayLayer, PlayLayer) {
             case 46: // Blue Mirror Portal
                 m_fields->mirrorObjects.push_back(object);
                 break;
-            case 200:  // -1x Speed Change
-            case 201:  // 1x Speed Change
-            case 202:  // 2x Speed Change
-            case 203:  // 3x Speed Change
+            case 200: // -1x Speed Change
+            case 201: // 1x Speed Change
+            case 202: // 2x Speed Change
+            case 203: // 3x Speed Change
             case 1334: // 4x Speed Change
                 m_fields->speedObjects.push_back(object);
                 break;
@@ -108,7 +109,7 @@ class $modify(SmartPlayLayer, PlayLayer) {
             }
 
             if (auto gravity = latestObjectForVector(m_fields->gravityObjects, sp)) {
-                //sp->m_startSettings->m_isFlipped = getFlippedGravity(m_fields->gravityObjects, sp);
+                // sp->m_startSettings->m_isFlipped = getFlippedGravity(m_fields->gravityObjects, sp);
             }
         }
     }

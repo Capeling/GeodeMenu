@@ -1,21 +1,26 @@
 #include "TranslationCreditsLayer.hpp"
-#include <Geode/modify/MenuLayer.hpp>
+
 #include "../UI/PlayerDeathAnimation.hpp"
 #include "../Utils/TranslationManager.hpp"
 
+#include <Geode/modify/MenuLayer.hpp>
+
 // Particle Strings
 
-#define PARTICLE_HIT_BIG                                                                                                                   \
-    "30a-1a1a0a-1a90a0a46a76a11a0a0a-"                                                                                                     \
-    "483a45a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0"                     \
+#define PARTICLE_HIT_BIG                                                                           \
+    "30a-1a1a0a-1a90a0a46a76a11a0a0a-"                                                             \
+    "483a45a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0" \
+    "a0a0a0a0a0a0a0a0a0a0"                                                                         \
     "a0a0a0a0a0"
-#define PARTICLE_HIT_MEDIUM                                                                                                                \
-    "30a-1a1a0a30a90a0a5a0a11a0a0a-"                                                                                                       \
-    "208a289a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a"                     \
+#define PARTICLE_HIT_MEDIUM                                                                        \
+    "30a-1a1a0a30a90a0a5a0a11a0a0a-"                                                               \
+    "208a289a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a" \
+    "0a0a0a0a0a0a0a0a0a0a"                                                                         \
     "0a0a0a0a0a0"
-#define PARTICLE_HIT_SMALL                                                                                                                 \
-    "30a-1a1a0a30a90a70a58a0a11a0a0a-"                                                                                                     \
-    "208a0a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0a"                     \
+#define PARTICLE_HIT_SMALL                                                                         \
+    "30a-1a1a0a30a90a70a58a0a11a0a0a-"                                                             \
+    "208a0a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a" \
+    "0a0a0a0a0a0a0a0a0a0a"                                                                         \
     "0a0a0a0a0"
 
 void TranslationCreditsLayer::customSetup() {
@@ -24,11 +29,12 @@ void TranslationCreditsLayer::customSetup() {
     langNode->setAnchorPoint(ccp(0.5f, 0.5f));
     langNode->setScale(0.5f);
 
-    auto langNative = CCLabelTTF::create(
-        language["display_name_native"].asString().unwrapOr("Missing field: display_name_native").c_str(), "Arial", 32.5f);
+    auto langNative =
+        CCLabelTTF::create(language["display_name_native"].asString().unwrapOr("Missing field: display_name_native").c_str(), "Arial", 32.5f);
     auto langEng = CCLabelBMFont::create(
         fmt::format("({})", language["display_name_english"].asString().unwrapOr("Missing field: display_name_english")).c_str(),
-        "bigFont.fnt");
+        "bigFont.fnt"
+    );
 
     langNode->addChild(langNative);
     langNode->addChild(langEng);
@@ -98,15 +104,15 @@ void TranslationCreditsLayer::customSetup() {
             plr->togglePlatformerMode(true);
             plr->m_regularTrail->setVisible(false);
 
-            plr->runAction(CCSequence::create(CCDelayTime::create(0.37f),
-                                              CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnBigParticle)),
-                                              nullptr));
-            plr->runAction(CCSequence::create(CCDelayTime::create(0.73f),
-                                              CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnMediumParticle)),
-                                              nullptr));
-            plr->runAction(CCSequence::create(CCDelayTime::create(0.92f),
-                                              CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnSmallParticle)),
-                                              nullptr));
+            plr->runAction(CCSequence::create(
+                CCDelayTime::create(0.37f), CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnBigParticle)), nullptr
+            ));
+            plr->runAction(CCSequence::create(
+                CCDelayTime::create(0.73f), CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnMediumParticle)), nullptr
+            ));
+            plr->runAction(CCSequence::create(
+                CCDelayTime::create(0.92f), CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnSmallParticle)), nullptr
+            ));
 
             auto plrBtn = CCMenuItemSpriteExtra::create(plr, this, menu_selector(TranslationCreditsLayer::onKill));
             plrBtn->setContentSize(ccp(30, 30));
@@ -182,7 +188,8 @@ void TranslationCreditsLayer::customSetup() {
         clip->addChild(menu);
     } else {
         auto btn = CCMenuItemSpriteExtra::create(
-            CCSprite::createWithSpriteFrameName("heart.png"_spr), this, menu_selector(TranslationCreditsLayer::onMessage));
+            CCSprite::createWithSpriteFrameName("heart.png"_spr), this, menu_selector(TranslationCreditsLayer::onMessage)
+        );
         btn->setPosition(ccp(142, 144));
 
         gameNode->addChild(btn);
@@ -229,10 +236,13 @@ void TranslationCreditsLayer::onUse(CCObject* sender) {
 }
 
 void TranslationCreditsLayer::onMessage(CCObject* sender) {
-    FLAlertLayer::create("Contributions",
-                         "These are all the <cl>amazing</c> people who have <cc>contributed</c> to <co>qolmod</c> by "
-                         "translatingthe mod to this <cp>language</c>.\nThank you <cr><3</c>",
-                         "OK")
+    FLAlertLayer::create(
+        "Contributions",
+        "These are all the <cl>amazing</c> people who have <cc>contributed</c> to <co>qolmod</c> "
+        "by "
+        "translatingthe mod to this <cp>language</c>.\nThank you <cr><3</c>",
+        "OK"
+    )
         ->show();
 }
 
@@ -251,14 +261,16 @@ void TranslationCreditsLayer::onKill(CCObject* sender) {
 
     as<CCMenuItemSpriteExtra*>(sender)->addChild(death);
 
-    background->runAction(
-        CCSequence::create(CCTintTo::create(0.05f, 200, 0, 0),
-                           CCTintTo::create(0.5f, background->getColor().r, background->getColor().g, background->getColor().b),
-                           nullptr));
+    background->runAction(CCSequence::create(
+        CCTintTo::create(0.05f, 200, 0, 0),
+        CCTintTo::create(0.5f, background->getColor().r, background->getColor().g, background->getColor().b),
+        nullptr
+    ));
 
     for (auto grn : CCArrayExt<CCSprite*>(ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren())) {
         grn->runAction(CCSequence::create(
-            CCTintTo::create(0.05f, 160, 0, 0), CCTintTo::create(0.5f, grn->getColor().r, grn->getColor().g, grn->getColor().b), nullptr));
+            CCTintTo::create(0.05f, 160, 0, 0), CCTintTo::create(0.5f, grn->getColor().r, grn->getColor().g, grn->getColor().b), nullptr
+        ));
     }
 
     if (sender->getTag() == 1) {
@@ -268,7 +280,8 @@ void TranslationCreditsLayer::onKill(CCObject* sender) {
 #ifndef GEODE_IS_MACOS
 
             AchievementNotifier::sharedState()->notifyAchievement(
-                "Waste of time", "Why would you waste your time doing that?", "diffIcon_04_btn_001.png", true);
+                "Waste of time", "Why would you waste your time doing that?", "diffIcon_04_btn_001.png", true
+            );
 
 #endif
         }

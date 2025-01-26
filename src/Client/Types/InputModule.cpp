@@ -1,6 +1,8 @@
 #include "InputModule.hpp"
-#include <imgui-cocos.hpp>
+
 #include "../../UI/TransLabelBMFont.hpp"
+
+#include <imgui-cocos.hpp>
 
 InputModule* mod;
 
@@ -28,9 +30,8 @@ void InputModule::drawImGui() {
 
     auto t = text.c_str();
 
-    if (ImGui::InputText(name.c_str(), (char*) text.c_str(), 127, ImGuiInputTextFlags_CallbackAlways, imguiTextInputChanged)) {
-    }
-    //text = t;
+    if (ImGui::InputText(name.c_str(), (char*) text.c_str(), 127, ImGuiInputTextFlags_CallbackAlways, imguiTextInputChanged)) {}
+    // text = t;
 }
 
 void InputModule::makeAndroid(CCNode* menu, CCPoint pos) {
