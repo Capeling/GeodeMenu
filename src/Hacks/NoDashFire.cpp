@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (PlayerObject)
-{
-    virtual void update(float dt)
-    {
+class $modify(PlayerObject) {
+    virtual void update(float dt) {
         PlayerObject::update(dt);
 
         if (m_dashFireSprite)

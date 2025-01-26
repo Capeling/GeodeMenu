@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (PauseLayer)
-{
-    virtual void customSetup()
-    {
+class $modify(PauseLayer) {
+    virtual void customSetup() {
         auto a = PlayLayer::get()->m_level->m_levelType;
 
         if (Client::GetModuleEnabled("level-edit"))
@@ -18,8 +16,7 @@ class $modify (PauseLayer)
         PlayLayer::get()->m_level->m_levelType = a;
     }
 
-    void onEdit(cocos2d::CCObject* sender)
-    {
+    void onEdit(cocos2d::CCObject* sender) {
         auto a = PlayLayer::get()->m_level->m_levelType;
 
         if (Client::GetModuleEnabled("level-edit"))

@@ -1,48 +1,47 @@
 #pragma once
 
-#include "../Client.h"
 #include "../../Labels/Labels.h"
+#include "../Client.h"
 
-class Labels : public Window
-{
-    private:
-        static inline Labels* instance = nullptr;
-    public:
-        Labels()
-        {
-            name = "Labels";
-            id = "labels-window";
+class Labels : public Window {
+private:
+    static inline Labels* instance = nullptr;
 
-            instance = this;
+public:
+    Labels() {
+        name = "Labels";
+        id = "labels-window";
 
-            load();
-        }
+        instance = this;
 
-        ScrollLayer* scroll = nullptr;
-        CCMenu* menu;
-        std::vector<CCNode*> cells;
-        CCRect safeZone;
-        std::function<CCLabelBMFont*()> createFuncCommentEmojis = nullptr;
+        load();
+    }
 
-        static Labels* get();
+    ScrollLayer* scroll = nullptr;
+    CCMenu* menu;
+    std::vector<CCNode*> cells;
+    CCRect safeZone;
+    std::function<CCLabelBMFont*()> createFuncCommentEmojis = nullptr;
 
-        void cocosCreate(CCMenu* menu);
+    static Labels* get();
 
-        void refreshList();
-        void dirtyRefreshList(bool smooth);
+    void cocosCreate(CCMenu* menu);
 
-        void save();
-        void load();
-        void loadFromPrevSave();
+    void refreshList();
+    void dirtyRefreshList(bool smooth);
 
-        void onAddItem(CCObject* sender);
-        void onDelete(CCObject* sender);
-        void onSettings(CCObject* sender);
-        void onSetupSafeZone(CCObject* sender);
-        void onMoveLabelUp(CCObject* sender);
-        void onMoveLabelDown(CCObject* sender);
-        void onToggleVisible(CCObject* sender);
-        void onImportFromFile(CCObject* sender);
+    void save();
+    void load();
+    void loadFromPrevSave();
 
-        void importFromFile(std::filesystem::path path);
+    void onAddItem(CCObject* sender);
+    void onDelete(CCObject* sender);
+    void onSettings(CCObject* sender);
+    void onSetupSafeZone(CCObject* sender);
+    void onMoveLabelUp(CCObject* sender);
+    void onMoveLabelDown(CCObject* sender);
+    void onToggleVisible(CCObject* sender);
+    void onImportFromFile(CCObject* sender);
+
+    void importFromFile(std::filesystem::path path);
 };

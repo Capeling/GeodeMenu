@@ -4,12 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (PlayerObject)
-{
-    void animatePlatformerJump(float p0)
-    {
-        
-    }
+class $modify(PlayerObject) {
+    void animatePlatformerJump(float p0) {}
 
     QOLMOD_MOD_ALL_HOOKS("plat-jump-anim")
 };

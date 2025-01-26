@@ -1,15 +1,13 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PauseLayer.hpp>
 #include <Geode/modify/CCLayer.hpp>
-#include <Geode/modify/GJGarageLayer.hpp>
 #include <Geode/modify/CharacterColorPage.hpp>
-#include "../Client/Client.h"
+#include <Geode/modify/GJGarageLayer.hpp>
+#include <Geode/modify/PauseLayer.hpp>
 #include "../UI/BoundingBoxClipNode.hpp"
+#include "../Client/Client.h"
 
-class $modify (IconPauseLayer, PauseLayer)
-{
-    virtual void customSetup()
-    {
+class $modify(IconPauseLayer, PauseLayer) {
+    virtual void customSetup() {
         PauseLayer::customSetup();
 
         auto clip = BoundingBoxClipNode::create();
@@ -38,12 +36,9 @@ class $modify (IconPauseLayer, PauseLayer)
     QOLMOD_MOD_HOOK("pause-icon-kit", "PauseLayer::customSetup")
 };
 
-class $modify (CCLayer)
-{
-    virtual void onEnter()
-    {
-        if (auto pl = typeinfo_cast<PlayLayer*>(this))
-        {
+class $modify(CCLayer) {
+    virtual void onEnter() {
+        if (auto pl = typeinfo_cast<PlayLayer*>(this)) {
             if (pl->m_isPaused)
                 return;
         }
@@ -52,20 +47,16 @@ class $modify (CCLayer)
     }
 };
 
-class $modify (GJGarageLayer)
-{
-    void onSelect(cocos2d::CCObject* sender)
-    {
+class $modify(GJGarageLayer) {
+    void onSelect(cocos2d::CCObject* sender) {
         GJGarageLayer::onSelect(sender);
 
         int id = sender->getTag();
 
-        if (auto pl = PlayLayer::get())
-        {
+        if (auto pl = PlayLayer::get()) {
             auto plr = pl->m_player1;
 
-            if (auto sep = Loader::get()->getLoadedMod("weebify.separate_dual_icons"))
-            {
+            if (auto sep = Loader::get()->getLoadedMod("weebify.separate_dual_icons")) {
                 if (sep->getSavedValue<bool>("2pselected"))
                     plr = pl->m_player2;
             }
@@ -103,20 +94,16 @@ class $modify (GJGarageLayer)
     }
 };
 
-class $modify (CharacterColorPage)
-{
-    void onPlayerColor(cocos2d::CCObject* sender)
-    {
+class $modify(CharacterColorPage) {
+    void onPlayerColor(cocos2d::CCObject* sender) {
         CharacterColorPage::onPlayerColor(sender);
 
         auto col = GameManager::get()->colorForIdx(sender->getTag());
 
-        if (auto pl = PlayLayer::get())
-        {
+        if (auto pl = PlayLayer::get()) {
             auto plr = pl->m_player1;
 
-            if (auto sep = Loader::get()->getLoadedMod("weebify.separate_dual_icons"))
-            {
+            if (auto sep = Loader::get()->getLoadedMod("weebify.separate_dual_icons")) {
                 if (sep->getSavedValue<bool>("2pselected"))
                     plr = pl->m_player2;
             }
@@ -135,16 +122,13 @@ class $modify (CharacterColorPage)
         }
     }
 
-    void toggleGlow(cocos2d::CCObject* sender)
-    {
+    void toggleGlow(cocos2d::CCObject* sender) {
         CharacterColorPage::toggleGlow(sender);
 
-        if (auto pl = PlayLayer::get())
-        {
+        if (auto pl = PlayLayer::get()) {
             auto plr = pl->m_player1;
 
-            if (auto sep = Loader::get()->getLoadedMod("weebify.separate_dual_icons"))
-            {
+            if (auto sep = Loader::get()->getLoadedMod("weebify.separate_dual_icons")) {
                 if (sep->getSavedValue<bool>("2pselected"))
                     plr = pl->m_player2;
             }

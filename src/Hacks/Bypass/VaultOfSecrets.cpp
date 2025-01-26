@@ -4,20 +4,16 @@
 
 using namespace geode::prelude;
 
-class $modify (CreatorLayer)
-{
+class $modify(CreatorLayer) {
     static void onModify(auto& self) {
-        (void)self.setHookPriority("CreatorLayer::onSecretVault", 99999999);
+        (void) self.setHookPriority("CreatorLayer::onSecretVault", 99999999);
         auto hook = self.getHook("CreatorLayer::onSecretVault");
-        Loader::get()->queueInMainThread([hook]{
-            Client::GetModule("vault-of-secrets-bypass")->addHookRaw(hook);
-        });
+        Loader::get()->queueInMainThread([hook] { Client::GetModule("vault-of-secrets-bypass")->addHookRaw(hook); });
     }
 
-    void onSecretVault(cocos2d::CCObject* sender)
-    {
+    void onSecretVault(cocos2d::CCObject* sender) {
         auto scene = CCTransitionFade::create(0.5f, SecretLayer2::scene());
-        
+
         CCDirector::get()->replaceScene(scene);
     }
 };

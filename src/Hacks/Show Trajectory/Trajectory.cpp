@@ -3,7 +3,11 @@
 #define ResetMember(_mem) fields->trajectoryPlayer->_mem = player->_mem;
 #define RM ResetMember
 
-void drawSegmentAlternative(CCDrawNode* drawNode, const CCPoint& startPoint, const CCPoint& endPoint, float radius, const ccColor4F& color) // taken from the depths of google
+void drawSegmentAlternative(CCDrawNode* drawNode,
+                            const CCPoint& startPoint,
+                            const CCPoint& endPoint,
+                            float radius,
+                            const ccColor4F& color) // taken from the depths of google
 {
     CCPoint direction = ccpNormalize(ccpSub(endPoint, startPoint));
     CCPoint perpendicular = ccp(-direction.y, direction.x);
@@ -17,14 +21,14 @@ void drawSegmentAlternative(CCDrawNode* drawNode, const CCPoint& startPoint, con
     drawNode->drawPolygon(vertices, 4, color, 0, color);
 }
 
-bool TrajectoryPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateObjects)
-{
+bool TrajectoryPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
     if (!PlayLayer::init(level, useReplay, dontCreateObjects))
         return false;
 
     auto tbgl = base_cast<TrajectoryBGL*>(this);
 
-    tbgl->m_fields->trajectoryPlayer = as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
+    tbgl->m_fields->trajectoryPlayer =
+        as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
     tbgl->m_fields->trajectoryDraw = CCDrawNode::create();
 
     tbgl->m_fields->trajectoryPlayer->setVisible(false);
@@ -37,19 +41,16 @@ bool TrajectoryPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCrea
     return true;
 }
 
-void TrajectoryPlayLayer::resetLevel()
-{
+void TrajectoryPlayLayer::resetLevel() {
     PlayLayer::resetLevel();
 
     base_cast<TrajectoryBGL*>(this)->updateSimulation();
 }
 
-void TrajectoryPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
-{
+void TrajectoryPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1) {
     auto tbgl = base_cast<TrajectoryBGL*>(this);
 
-    if (p0 == tbgl->m_fields->trajectoryPlayer)
-    {
+    if (p0 == tbgl->m_fields->trajectoryPlayer) {
         tbgl->m_fields->trajectoryPlayer->m_isDead = true;
 
         return;
@@ -58,14 +59,14 @@ void TrajectoryPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
     PlayLayer::destroyPlayer(p0, p1);
 }
 
-bool TrajectoryEditorLayer::init(GJGameLevel* p0, bool p1)
-{
+bool TrajectoryEditorLayer::init(GJGameLevel* p0, bool p1) {
     if (!LevelEditorLayer::init(p0, p1))
         return false;
 
     auto tbgl = base_cast<TrajectoryBGL*>(this);
 
-    tbgl->m_fields->trajectoryPlayer = as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
+    tbgl->m_fields->trajectoryPlayer =
+        as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
     tbgl->m_fields->trajectoryDraw = CCDrawNode::create();
 
     tbgl->m_fields->trajectoryPlayer->setVisible(false);
@@ -78,12 +79,10 @@ bool TrajectoryEditorLayer::init(GJGameLevel* p0, bool p1)
     return true;
 }
 
-void TrajectoryEditorLayer::playerTookDamage(PlayerObject* p0)
-{
+void TrajectoryEditorLayer::playerTookDamage(PlayerObject* p0) {
     auto tbgl = base_cast<TrajectoryBGL*>(this);
 
-    if (p0 == tbgl->m_fields->trajectoryPlayer)
-    {
+    if (p0 == tbgl->m_fields->trajectoryPlayer) {
         tbgl->m_fields->trajectoryPlayer->m_isDead = true;
 
         return;
@@ -92,26 +91,21 @@ void TrajectoryEditorLayer::playerTookDamage(PlayerObject* p0)
     LevelEditorLayer::playerTookDamage(p0);
 }
 
-void TrajectoryPlayerObject::playSpiderDashEffect(cocos2d::CCPoint from, cocos2d::CCPoint to)
-{
+void TrajectoryPlayerObject::playSpiderDashEffect(cocos2d::CCPoint from, cocos2d::CCPoint to) {
     if (m_gameLayer && as<TrajectoryBGL*>(m_gameLayer)->m_fields->trajectoryPlayer == this)
         return;
 
     PlayerObject::playSpiderDashEffect(from, to);
 }
 
-void TrajectoryBGL::collisionCheckObjects(PlayerObject* p0, gd::vector<GameObject*>* p1, int p2, float p3)
-{
-    if (p0 == m_fields->trajectoryPlayer)
-    {
+void TrajectoryBGL::collisionCheckObjects(PlayerObject* p0, gd::vector<GameObject*>* p1, int p2, float p3) {
+    if (p0 == m_fields->trajectoryPlayer) {
         gd::vector<GameObject*> p1old = *p1;
 
-        auto new_end = std::remove_if(p1->begin(), p1->end(), [](GameObject* obj)
-        {
+        auto new_end = std::remove_if(p1->begin(), p1->end(), [](GameObject* obj) {
             bool del = true;
-            
-            if (typeinfo_cast<GameObject*>(obj))
-            {
+
+            if (typeinfo_cast<GameObject*>(obj)) {
                 if (obj->m_objectType == GameObjectType::Solid)
                     del = false;
 
@@ -124,7 +118,7 @@ void TrajectoryBGL::collisionCheckObjects(PlayerObject* p0, gd::vector<GameObjec
                 if (obj->m_objectType == GameObjectType::Slope)
                     del = false;
             }
-            
+
             return del;
         });
 
@@ -140,23 +134,19 @@ void TrajectoryBGL::collisionCheckObjects(PlayerObject* p0, gd::vector<GameObjec
     GJBaseGameLayer::collisionCheckObjects(p0, p1, p2, p3);
 }
 
-void TrajectoryBGL::update(float dt)
-{
+void TrajectoryBGL::update(float dt) {
     GJBaseGameLayer::update(dt);
 
     updateSimulation();
 }
 
-void TrajectoryBGL::updateSimulation()
-{
-    if (m_fields->trajectoryPlayer)
-    {
+void TrajectoryBGL::updateSimulation() {
+    if (m_fields->trajectoryPlayer) {
         m_fields->trajectoryDraw->clear();
 
         bool v = false;
-        
-        if (auto clickSounds = Loader::get()->getLoadedMod("beat.click-sound"))
-        {
+
+        if (auto clickSounds = Loader::get()->getLoadedMod("beat.click-sound")) {
             v = clickSounds->getSettingValue<bool>("enable-clicksound");
             clickSounds->setSettingValue<bool>("enable-clicksound", false);
         }
@@ -171,8 +161,7 @@ void TrajectoryBGL::updateSimulation()
     }
 }
 
-void TrajectoryBGL::resetSimulation(PlayerObject* player)
-{
+void TrajectoryBGL::resetSimulation(PlayerObject* player) {
     auto fields = m_fields.self();
 
     fields->trajectoryPlayer->m_scaleX = player->m_scaleX;
@@ -427,8 +416,7 @@ void TrajectoryBGL::resetSimulation(PlayerObject* player)
     RM(m_unkUnused)
 }
 
-void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player)
-{
+void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player) {
     float delta = 0.75f;
     int iterations = 95;
 
@@ -449,18 +437,21 @@ void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player)
     if (m_fields->trajectoryPlayer->m_ghostTrail)
         m_fields->trajectoryPlayer->m_ghostTrail->setVisible(false);
 
-    for (size_t i = 0; i < iterations; i++)
-    {
+    for (size_t i = 0; i < iterations; i++) {
         m_fields->trajectoryPlayer->m_isDead = false;
 
         m_fields->trajectoryPlayer->update(delta);
         this->checkCollisions(m_fields->trajectoryPlayer, delta, false);
 
-        drawSegmentAlternative(m_fields->trajectoryDraw, m_fields->trajectoryPlayer->getPosition(), m_fields->point, 0.5f, m_fields->trajectoryPlayer->m_isDead ? ccc4f(1, 0, 0, 1) : ccc4f(0, press ? 1 : 0.45f, 0, 1));
+        drawSegmentAlternative(m_fields->trajectoryDraw,
+                               m_fields->trajectoryPlayer->getPosition(),
+                               m_fields->point,
+                               0.5f,
+                               m_fields->trajectoryPlayer->m_isDead ? ccc4f(1, 0, 0, 1)
+                                                                    : ccc4f(0, press ? 1 : 0.45f, 0, 1));
         m_fields->point = m_fields->trajectoryPlayer->getPosition();
 
-        if (m_fields->trajectoryPlayer->m_isDead)
-        {
+        if (m_fields->trajectoryPlayer->m_isDead) {
             CCPoint squareSize = m_fields->trajectoryPlayer->getObjectRect().size;
             CCPoint squarePosition = m_fields->trajectoryPlayer->getPosition();
 
@@ -477,12 +468,10 @@ void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player)
     }
 }
 
-$execute
-{
+$execute {
     Loader::get()->queueInMainThread([] {
-        Client::GetModule("show-trajectory")->onToggle = [](bool enabled){
-            if (auto bgl = as<TrajectoryBGL*>(GJBaseGameLayer::get()))
-            {
+        Client::GetModule("show-trajectory")->onToggle = [](bool enabled) {
+            if (auto bgl = as<TrajectoryBGL*>(GJBaseGameLayer::get())) {
                 if (!enabled)
                     bgl->m_fields->trajectoryDraw->clear();
             }

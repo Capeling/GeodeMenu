@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (CCMotionStreak)
-{
-    virtual void update(float delta)
-    {
+class $modify(CCMotionStreak) {
+    virtual void update(float delta) {
         if (getUserObject("ignore-longer-trail"_spr))
             delta *= 3;
 

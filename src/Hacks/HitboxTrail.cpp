@@ -1,7 +1,7 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
-#include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>
+#include <Geode/modify/PlayLayer.hpp>
 #include "../Client/Client.h"
 
 using namespace geode::prelude;
@@ -12,10 +12,8 @@ Module* hitboxTrail = nullptr;
 CCPoint lastPos = CCPointZero;
 CCPoint lastPos2 = CCPointZero;
 
-class $modify (GJBaseGameLayerExt, GJBaseGameLayer)
-{
-    virtual bool init()
-    {
+class $modify(GJBaseGameLayerExt, GJBaseGameLayer) {
+    virtual bool init() {
         if (!GJBaseGameLayer::init())
             return false;
 
@@ -26,7 +24,7 @@ class $modify (GJBaseGameLayerExt, GJBaseGameLayer)
         lastPos2 = CCPointZero;
 
         hitboxTrail = Client::GetModule("show-hitboxes")->options[6];
-        hitboxTrail->onToggle = [](bool enabled){
+        hitboxTrail->onToggle = [](bool enabled) {
             points.clear();
             sizes.clear();
         };
@@ -34,20 +32,16 @@ class $modify (GJBaseGameLayerExt, GJBaseGameLayer)
         return true;
     }
 
-    virtual void update(float dt)
-    {
+    virtual void update(float dt) {
         GJBaseGameLayer::update(dt);
 
         if (hitboxTrail->enabled && m_debugDrawNode->isVisible())
             drawTrail();
     }
 
-    void drawTrail()
-    {
-        if (m_player1)
-        {
-            if (lastPos != m_player1->getPosition())
-            {
+    void drawTrail() {
+        if (m_player1) {
+            if (lastPos != m_player1->getPosition()) {
                 lastPos = m_player1->getPosition();
 
                 points.push_back(lastPos);
@@ -55,10 +49,8 @@ class $modify (GJBaseGameLayerExt, GJBaseGameLayer)
             }
         }
 
-        if (m_player2)
-        {
-            if (lastPos2 != m_player2->getPosition())
-            {
+        if (m_player2) {
+            if (lastPos2 != m_player2->getPosition()) {
                 lastPos2 = m_player2->getPosition();
 
                 points.push_back(lastPos2);
@@ -66,11 +58,9 @@ class $modify (GJBaseGameLayerExt, GJBaseGameLayer)
             }
         }
 
-        if (m_debugDrawNode)
-        {
+        if (m_debugDrawNode) {
             int i = 0;
-            for (auto point : points)
-            {
+            for (auto point : points) {
                 auto squareSize = sizes[i];
                 CCPoint squarePosition = point;
 
@@ -87,18 +77,15 @@ class $modify (GJBaseGameLayerExt, GJBaseGameLayer)
             }
         }
 
-        if (points.size() > 200)
-        {
+        if (points.size() > 200) {
             points.erase(points.begin());
             sizes.erase(sizes.begin());
         }
     }
 };
 
-class $modify (PlayLayer)
-{
-    void resetLevel()
-    {
+class $modify(PlayLayer) {
+    void resetLevel() {
         PlayLayer::resetLevel();
 
         points.clear();
@@ -106,18 +93,15 @@ class $modify (PlayLayer)
     }
 };
 
-class $modify (LevelEditorLayer)
-{
-    virtual void updateVisibility(float p0)
-    {
+class $modify(LevelEditorLayer) {
+    virtual void updateVisibility(float p0) {
         LevelEditorLayer::updateVisibility(p0);
 
         if (hitboxTrail && hitboxTrail->enabled)
             reinterpret_cast<GJBaseGameLayerExt*>(this)->drawTrail();
     }
 
-    void onPlaytest()
-    {
+    void onPlaytest() {
         LevelEditorLayer::onPlaytest();
 
         points.clear();

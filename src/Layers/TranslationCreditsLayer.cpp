@@ -5,19 +5,33 @@
 
 // Particle Strings
 
-#define PARTICLE_HIT_BIG "30a-1a1a0a-1a90a0a46a76a11a0a0a-483a45a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0"
-#define PARTICLE_HIT_MEDIUM "30a-1a1a0a30a90a0a5a0a11a0a0a-208a289a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0"
-#define PARTICLE_HIT_SMALL "30a-1a1a0a30a90a70a58a0a11a0a0a-208a0a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0"
+#define PARTICLE_HIT_BIG                                                                                               \
+    "30a-1a1a0a-1a90a0a46a76a11a0a0a-"                                                                                 \
+    "483a45a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0" \
+    "a0a0a0a0a0"
+#define PARTICLE_HIT_MEDIUM                                                                                            \
+    "30a-1a1a0a30a90a0a5a0a11a0a0a-"                                                                                   \
+    "208a289a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a" \
+    "0a0a0a0a0a0"
+#define PARTICLE_HIT_SMALL                                                                                             \
+    "30a-1a1a0a30a90a70a58a0a11a0a0a-"                                                                                 \
+    "208a0a0a0a0a1a1a0a0a1a0a1a0a1a0a1a0a0a1a0a0a1a0a1a0a1a0a0a0a0a0a0a0a0a0a0a0a0a0a0a2a1a0a0a0a0a0a0a0a0a0a0a0a0a0a" \
+    "0a0a0a0a0"
 
-void TranslationCreditsLayer::customSetup()
-{
+void TranslationCreditsLayer::customSetup() {
     auto langNode = CCNode::create();
     langNode->setContentWidth(6969);
     langNode->setAnchorPoint(ccp(0.5f, 0.5f));
     langNode->setScale(0.5f);
-    
-    auto langNative = CCLabelTTF::create(language["display_name_native"].asString().unwrapOr("Missing field: display_name_native").c_str(), "Arial", 32.5f);
-    auto langEng = CCLabelBMFont::create(fmt::format("({})", language["display_name_english"].asString().unwrapOr("Missing field: display_name_english")).c_str(), "bigFont.fnt");
+
+    auto langNative = CCLabelTTF::create(
+        language["display_name_native"].asString().unwrapOr("Missing field: display_name_native").c_str(),
+        "Arial",
+        32.5f);
+    auto langEng = CCLabelBMFont::create(
+        fmt::format("({})", language["display_name_english"].asString().unwrapOr("Missing field: display_name_english"))
+            .c_str(),
+        "bigFont.fnt");
 
     langNode->addChild(langNative);
     langNode->addChild(langEng);
@@ -69,30 +83,38 @@ void TranslationCreditsLayer::customSetup()
     creditsMenu->ignoreAnchorPointForPosition(false);
     creditsMenu->setContentWidth(320);
     creditsMenu->setAnchorPoint(ccp(0.5f, 1));
-    creditsMenu->setLayout(AxisLayout::create()->setGrowCrossAxis(true)->setCrossAxisAlignment(AxisAlignment::Start)->setGap(15));
+    creditsMenu->setLayout(
+        AxisLayout::create()->setGrowCrossAxis(true)->setCrossAxisAlignment(AxisAlignment::Start)->setGap(15));
     creditsMenu->setZOrder(6);
 
-    if (path != "none" && language.contains("contributors"))
-    {
-        for (auto contributor : language["contributors"].asArray().unwrap())
-        {
+    if (path != "none" && language.contains("contributors")) {
+        for (auto contributor : language["contributors"].asArray().unwrap()) {
             auto plr = PlayerObject::create(contributor["icon-id"].asUInt().unwrapOr(1), 2, nullptr, this, false);
 
             plr->setColor(GameManager::get()->colorForIdx(contributor["primary-col"].asInt().unwrapOr(0)));
             plr->setSecondColor(GameManager::get()->colorForIdx(contributor["secondary-col"].asInt().unwrapOr(0)));
 
-            if (contributor["glow-enabled"].asBool().unwrapOr(false))
-            {
-                plr->enableCustomGlowColor(GameManager::get()->colorForIdx(contributor["glow-col"].asInt().unwrapOr(0)));
+            if (contributor["glow-enabled"].asBool().unwrapOr(false)) {
+                plr->enableCustomGlowColor(
+                    GameManager::get()->colorForIdx(contributor["glow-col"].asInt().unwrapOr(0)));
                 plr->updateGlowColor();
             }
 
             plr->togglePlatformerMode(true);
             plr->m_regularTrail->setVisible(false);
 
-            plr->runAction(CCSequence::create(CCDelayTime::create(0.37f), CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnBigParticle)), nullptr));
-            plr->runAction(CCSequence::create(CCDelayTime::create(0.73f), CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnMediumParticle)), nullptr));
-            plr->runAction(CCSequence::create(CCDelayTime::create(0.92f), CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnSmallParticle)), nullptr));
+            plr->runAction(CCSequence::create(
+                CCDelayTime::create(0.37f),
+                CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnBigParticle)),
+                nullptr));
+            plr->runAction(CCSequence::create(
+                CCDelayTime::create(0.73f),
+                CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnMediumParticle)),
+                nullptr));
+            plr->runAction(CCSequence::create(
+                CCDelayTime::create(0.92f),
+                CCCallFunc::create(plr, callfunc_selector(TranslationCreditsLayer::spawnSmallParticle)),
+                nullptr));
 
             auto plrBtn = CCMenuItemSpriteExtra::create(plr, this, menu_selector(TranslationCreditsLayer::onKill));
             plrBtn->setContentSize(ccp(30, 30));
@@ -106,12 +128,14 @@ void TranslationCreditsLayer::customSetup()
 
             gameNode->addChild(plrBtn);
 
-            auto lbl = CCLabelBMFont::create(contributor["username"].asString().unwrapOr("Error").c_str(), "goldFont.fnt");
+            auto lbl =
+                CCLabelBMFont::create(contributor["username"].asString().unwrapOr("Error").c_str(), "goldFont.fnt");
             lbl->limitLabelWidth(130, 1, 0);
             lbl->setAlignment(CCTextAlignment::kCCTextAlignmentCenter);
             float s = lbl->getScale();
-            
-            auto btn = CCMenuItemSpriteExtra::create(lbl, this, menu_selector(TranslationCreditsLayer::onPlayerProfile));
+
+            auto btn =
+                CCMenuItemSpriteExtra::create(lbl, this, menu_selector(TranslationCreditsLayer::onPlayerProfile));
             btn->setTag(contributor["account-id"].asUInt().unwrapOr(0));
 
             lbl->setScale(0);
@@ -126,9 +150,9 @@ void TranslationCreditsLayer::customSetup()
     clip->addChild(gameNode);
     baseLayer->addChildAtPosition(creditsMenu, Anchor::Top, ccp(0, -45));
 
-    if (path == "none")
-    {
-        auto thanks = CCLabelBMFont::create("Nobody to thank here.\nExcept you <3\nThanks for using QOLMod!", "bigFont.fnt");
+    if (path == "none") {
+        auto thanks =
+            CCLabelBMFont::create("Nobody to thank here.\nExcept you <3\nThanks for using QOLMod!", "bigFont.fnt");
         thanks->setAlignment(CCTextAlignment::kCCTextAlignmentCenter);
 
         auto sprs = CCArrayExt<CCSprite*>(thanks->getChildren());
@@ -153,8 +177,7 @@ void TranslationCreditsLayer::customSetup()
         menu->setScale(0.6f);
         menu->setContentSize(thanks->getContentSize());
 
-        for (auto letter : CCArrayExt<CCSprite*>(thanks->getChildren()))
-        {
+        for (auto letter : CCArrayExt<CCSprite*>(thanks->getChildren())) {
             auto spr = CCSprite::createWithTexture(letter->getTexture());
             spr->setTextureRect(letter->getTextureRect());
             spr->setColor(letter->getColor());
@@ -168,10 +191,10 @@ void TranslationCreditsLayer::customSetup()
         }
 
         clip->addChild(menu);
-    }
-    else
-    {
-        auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("heart.png"_spr), this, menu_selector(TranslationCreditsLayer::onMessage));
+    } else {
+        auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("heart.png"_spr),
+                                                 this,
+                                                 menu_selector(TranslationCreditsLayer::onMessage));
         btn->setPosition(ccp(142, 144));
 
         gameNode->addChild(btn);
@@ -182,7 +205,8 @@ void TranslationCreditsLayer::customSetup()
     if (path == "none")
         used = !TranslationManager::get()->isLanguageLoaded();
 
-    sprUse = ButtonSprite::create(used ? "Used" : "Use", "goldFont.fnt", used ? "GJ_button_05.png" : "GJ_button_01.png");
+    sprUse =
+        ButtonSprite::create(used ? "Used" : "Use", "goldFont.fnt", used ? "GJ_button_05.png" : "GJ_button_01.png");
     btnUse = CCMenuItemSpriteExtra::create(sprUse, this, menu_selector(TranslationCreditsLayer::onUse));
     btnUse->setEnabled(!used);
 
@@ -193,8 +217,7 @@ void TranslationCreditsLayer::customSetup()
     baseLayer->addChild(btnUse, 69);
 }
 
-void TranslationCreditsLayer::onUse(CCObject* sender)
-{
+void TranslationCreditsLayer::onUse(CCObject* sender) {
     if (path == "none")
         Client::get()->setLanguage("none");
     else
@@ -208,7 +231,8 @@ void TranslationCreditsLayer::onUse(CCObject* sender)
     if (path == "none")
         used = !TranslationManager::get()->isLanguageLoaded();
 
-    sprUse = ButtonSprite::create(used ? "Used" : "Use", "goldFont.fnt", used ? "GJ_button_05.png" : "GJ_button_01.png");
+    sprUse =
+        ButtonSprite::create(used ? "Used" : "Use", "goldFont.fnt", used ? "GJ_button_05.png" : "GJ_button_01.png");
     btnUse = CCMenuItemSpriteExtra::create(sprUse, this, menu_selector(TranslationCreditsLayer::onUse));
     btnUse->setEnabled(!used);
 
@@ -218,18 +242,19 @@ void TranslationCreditsLayer::onUse(CCObject* sender)
     baseLayer->addChild(btnUse, 69);
 }
 
-void TranslationCreditsLayer::onMessage(CCObject* sender)
-{
-    FLAlertLayer::create("Contributions", "These are all the <cl>amazing</c> people who have <cc>contributed</c> to <co>qolmod</c> by translatingthe mod to this <cp>language</c>.\nThank you <cr><3</c>", "OK")->show();
+void TranslationCreditsLayer::onMessage(CCObject* sender) {
+    FLAlertLayer::create("Contributions",
+                         "These are all the <cl>amazing</c> people who have <cc>contributed</c> to <co>qolmod</c> by "
+                         "translatingthe mod to this <cp>language</c>.\nThank you <cr><3</c>",
+                         "OK")
+        ->show();
 }
 
-void TranslationCreditsLayer::onPlayerProfile(CCObject* sender)
-{
+void TranslationCreditsLayer::onPlayerProfile(CCObject* sender) {
     ProfilePage::create(sender->getTag(), false)->show();
 }
 
-void TranslationCreditsLayer::onKill(CCObject* sender)
-{
+void TranslationCreditsLayer::onKill(CCObject* sender) {
     FMODAudioEngine::get()->playEffect("explode_11.ogg");
 
     as<CCMenuItemSpriteExtra*>(sender)->setEnabled(false);
@@ -240,30 +265,34 @@ void TranslationCreditsLayer::onKill(CCObject* sender)
 
     as<CCMenuItemSpriteExtra*>(sender)->addChild(death);
 
-    background->runAction(CCSequence::create(CCTintTo::create(0.05f, 200, 0, 0), CCTintTo::create(0.5f, background->getColor().r, background->getColor().g, background->getColor().b), nullptr));
+    background->runAction(CCSequence::create(
+        CCTintTo::create(0.05f, 200, 0, 0),
+        CCTintTo::create(0.5f, background->getColor().r, background->getColor().g, background->getColor().b),
+        nullptr));
 
-    for (auto grn : CCArrayExt<CCSprite*>(ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren()))
-    {
-        grn->runAction(CCSequence::create(CCTintTo::create(0.05f, 160, 0, 0), CCTintTo::create(0.5f, grn->getColor().r, grn->getColor().g, grn->getColor().b), nullptr));
+    for (auto grn : CCArrayExt<CCSprite*>(
+             ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren())) {
+        grn->runAction(
+            CCSequence::create(CCTintTo::create(0.05f, 160, 0, 0),
+                               CCTintTo::create(0.5f, grn->getColor().r, grn->getColor().g, grn->getColor().b),
+                               nullptr));
     }
 
-    if (sender->getTag() == 1)
-    {
+    if (sender->getTag() == 1) {
         killCount++;
 
-        if (killCount == 50)
-        {
-            #ifndef GEODE_IS_MACOS
+        if (killCount == 50) {
+#ifndef GEODE_IS_MACOS
 
-            AchievementNotifier::sharedState()->notifyAchievement("Waste of time", "Why would you waste your time doing that?", "diffIcon_04_btn_001.png", true);
+            AchievementNotifier::sharedState()->notifyAchievement(
+                "Waste of time", "Why would you waste your time doing that?", "diffIcon_04_btn_001.png", true);
 
-            #endif
+#endif
         }
     }
 }
 
-void TranslationCreditsLayer::spawnBigParticle()
-{
+void TranslationCreditsLayer::spawnBigParticle() {
     auto plr = reinterpret_cast<PlayerObject*>(this);
 
     auto part = GameToolbox::particleFromString(PARTICLE_HIT_BIG, nullptr, false);
@@ -275,8 +304,7 @@ void TranslationCreditsLayer::spawnBigParticle()
     plr->getParent()->getParent()->addChild(part, 7);
 }
 
-void TranslationCreditsLayer::spawnMediumParticle()
-{
+void TranslationCreditsLayer::spawnMediumParticle() {
     auto plr = reinterpret_cast<PlayerObject*>(this);
 
     auto part = GameToolbox::particleFromString(PARTICLE_HIT_MEDIUM, nullptr, false);
@@ -288,8 +316,7 @@ void TranslationCreditsLayer::spawnMediumParticle()
     plr->getParent()->getParent()->addChild(part, 6);
 }
 
-void TranslationCreditsLayer::spawnSmallParticle()
-{
+void TranslationCreditsLayer::spawnSmallParticle() {
     auto plr = reinterpret_cast<PlayerObject*>(this);
 
     auto part = GameToolbox::particleFromString(PARTICLE_HIT_SMALL, nullptr, false);
@@ -301,15 +328,13 @@ void TranslationCreditsLayer::spawnSmallParticle()
     plr->getParent()->getParent()->addChild(part, 5);
 }
 
-TranslationCreditsLayer* TranslationCreditsLayer::create(matjson::Value language, std::filesystem::path path)
-{
+TranslationCreditsLayer* TranslationCreditsLayer::create(matjson::Value language, std::filesystem::path path) {
     auto pRet = new TranslationCreditsLayer();
 
     pRet->language = language;
     pRet->path = path;
 
-    if (pRet && pRet->initWithSizeAndName(ccp(330, 280), ""))
-    {
+    if (pRet && pRet->initWithSizeAndName(ccp(330, 280), "")) {
         pRet->autorelease();
         return pRet;
     }
@@ -318,8 +343,7 @@ TranslationCreditsLayer* TranslationCreditsLayer::create(matjson::Value language
     return nullptr;
 }
 
-TranslationCreditsLayer* TranslationCreditsLayer::addToScene(matjson::Value language, std::filesystem::path path)
-{
+TranslationCreditsLayer* TranslationCreditsLayer::addToScene(matjson::Value language, std::filesystem::path path) {
     auto pRet = TranslationCreditsLayer::create(language, path);
 
     CCScene::get()->addChild(pRet, 99999);

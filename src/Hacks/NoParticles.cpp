@@ -8,10 +8,8 @@ Module* part = nullptr;
 
 #ifdef __APPLE__
 
-class $modify (CCParticleSystem)
-{
-    virtual void update(float dt)
-    {
+class $modify(CCParticleSystem) {
+    virtual void update(float dt) {
         this->setScale(0);
     }
 
@@ -20,24 +18,20 @@ class $modify (CCParticleSystem)
 
 #else
 
-void myParticleUpdate(CCParticleSystem* ins, float dt)
-{
+void myParticleUpdate(CCParticleSystem* ins, float dt) {
     ins->update(dt);
     ins->setScale(0);
 }
 
 $execute {
-    auto hook = Mod::get()->hook(
-        reinterpret_cast<void*>(
-            geode::addresser::getVirtual(&CCParticleSystem::update)
-        ),
-        &myParticleUpdate,
-        "cocos2d::CCParticleSystem::update",
-        tulip::hook::TulipConvention::Thiscall
-    ).unwrap();
+    auto hook = Mod::get()
+                    ->hook(reinterpret_cast<void*>(geode::addresser::getVirtual(&CCParticleSystem::update)),
+                           &myParticleUpdate,
+                           "cocos2d::CCParticleSystem::update",
+                           tulip::hook::TulipConvention::Thiscall)
+                    .unwrap();
 
-    Loader::get()->queueInMainThread([hook]
-    {
+    Loader::get()->queueInMainThread([hook] {
         auto modu = Client::GetModule("no-particles");
         modu->addHook(hook);
     });

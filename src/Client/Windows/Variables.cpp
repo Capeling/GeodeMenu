@@ -24,7 +24,7 @@ void Variables::onChangeMode(CCObject* sender) {
     */
 
     //if (!PlayLayer::get() || !PlayLayer::get()->m_player1)
-        //return;
+    //return;
 
     //auto plr = PlayLayer::get()->m_player1;
 

@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (InputScaleControl, GJScaleControl)
-{
-    struct Fields
-    {
+class $modify(InputScaleControl, GJScaleControl) {
+    struct Fields {
         TextInput* scaleXInput;
         TextInput* scaleYInput;
         TextInput* scaleXYInput;
@@ -17,65 +15,55 @@ class $modify (InputScaleControl, GJScaleControl)
         CCLabelBMFont* scaleXYLabel;
     };
 
-    void updateScaleXY(std::string str)
-    {
+    void updateScaleXY(std::string str) {
         auto v = numFromString<float>(str);
 
-        if (v.isOk())
-        {
+        if (v.isOk()) {
             auto value = v.unwrapOr(1);
             auto wrappedValue = unscaleFloat(value, m_lowerBound, m_upperBound);
 
             m_sliderXY->setValue(clamp<float>(wrappedValue, 0, 1));
             //this->sliderChanged(m_sliderXY->m_touchLogic);
 
-            if (EditorUI::get())
-            {
+            if (EditorUI::get()) {
                 EditorUI::get()->scaleXYChanged(value, value, m_scaleLocked);
             }
         }
     }
 
-    void updateScaleX(std::string str)
-    {
+    void updateScaleX(std::string str) {
         auto v = numFromString<float>(str);
 
-        if (v.isOk())
-        {
+        if (v.isOk()) {
             auto value = v.unwrapOr(1);
             auto wrappedValue = unscaleFloat(value, m_lowerBound, m_upperBound);
 
             m_sliderX->setValue(clamp<float>(wrappedValue, 0, 1));
             //this->sliderChanged(m_sliderX->m_touchLogic);
 
-            if (EditorUI::get())
-            {
+            if (EditorUI::get()) {
                 EditorUI::get()->scaleXChanged(value, m_scaleLocked);
             }
         }
     }
 
-    void updateScaleY(std::string str)
-    {
+    void updateScaleY(std::string str) {
         auto v = numFromString<float>(str);
 
-        if (v.isOk())
-        {
+        if (v.isOk()) {
             auto value = v.unwrapOr(1);
             auto wrappedValue = unscaleFloat(value, m_lowerBound, m_upperBound);
 
             m_sliderY->setValue(clamp<float>(wrappedValue, 0, 1));
             //this->sliderChanged(m_sliderY->m_touchLogic);
 
-            if (EditorUI::get())
-            {
+            if (EditorUI::get()) {
                 EditorUI::get()->scaleYChanged(value, m_scaleLocked);
             }
         }
     }
 
-    void addControl()
-    {
+    void addControl() {
         if (Loader::get()->getLoadedMod("hjfod.betteredit"))
             return;
 
@@ -87,25 +75,19 @@ class $modify (InputScaleControl, GJScaleControl)
         scaleXYInput->setScale(0.6f);
         scaleXYInput->setPosition(ccp(32, 28));
         scaleXYInput->setFilter("1234567890.");
-        scaleXYInput->setCallback([this](const std::string& str){
-            updateScaleXY(str);
-        });
+        scaleXYInput->setCallback([this](const std::string& str) { updateScaleXY(str); });
 
         auto scaleXInput = TextInput::create(70, "Scale");
         scaleXInput->setScale(0.6f);
         scaleXInput->setPosition(ccp(32, 28));
         scaleXInput->setFilter("1234567890.");
-        scaleXInput->setCallback([this](const std::string& str){
-            updateScaleX(str);
-        });
+        scaleXInput->setCallback([this](const std::string& str) { updateScaleX(str); });
 
         auto scaleYInput = TextInput::create(70, "Scale");
         scaleYInput->setScale(0.6f);
         scaleYInput->setPosition(ccp(32, 28));
         scaleYInput->setFilter("1234567890.");
-        scaleYInput->setCallback([this](const std::string& str){
-            updateScaleY(str);
-        });
+        scaleYInput->setCallback([this](const std::string& str) { updateScaleY(str); });
 
         auto scaleXLabel = CCLabelBMFont::create("ScaleX:", "bigFont.fnt");
         scaleXLabel->setScale(0.5f);
@@ -143,8 +125,7 @@ class $modify (InputScaleControl, GJScaleControl)
         m_fields->scaleXYInput->setString(fmt::format("{:.2f}", m_valueX > m_valueY ? m_valueY : m_valueX));
     }
 
-    void removeControl()
-    {
+    void removeControl() {
         if (Loader::get()->getLoadedMod("hjfod.betteredit"))
             return;
 
@@ -161,8 +142,7 @@ class $modify (InputScaleControl, GJScaleControl)
         m_fields->scaleXYLabel->removeFromParent();
     }
 
-    void loadValues(GameObject* p0, cocos2d::CCArray* p1, gd::unordered_map<int, GameObjectEditorState>& p2)
-    {
+    void loadValues(GameObject* p0, cocos2d::CCArray* p1, gd::unordered_map<int, GameObjectEditorState>& p2) {
         GJScaleControl::loadValues(p0, p1, p2);
 
         if (Loader::get()->getLoadedMod("hjfod.betteredit"))
@@ -205,8 +185,7 @@ class $modify (InputScaleControl, GJScaleControl)
     }
     */
 
-    virtual bool init()
-    {
+    virtual bool init() {
         if (!GJScaleControl::init())
             return false;
 
@@ -219,16 +198,12 @@ class $modify (InputScaleControl, GJScaleControl)
     QOLMOD_MOD_ALL_HOOKS("scale-input-control")
 };
 
-$execute
-{
+$execute {
     Loader::get()->queueInMainThread([] {
-        Client::GetModule("scale-input-control")->onToggle = [](bool enabled){
-            if (auto editor = LevelEditorLayer::get())
-            {
-                if (auto ui = editor->m_editorUI)
-                {
-                    if (auto control = as<InputScaleControl*>(ui->m_scaleControl))
-                    {
+        Client::GetModule("scale-input-control")->onToggle = [](bool enabled) {
+            if (auto editor = LevelEditorLayer::get()) {
+                if (auto ui = editor->m_editorUI) {
+                    if (auto control = as<InputScaleControl*>(ui->m_scaleControl)) {
                         if (enabled)
                             control->addControl();
                         else

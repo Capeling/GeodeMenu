@@ -2,8 +2,7 @@
 
 #include <Geode/Geode.hpp>
 
-enum class LabelAnchor
-{
+enum class LabelAnchor {
     TopLeft,
     TopCenter,
     TopRight,
@@ -15,8 +14,7 @@ enum class LabelAnchor
     Center,
 };
 
-enum class LabelEventType
-{
+enum class LabelEventType {
     PlayerTookDamage,
     ClickStarted,
     ClickEnded,
@@ -26,8 +24,7 @@ enum class LabelEventType
     P2ClickEnded,
 };
 
-struct LabelEvent
-{
+struct LabelEvent {
     bool enabled = false;
     cocos2d::ccColor4B colour = cocos2d::ccc4(0, 255, 0, 255);
     float fadeIn = 0;

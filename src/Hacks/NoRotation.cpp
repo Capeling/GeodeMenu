@@ -1,9 +1,9 @@
 #ifndef GEODE_IS_ANDROID32
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/CCNode.hpp>
-#include <Geode/modify/PlayerObject.hpp>
-#include "../Client/Client.h"
+#    include <Geode/Geode.hpp>
+#    include <Geode/modify/CCNode.hpp>
+#    include <Geode/modify/PlayerObject.hpp>
+#    include "../Client/Client.h"
 
 using namespace geode::prelude;
 

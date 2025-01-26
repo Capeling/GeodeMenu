@@ -6,42 +6,41 @@
 
 using namespace geode::prelude;
 
-class LabelModule : public Module
-{
-    private:
-        float scale = 1;
-        float opacity = 1;
-        std::string font = "bigFont.fnt";
-        LabelAnchor side = LabelAnchor::TopLeft;
-    
-    public:
-        CCPoint offset;
-        CCLabelBMFont* labelNode = nullptr;
-        std::string format;
-        int presetType = -1;
-        bool isCheatIndicator = false;
-        bool noclipOnly = false;
-        std::vector<LabelEvent> events;
-        bool visible = true;
+class LabelModule : public Module {
+private:
+    float scale = 1;
+    float opacity = 1;
+    std::string font = "bigFont.fnt";
+    LabelAnchor side = LabelAnchor::TopLeft;
 
-        LabelModule(std::string format, std::string font);
+public:
+    CCPoint offset;
+    CCLabelBMFont* labelNode = nullptr;
+    std::string format;
+    int presetType = -1;
+    bool isCheatIndicator = false;
+    bool noclipOnly = false;
+    std::vector<LabelEvent> events;
+    bool visible = true;
 
-        void setFont(std::string newFont);
-        std::string getFont();
+    LabelModule(std::string format, std::string font);
 
-        void setScale(float newScale);
-        float getScale();
+    void setFont(std::string newFont);
+    std::string getFont();
 
-        void setOpacity(float newOpacity);
-        float getOpacity();
+    void setScale(float newScale);
+    float getScale();
 
-        void setSide(LabelAnchor newSide);
-        LabelAnchor getSide();
+    void setOpacity(float newOpacity);
+    float getOpacity();
 
-        ccColor3B getColour();
+    void setSide(LabelAnchor newSide);
+    LabelAnchor getSide();
 
-        matjson::Value saveToObject();
-        static LabelModule* createFromObject(matjson::Value obj);
+    ccColor3B getColour();
 
-        void exportToFile();
+    matjson::Value saveToObject();
+    static LabelModule* createFromObject(matjson::Value obj);
+
+    void exportToFile();
 };

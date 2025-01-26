@@ -5,15 +5,14 @@
 
 using namespace geode::prelude;
 
-class SmartStartposUIModule : public Module
-{
-    public:
-        SmartStartposUIModule();
+class SmartStartposUIModule : public Module {
+public:
+    SmartStartposUIModule();
 
-        void save();
-        void load();
+    void save();
+    void load();
 
-        virtual CCSize sizeForOptionsPage();
+    virtual CCSize sizeForOptionsPage();
 
-        void makeAndroid(CCNode* menu, CCPoint pos);
+    void makeAndroid(CCNode* menu, CCPoint pos);
 };

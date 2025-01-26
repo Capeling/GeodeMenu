@@ -5,15 +5,13 @@
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/UILayer.hpp>
 #include "../../Layers/EditPositionLayer.hpp"
-#include "../../Client/Client.h"
 #include "../../UI/RepeatableMenuItemSpriteExtra.hpp"
+#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (SteppedBaseGameLayer, GJBaseGameLayer)
-{
-    struct Fields
-    {
+class $modify(SteppedBaseGameLayer, GJBaseGameLayer) {
+    struct Fields {
         std::vector<Ref<CheckpointObject>> states;
         bool paused = true;
         bool steppingUpdate = false;
@@ -32,10 +30,8 @@ class $modify (SteppedBaseGameLayer, GJBaseGameLayer)
     QOLMOD_MOD_ALL_HOOKS("frame-stepper")
 };
 
-class $modify (SteppedUILayer, UILayer)
-{
-    struct Fields
-    {
+class $modify(SteppedUILayer, UILayer) {
+    struct Fields {
         RepeatableMenuItemSpriteExtra* next;
         RepeatableMenuItemSpriteExtra* prev;
         RepeatableMenuItemSpriteExtra* pause;
@@ -53,8 +49,7 @@ class $modify (SteppedUILayer, UILayer)
 
 #ifndef GEODE_IS_IOS
 
-class $modify (SteppedKeyboardDispatcher, CCKeyboardDispatcher)
-{
+class $modify(SteppedKeyboardDispatcher, CCKeyboardDispatcher) {
     bool dispatchKeyboardMSG(enumKeyCodes key, bool isKeyDown, bool isKeyRepeat);
 
     QOLMOD_MOD_ALL_HOOKS("frame-stepper")

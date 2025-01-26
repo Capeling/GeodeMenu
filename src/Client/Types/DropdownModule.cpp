@@ -1,15 +1,13 @@
 #include "DropdownModule.hpp"
 
-void DropdownModule::makeAndroid(CCNode* menu, CCPoint pos)
-{
+void DropdownModule::makeAndroid(CCNode* menu, CCPoint pos) {
     auto dd = Dropdown::create(ccp(140, 30), content, menu_selector(DropdownModule::onDropdownSelectionChanged), index);
     dd->setUserData(this);
     dd->setPosition(pos + ccp(0, -15));
     menu->addChild(dd);
 }
 
-void DropdownModule::onDropdownSelectionChanged(CCObject* sender)
-{
+void DropdownModule::onDropdownSelectionChanged(CCObject* sender) {
     auto mod = as<DropdownModule*>(as<CCNode*>(sender)->getParent()->getUserData());
     auto drop = as<Dropdown*>(as<CCNode*>(sender)->getParent());
 
@@ -20,8 +18,7 @@ void DropdownModule::onDropdownSelectionChanged(CCObject* sender)
         mod->delegate->onModuleChanged(mod->enabled);
 }
 
-DropdownModule::DropdownModule(std::vector<std::string> stuff, std::string id, int def)
-{
+DropdownModule::DropdownModule(std::vector<std::string> stuff, std::string id, int def) {
     this->name = name;
     this->id = id;
     index = def;
@@ -30,12 +27,10 @@ DropdownModule::DropdownModule(std::vector<std::string> stuff, std::string id, i
     this->load();
 }
 
-void DropdownModule::save()
-{
+void DropdownModule::save() {
     Mod::get()->setSavedValue<int>(id + "_index", index);
 }
 
-void DropdownModule::load()
-{
+void DropdownModule::load() {
     index = Mod::get()->getSavedValue<int>(id + "_index", index);
 }

@@ -5,16 +5,15 @@
 
 using namespace geode::prelude;
 
-class BetterSlider : public CCLayer
-{
-    private:
-        CCScale9Sprite* bg;
-        CCSprite* fill;
-    
-    public:
-        bool init(CCObject* sender, SEL_MenuHandler selector);
+class BetterSlider : public CCLayer {
+private:
+    CCScale9Sprite* bg;
+    CCSprite* fill;
 
-        static BetterSlider* create(CCObject* sender, SEL_MenuHandler selector);
+public:
+    bool init(CCObject* sender, SEL_MenuHandler selector);
+
+    static BetterSlider* create(CCObject* sender, SEL_MenuHandler selector);
 };
 
 /*class $modify (MenuLayer)

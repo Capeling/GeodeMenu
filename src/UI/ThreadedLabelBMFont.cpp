@@ -1,7 +1,6 @@
 #include "ThreadedLabelBMFont.hpp"
 
-bool ThreadedLabelBMFont::init(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback)
-{
+bool ThreadedLabelBMFont::init(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback) {
     if (!CCNode::init())
         return false;
 
@@ -9,66 +8,48 @@ bool ThreadedLabelBMFont::init(std::string text, std::string font, std::function
     this->font = font;
     this->callback = callback;
 
-    if (CCTextureCache::get()->textureForKey(utils::string::replace(font, ".fnt", ".png").c_str()))
-    {
+    if (CCTextureCache::get()->textureForKey(utils::string::replace(font, ".fnt", ".png").c_str())) {
         addLabel();
-    }
-    else
-    {
+    } else {
         labels.push_back(this);
         this->retain();
 
-        if (labels.size() - 1 == 0)
-        {
-            Loader::get()->queueInMainThread([this]
-            {
-                queueStep();
-            });
+        if (labels.size() - 1 == 0) {
+            Loader::get()->queueInMainThread([this] { queueStep(); });
         }
     }
 
     return true;
 }
 
-void ThreadedLabelBMFont::queueStep()
-{
+void ThreadedLabelBMFont::queueStep() {
     if (labels.size() == 0)
         return;
 
-    if (auto lbl = as<Ref<ThreadedLabelBMFont>>(labels[0]))
-    {
+    if (auto lbl = as<Ref<ThreadedLabelBMFont>>(labels[0])) {
         auto conf = FNTConfigLoadFile(lbl->font.c_str());
 
         CCTextureCache::get()->addImage(conf->getAtlasName(), false);
 
         auto fnt = lbl->font;
 
-        for (auto lbl : labels)
-        {
-            if (lbl->font == fnt)
-            {
+        for (auto lbl : labels) {
+            if (lbl->font == fnt) {
                 lbl->addLabel();
                 lbl->release();
             }
         }
 
-        labels.erase(std::remove_if(labels.begin(), labels.end(), [fnt](ThreadedLabelBMFont* obj)
-        {
-            return obj->getFont() == fnt;
-        }));
+        labels.erase(std::remove_if(
+            labels.begin(), labels.end(), [fnt](ThreadedLabelBMFont* obj) { return obj->getFont() == fnt; }));
 
-        if (labels.size() != 0)
-        {
-            Loader::get()->queueInMainThread([this]
-            {
-                queueStep();
-            });
+        if (labels.size() != 0) {
+            Loader::get()->queueInMainThread([this] { queueStep(); });
         }
     }
 }
 
-void ThreadedLabelBMFont::addLabel()
-{
+void ThreadedLabelBMFont::addLabel() {
     label = CCLabelBMFont::create(text.c_str(), font.c_str());
     this->addChild(label);
 
@@ -79,22 +60,19 @@ void ThreadedLabelBMFont::addLabel()
     label->setAnchorPoint(ccp(0, 0));
 }
 
-CCLabelBMFont* ThreadedLabelBMFont::getLabel()
-{
+CCLabelBMFont* ThreadedLabelBMFont::getLabel() {
     return label;
 }
 
-std::string ThreadedLabelBMFont::getFont()
-{
+std::string ThreadedLabelBMFont::getFont() {
     return font;
 }
 
-ThreadedLabelBMFont* ThreadedLabelBMFont::create(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback)
-{
+ThreadedLabelBMFont*
+ThreadedLabelBMFont::create(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback) {
     auto pRet = new ThreadedLabelBMFont();
 
-    if (pRet && pRet->init(text, font, callback))
-    {
+    if (pRet && pRet->init(text, font, callback)) {
         pRet->autorelease();
         return pRet;
     }

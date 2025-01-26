@@ -1,11 +1,10 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#include "KeyInfoPopup.hpp"
+#    include "KeyInfoPopup.hpp"
 
-KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node)
-{
+KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node) {
     KeyInfoPopup* pRet = new KeyInfoPopup();
-    
+
     pRet->key = key;
     pRet->node = node;
 
@@ -18,10 +17,9 @@ KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node)
     }
 }
 
-void KeyInfoPopup::customSetup()
-{
-    #ifndef GEODE_IS_IOS
-    
+void KeyInfoPopup::customSetup() {
+#    ifndef GEODE_IS_IOS
+
     auto lbl = CCLabelBMFont::create(CCKeyboardDispatcher::get()->keyToString(as<enumKeyCodes>(key)), "bigFont.fnt");
 
     auto lblBG = CCScale9Sprite::create("geode.loader/black-square.png");
@@ -39,41 +37,40 @@ void KeyInfoPopup::customSetup()
 
     auto removeBtn = CCMenuItemSpriteExtra::create(removeSpr, this, menu_selector(KeyInfoPopup::onRemove));
 
-    baseLayer->addChildAtPosition(removeBtn, Anchor::Bottom, ccp(removeBtn->getContentWidth() / 2 - ok->getContentWidth() / 2, 23));
+    baseLayer->addChildAtPosition(
+        removeBtn, Anchor::Bottom, ccp(removeBtn->getContentWidth() / 2 - ok->getContentWidth() / 2, 23));
     baseLayer->addChildAtPosition(lblBG, Anchor::Center, ccp(0, 10));
 
     ok->setPositionX(ok->getPositionX() - removeBtn->getContentWidth() / 2);
 
-    #endif
+#    endif
 }
 
-void KeyInfoPopup::onRemove(CCObject* sender)
-{
-    geode::createQuickPopup(
-        "Delete bind",
-        "Are you sure you want to <cr>delete</c> this bind?",
-        "Cancel", "Delete",
-        [this, sender](FLAlertLayer*, bool btn2) {
-            if (btn2)
-            {
-                if (node->buttons.size() <= 1)
-                {
-                    this->onClose(nullptr);
+void KeyInfoPopup::onRemove(CCObject* sender) {
+    geode::createQuickPopup("Delete bind",
+                            "Are you sure you want to <cr>delete</c> this bind?",
+                            "Cancel",
+                            "Delete",
+                            [this, sender](FLAlertLayer*, bool btn2) {
+                                if (btn2) {
+                                    if (node->buttons.size() <= 1) {
+                                        this->onClose(nullptr);
 
-                    return FLAlertLayer::create("Error", "You <cr>must</c> have at least <cl>one</c> bind.", "OK")->show();
-                }
+                                        return FLAlertLayer::create(
+                                                   "Error", "You <cr>must</c> have at least <cl>one</c> bind.", "OK")
+                                            ->show();
+                                    }
 
-                node->buttons.erase(std::find(node->buttons.begin(), node->buttons.end(), key));
-                node->btns.find(key)->second->removeFromParent();
-                node->btns.erase(key);
-                
-                node->updateLayout();
-                node->changed();
+                                    node->buttons.erase(std::find(node->buttons.begin(), node->buttons.end(), key));
+                                    node->btns.find(key)->second->removeFromParent();
+                                    node->btns.erase(key);
 
-                this->onClose(nullptr);
-            }
-        }
-    );
+                                    node->updateLayout();
+                                    node->changed();
+
+                                    this->onClose(nullptr);
+                                }
+                            });
 }
 
 #endif

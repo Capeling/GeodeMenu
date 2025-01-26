@@ -1,0 +1,38 @@
+---
+BasedOnStyle: LLVM
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never
+AllowShortFunctionsOnASingleLine: Empty
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakTemplateDeclarations: No
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Attach
+ColumnLimit: 120
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+Cpp11BracedListStyle: true
+DerivePointerAlignment: false
+IncludeBlocks: Preserve
+IncludeIsMainRegex: '(Test)?$'
+IncludeCategories:
+  - Regex: '^<.*\.hpp>'
+    Priority: 1
+  - Regex: '^<.*\.h>'
+    Priority: 2
+  - Regex: '^".*\.hpp"'
+    Priority: 3
+  - Regex: '^".*\.h"'
+    Priority: 4
+IndentCaseLabels: true
+IndentPPDirectives: AfterHash
+PointerAlignment: Left
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: true
+SpaceBeforeParens: ControlStatements
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+Standard: c++20
+ReflowComments: false
+SortIncludes: true
+AccessModifierOffset: -4

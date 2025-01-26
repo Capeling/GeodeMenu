@@ -1,7 +1,6 @@
 #include "BetterSlider.hpp"
 
-bool BetterSlider::init(CCObject* sender, SEL_MenuHandler selector)
-{
+bool BetterSlider::init(CCObject* sender, SEL_MenuHandler selector) {
     if (!CCLayer::init())
         return false;
 
@@ -22,12 +21,10 @@ bool BetterSlider::init(CCObject* sender, SEL_MenuHandler selector)
     return true;
 }
 
-BetterSlider* BetterSlider::create(CCObject* sender, SEL_MenuHandler selector)
-{
+BetterSlider* BetterSlider::create(CCObject* sender, SEL_MenuHandler selector) {
     auto pRet = new BetterSlider();
-    
-    if (pRet && pRet->init(sender, selector))
-    {
+
+    if (pRet && pRet->init(sender, selector)) {
         pRet->autorelease();
         return pRet;
     }

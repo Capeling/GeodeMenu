@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (PlayerObject)
-{
-    virtual void update(float dt)
-    {
+class $modify(PlayerObject) {
+    virtual void update(float dt) {
         if (m_regularTrail)
             m_regularTrail->setBlendFunc(this->getBlendFunc());
 

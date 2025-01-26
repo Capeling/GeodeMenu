@@ -4,20 +4,17 @@
 
 InputModule* mod;
 
-void playSound()
-{
+void playSound() {
     FMODAudioEngine::get()->playEffect("start.wav"_spr);
 }
 
-int imguiTextInputChanged(ImGuiInputTextCallbackData* data)
-{
+int imguiTextInputChanged(ImGuiInputTextCallbackData* data) {
     int ret = 0;
 
     if (ImGui::IsKeyPressed(ImGuiKey_Backspace) && data->BufTextLen == 0)
         playSound();
-    
-    if (mod->text.size() > mod->maxSize)
-    {
+
+    if (mod->text.size() > mod->maxSize) {
         mod->text = mod->text.substr(0, mod->maxSize);
 
         playSound();
@@ -26,21 +23,18 @@ int imguiTextInputChanged(ImGuiInputTextCallbackData* data)
     return ret;
 }
 
-void InputModule::drawImGui()
-{
+void InputModule::drawImGui() {
     mod = this;
 
     auto t = text.c_str();
 
-    if (ImGui::InputText(name.c_str(), (char*)text.c_str(), 127, ImGuiInputTextFlags_CallbackAlways, imguiTextInputChanged))
-    {
-
+    if (ImGui::InputText(
+            name.c_str(), (char*) text.c_str(), 127, ImGuiInputTextFlags_CallbackAlways, imguiTextInputChanged)) {
     }
     //text = t;
 }
 
-void InputModule::makeAndroid(CCNode* menu, CCPoint pos)
-{
+void InputModule::makeAndroid(CCNode* menu, CCPoint pos) {
     auto label = TransLabelBMFont::create(name, "bigFont.fnt");
     label->setAnchorPoint(ccp(0, 0.5f));
     label->setScale(0.575f);
@@ -56,8 +50,7 @@ void InputModule::makeAndroid(CCNode* menu, CCPoint pos)
     input->getInputNode()->setID("IGNOREBYPASSES"_spr);
     input->setString(text);
 
-    if (id != "speedhack-top")
-    {
+    if (id != "speedhack-top") {
         input->setAnchorPoint(ccp(1, 0.5f));
         input->setPosition(pos + ccp(145, 0));
         input->setScale(0.85f);
@@ -69,21 +62,18 @@ void InputModule::makeAndroid(CCNode* menu, CCPoint pos)
     menu->addChild(label);
 }
 
-void InputModule::textChanged(CCTextInputNode* input)
-{
+void InputModule::textChanged(CCTextInputNode* input) {
     text = input->getString();
 
     this->save();
     onChange();
 }
 
-InputModule::InputModule()
-{
+InputModule::InputModule() {
     this->load();
 }
 
-InputModule::InputModule(std::string name, std::string id, std::string def)
-{
+InputModule::InputModule(std::string name, std::string id, std::string def) {
     this->name = name;
     this->id = id;
     this->text = def;
@@ -91,23 +81,20 @@ InputModule::InputModule(std::string name, std::string id, std::string def)
     this->load();
 }
 
-void InputModule::save()
-{
+void InputModule::save() {
     Mod::get()->setSavedValue<std::string>(id + "_value", text);
 }
 
-void InputModule::load()
-{
+void InputModule::load() {
     text = Mod::get()->getSavedValue<std::string>(id + "_value", text);
-    
-    Loader::get()->queueInMainThread([this]{
+
+    Loader::get()->queueInMainThread([this] {
         if (this->text.size() > maxSize)
             this->text = this->text.substr(0, maxSize);
     });
 }
 
-void InputModule::updateValue()
-{
+void InputModule::updateValue() {
     lastCheckedText = text;
     floatValue = 1;
     intValue = 0;
@@ -128,16 +115,14 @@ void InputModule::updateValue()
         floatValue = 99999;
 }
 
-float InputModule::getFloatValue()
-{
+float InputModule::getFloatValue() {
     if (lastCheckedText != text)
         updateValue();
 
     return floatValue;
 }
 
-int InputModule::getIntValue()
-{
+int InputModule::getIntValue() {
     if (lastCheckedText != text)
         updateValue();
 

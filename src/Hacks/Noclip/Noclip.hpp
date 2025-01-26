@@ -1,13 +1,12 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
 #include <Geode/modify/LevelEditorLayer.hpp>
+#include <Geode/modify/PlayLayer.hpp>
 #include "../../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (NoclipPlayLayer, PlayLayer)
-{
+class $modify(NoclipPlayLayer, PlayLayer) {
     struct Fields {
         GameObject* last;
 
@@ -26,11 +25,10 @@ class $modify (NoclipPlayLayer, PlayLayer)
     void resetLevel();
 };
 
-class $modify (NoclipBaseGameLayer, GJBaseGameLayer)
-{
+class $modify(NoclipBaseGameLayer, GJBaseGameLayer) {
     struct Fields {
         GameObject* ac;
-        
+
         float timeDead = 0;
         float timeInLevel = 0;
         bool hasDied = false;
@@ -49,8 +47,7 @@ class $modify (NoclipBaseGameLayer, GJBaseGameLayer)
     bool shouldIncreaseTime();
 };
 
-class $modify (NoclipEditorLayer, LevelEditorLayer)
-{
+class $modify(NoclipEditorLayer, LevelEditorLayer) {
     virtual void playerTookDamage(PlayerObject* p0);
     virtual void postUpdate(float p0);
 };

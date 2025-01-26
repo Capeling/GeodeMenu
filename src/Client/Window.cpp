@@ -1,8 +1,7 @@
-#include "Client.h"
 #include "Types/SetValueModule.hpp"
+#include "Client.h"
 
-Window::Window()
-{
+Window::Window() {
     static int i = 0;
 
     priority = i * 100;
@@ -10,26 +9,23 @@ Window::Window()
     i++;
 }
 
-void Window::drawImGui()
-{
+void Window::drawImGui() {
     ImGui::SetNextWindowPos(ImVec2(getPosition().x, getPosition().y));
     ImGui::SetNextWindowSize(getDesiredWindowSize());
 
     ImGui::Begin(this->name.c_str(), nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
 
-    if (ImGui::IsWindowHovered() && ImGui::IsMouseDown(ImGuiMouseButton_Left))
-    {
-        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-        {
+    if (ImGui::IsWindowHovered() && ImGui::IsMouseDown(ImGuiMouseButton_Left)) {
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Left)) {
             dragOffset = windowPos;
-        }        
+        }
 
         setPosition(ccp(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y));
-        actualWindowPos = ImVec2(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y);
+        actualWindowPos =
+            ImVec2(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y);
     }
 
-    for (auto module : modules)
-    {
+    for (auto module : modules) {
         ImGui::PushItemWidth(Client::get()->widgetSize.x);
         module->drawImGui();
     }
@@ -39,29 +35,26 @@ void Window::drawImGui()
     ImGui::End();
 }
 
-ImVec2 Window::getDesiredWindowSize()
-{
-    auto vec = ImVec2(Client::get()->widgetSize.x, Client::get()->widgetSize.y * ((std::min<int>(modules.size(), 69) * closedTimer) + 1));
+ImVec2 Window::getDesiredWindowSize() {
+    auto vec = ImVec2(Client::get()->widgetSize.x,
+                      Client::get()->widgetSize.y * ((std::min<int>(modules.size(), 69) * closedTimer) + 1));
 
     vec.y = clamp<float>(vec.y, 0, ImGui::GetIO().DisplaySize.y - (15 + 15));
     return vec;
 }
 
-const CCPoint& Window::getPosition()
-{
+const CCPoint& Window::getPosition() {
     return CCNode::getPosition();
     //return ccp(windowPos.x, windowPos.y);
 }
 
-void Window::setPosition(const CCPoint &position)
-{
+void Window::setPosition(const CCPoint& position) {
     CCNode::setPosition(position);
 
     windowPos = ImVec2(position.x, position.y);
 }
 
-CCPoint Window::offsetForTime(float time)
-{
+CCPoint Window::offsetForTime(float time) {
     CCPoint wndSize = CCDirector::get()->getWinSize();
 
     return ccp(0, wndSize.y * (1 - quadraticEaseInOut(time)));
@@ -84,27 +77,24 @@ float Window::clampf(float v, float min, float max) {
     return v;
 }
 
-int Window::getIndex(std::vector<float> v, float K) { 
-    auto it = std::find(v.begin(), v.end(), K); 
+int Window::getIndex(std::vector<float> v, float K) {
+    auto it = std::find(v.begin(), v.end(), K);
 
-    // If element was found 
-    if (it != v.end())  
-    { 
-    
-        // calculating the index 
-        // of K 
-        int index = it - v.begin(); 
+    // If element was found
+    if (it != v.end()) {
+
+        // calculating the index
+        // of K
+        int index = it - v.begin();
         return index;
-    } 
-    else { 
-        // If the element is not 
-        // present in the vector 
+    } else {
+        // If the element is not
+        // present in the vector
         return -1;
-    } 
+    }
 }
 
-void Window::cocosCreate(CCMenu* menu)
-{
+void Window::cocosCreate(CCMenu* menu) {
     auto back = CCScale9Sprite::create("square02b_small.png");
     back->setContentSize(menu->getContentSize() / 0.5f);
     back->setPosition(ccp(0, 0));
@@ -123,7 +113,7 @@ void Window::cocosCreate(CCMenu* menu)
     height += gap;
 
     height = std::max<float>(menu->getContentHeight(), height + extraGap);
-    
+
     scroll = geode::ScrollLayer::create(menu->getContentSize());
     scroll->m_peekLimitTop = 15;
     scroll->m_peekLimitBottom = 15;
@@ -137,8 +127,7 @@ void Window::cocosCreate(CCMenu* menu)
 
     int v = 0;
 
-    for (size_t m = 0; m < modules.size(); m++)
-    {
+    for (size_t m = 0; m < modules.size(); m++) {
         float x = 20;
 
         if (!(v % 2 == 0))
@@ -147,15 +136,12 @@ void Window::cocosCreate(CCMenu* menu)
         if (modules[m])
             modules[m]->makeAndroid(btnMenu, {x, height - (gap * y) - (gap / 2) - (extraGap / 2)});
 
-        if (dynamic_cast<SetValueModule*>(modules[m]))
-        {
+        if (dynamic_cast<SetValueModule*>(modules[m])) {
             y++;
 
             if (x == 20)
                 v++;
-        }
-        else
-        {
+        } else {
             if ((v - 1) % 2 == 0 && v != 0)
                 y++;
         }
@@ -172,12 +158,9 @@ void Window::cocosCreate(CCMenu* menu)
 
 #ifndef GEODE_IS_IOS
 
-bool WindowMouseDispatcher::dispatchScrollMSG(float y, float x)
-{
-    for (auto window : Client::instance->windows)
-    {
-        if (window->scroll && nodeIsVisible(window->scroll))
-        {
+bool WindowMouseDispatcher::dispatchScrollMSG(float y, float x) {
+    for (auto window : Client::instance->windows) {
+        if (window->scroll && nodeIsVisible(window->scroll)) {
             window->scroll->scrollLayer(y);
         }
     }

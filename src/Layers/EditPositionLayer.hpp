@@ -8,70 +8,63 @@
 
 using namespace geode::prelude;
 
-enum EditPositionType
-{
-    StartposSwitcher,
-    FrameStepper
-};
+enum EditPositionType { StartposSwitcher, FrameStepper };
 
-class EditPositionLayer : public SillyBaseLayer
-{
-    public:
-        CCLayerColor* bg;
-        EditPositionType type;
-        CCMenu* node;
-        CCSprite* left;
-        CCSprite* right;
-        CCSprite* previewBG;
-        CCLabelBMFont* label;
-        CCMenu* nodeOuter;
-        Slider* scaleSlider;
-        Slider* opacitySlider;
-        CCPoint position;
-        float scale;
-        float opacity;
-        CCPoint offset;
-        bool isDragging;
+class EditPositionLayer : public SillyBaseLayer {
+public:
+    CCLayerColor* bg;
+    EditPositionType type;
+    CCMenu* node;
+    CCSprite* left;
+    CCSprite* right;
+    CCSprite* previewBG;
+    CCLabelBMFont* label;
+    CCMenu* nodeOuter;
+    Slider* scaleSlider;
+    Slider* opacitySlider;
+    CCPoint position;
+    float scale;
+    float opacity;
+    CCPoint offset;
+    bool isDragging;
 
-        virtual void customSetup();
-        virtual void update(float dt);
+    virtual void customSetup();
+    virtual void update(float dt);
 
-        virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
-        virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
-        virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
-        virtual void ccTouchCancelled(CCTouch* touch, CCEvent* event);
+    virtual bool ccTouchBegan(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchMoved(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchEnded(CCTouch* touch, CCEvent* event);
+    virtual void ccTouchCancelled(CCTouch* touch, CCEvent* event);
 
-        void onClose(CCObject*);
-        void onReset(CCObject*);
-        void onTogglePreview(CCObject*);
-        void sliderValueChanged(CCObject* sender);
+    void onClose(CCObject*);
+    void onReset(CCObject*);
+    void onTogglePreview(CCObject*);
+    void sliderValueChanged(CCObject* sender);
 
-        CCMenu* getNodeForType();
+    CCMenu* getNodeForType();
 
-        float scaleValue(float originalValue);
-        float unscaleValue(float scaledValue);
+    float scaleValue(float originalValue);
+    float unscaleValue(float scaledValue);
 
-        static EditPositionLayer* create(EditPositionType type)
-        {
-            EditPositionLayer* pRet = new EditPositionLayer();
-            
-            pRet->type = type;
+    static EditPositionLayer* create(EditPositionType type) {
+        EditPositionLayer* pRet = new EditPositionLayer();
 
-            if (pRet && pRet->initWithSizeAndName(ccp(0, 0), "", false, false, true)) {
-                pRet->autorelease();
-                return pRet;
-            } else {
-                delete pRet;
-                return nullptr;
-            }
-        }
+        pRet->type = type;
 
-        static EditPositionLayer* addToScene(EditPositionType type)
-        {
-            auto pRet = EditPositionLayer::create(type);
-
-            CCScene::get()->addChild(pRet, 99999);
-
+        if (pRet && pRet->initWithSizeAndName(ccp(0, 0), "", false, false, true)) {
+            pRet->autorelease();
             return pRet;
+        } else {
+            delete pRet;
+            return nullptr;
         }
+    }
+
+    static EditPositionLayer* addToScene(EditPositionType type) {
+        auto pRet = EditPositionLayer::create(type);
+
+        CCScene::get()->addChild(pRet, 99999);
+
+        return pRet;
+    }
 };

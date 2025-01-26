@@ -2,13 +2,11 @@
 
 CountdownLayer* countdownInstance;
 
-CountdownLayer* CountdownLayer::get()
-{
+CountdownLayer* CountdownLayer::get() {
     return countdownInstance;
 }
 
-bool CountdownLayer::init()
-{
+bool CountdownLayer::init() {
     if (!CCLayer::init())
         return false;
 
@@ -26,8 +24,7 @@ bool CountdownLayer::init()
 
     applyAnimation();
 
-    if (auto gjbgl = GJBaseGameLayer::get())
-    {
+    if (auto gjbgl = GJBaseGameLayer::get()) {
         this->addChild(gjbgl->m_uiLayer->m_pauseBtn->getParent());
     }
 
@@ -35,27 +32,23 @@ bool CountdownLayer::init()
     return true;
 }
 
-void CountdownLayer::onDecrement(float)
-{
+void CountdownLayer::onDecrement(float) {
     count--;
     label->setString(fmt::format("{}", count).c_str());
     applyAnimation();
 
-    if (count == 0)
-    {
+    if (count == 0) {
         onCountReachedZero();
     }
 }
 
-void CountdownLayer::onCountReachedZero()
-{
+void CountdownLayer::onCountReachedZero() {
     PlayLayer::get()->resume();
 
     this->removeFromParent();
 }
 
-void CountdownLayer::applyAnimation()
-{
+void CountdownLayer::applyAnimation() {
     label->setScale(2.2f);
     label->runAction(CCEaseElasticOut::create(CCScaleTo::create(0.5f, 1.5f)));
 
@@ -63,20 +56,17 @@ void CountdownLayer::applyAnimation()
     label->runAction(CCEaseInOut::create(CCFadeTo::create(0.5f, 255), 2));
 }
 
-void CountdownLayer::keyBackClicked()
-{
+void CountdownLayer::keyBackClicked() {
     PlayLayer::get()->resume();
     PlayLayer::get()->pauseGame(false);
 
     this->removeFromParent();
 }
 
-void CountdownLayer::visit()
-{
+void CountdownLayer::visit() {
     label->visit();
 }
 
-CountdownLayer::~CountdownLayer()
-{
+CountdownLayer::~CountdownLayer() {
     countdownInstance = nullptr;
 }

@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (LevelEditorLayer)
-{
-    virtual void postUpdate(float dt)
-    {
+class $modify(LevelEditorLayer) {
+    virtual void postUpdate(float dt) {
         m_trailTimer = 69420.42069f;
 
         LevelEditorLayer::postUpdate(dt);

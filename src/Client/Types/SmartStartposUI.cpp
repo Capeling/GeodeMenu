@@ -1,12 +1,8 @@
 #include "SmartStartposUI.hpp"
 
-SmartStartposUIModule::SmartStartposUIModule()
-{
+SmartStartposUIModule::SmartStartposUIModule() {}
 
-}
-
-void SmartStartposUIModule::makeAndroid(CCNode* menuu, CCPoint pos)
-{
+void SmartStartposUIModule::makeAndroid(CCNode* menuu, CCPoint pos) {
     auto menu = CCMenu::create();
     menu->setPosition(sizeForOptionsPage() / 2);
     menu->setScale(0.6f);
@@ -47,11 +43,10 @@ void SmartStartposUIModule::makeAndroid(CCNode* menuu, CCPoint pos)
     menuu->addChild(menu);
 }
 
-CCSize SmartStartposUIModule::sizeForOptionsPage()
-{
+CCSize SmartStartposUIModule::sizeForOptionsPage() {
     return ccp(350, 170);
 }
 
-void SmartStartposUIModule::save() { }
+void SmartStartposUIModule::save() {}
 
-void SmartStartposUIModule::load() { }
+void SmartStartposUIModule::load() {}

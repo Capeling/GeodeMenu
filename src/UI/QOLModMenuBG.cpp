@@ -1,25 +1,20 @@
 #include "QOLModMenuBG.hpp"
 
-bool QOLModMenuBG::init()
-{
+bool QOLModMenuBG::init() {
     if (!CCNode::init())
         return false;
 
     colouredBG = CCScale9Sprite::create("GJ_square01.png");
     outlineSpr = CCScale9Sprite::create("GJ_square07.png");
 
-    if (auto gradPages = Loader::get()->getLoadedMod("thesillydoggo.gradientpages"))
-    {
+    if (auto gradPages = Loader::get()->getLoadedMod("thesillydoggo.gradientpages")) {
         gradientBG = CCLayerGradient::create(ccc4(0, 0, 0, 255), ccc4(0, 0, 0, 255));
         gradientBG->ignoreAnchorPointForPosition(false);
 
-        if (gradPages->getSettingValue<bool>("use-custom-colours"))
-        {
+        if (gradPages->getSettingValue<bool>("use-custom-colours")) {
             gradientBG->setStartColor(gradPages->getSettingValue<ccColor3B>("primary-colour"));
             gradientBG->setEndColor(gradPages->getSettingValue<ccColor3B>("secondary-colour"));
-        }
-        else
-        {
+        } else {
             auto gm = GameManager::get();
 
             gradientBG->setStartColor(gm->colorForIdx(gm->m_playerColor.value()));
@@ -44,8 +39,7 @@ bool QOLModMenuBG::init()
     return true;
 }
 
-void QOLModMenuBG::updateTheme(int theme)
-{
+void QOLModMenuBG::updateTheme(int theme) {
     this->theme = theme;
 
     auto bgStr = fmt::format("GJ_square0{}.png", theme < 0 ? 6 : theme);
@@ -67,31 +61,27 @@ void QOLModMenuBG::updateTheme(int theme)
     colouredBG->setVisible(theme != -1);
     outlineSpr->setVisible(theme == -2);
 
-    if (gradientBG)
-    {
+    if (gradientBG) {
         gradientBG->setVisible(theme == -1);
         gradientOutline->setVisible(theme == -1);
         gradientDarken->setVisible(theme == -1 && gradientDarkenVisible);
     }
 }
 
-void QOLModMenuBG::setGradientDarkenVisible(bool visible)
-{
+void QOLModMenuBG::setGradientDarkenVisible(bool visible) {
     gradientDarkenVisible = visible;
 
     if (gradientDarken)
         gradientDarken->setVisible(theme == -1 && gradientDarkenVisible);
 }
 
-void QOLModMenuBG::setContentSize(const CCSize& contentSize)
-{
+void QOLModMenuBG::setContentSize(const CCSize& contentSize) {
     CCNode::setContentSize(contentSize);
 
     colouredBG->setContentSize(contentSize);
     outlineSpr->setContentSize(contentSize);
 
-    if (gradientBG)
-    {
+    if (gradientBG) {
         gradientBG->setContentSize(contentSize);
         gradientOutline->setContentSize(contentSize);
         gradientDarken->setContentSize(contentSize - ccp(15, 15));

@@ -4,15 +4,13 @@
 
 using namespace geode::prelude;
 
-enum class PatchType
-{
+enum class PatchType {
     PhysicsBypass,
     EditorExtension1,
     EditorExtension2,
 };
 
-enum class FunctionType
-{
+enum class FunctionType {
     FMOD__ChannelControl__removeDSP,
     FMOD__System__createDSPByType,
     FMOD__ChannelControl__addDSP,
@@ -21,12 +19,11 @@ enum class FunctionType
     FMOD__System__createChannelGroup,
 };
 
-class OffsetManager
-{
-    public:
-        static OffsetManager* get();
+class OffsetManager {
+public:
+    static OffsetManager* get();
 
-        unsigned int offsetForType(PatchType type);
-        unsigned int offsetForRandomSeed();
-        unsigned int offsetForFunction(FunctionType type);
+    unsigned int offsetForType(PatchType type);
+    unsigned int offsetForRandomSeed();
+    unsigned int offsetForFunction(FunctionType type);
 };

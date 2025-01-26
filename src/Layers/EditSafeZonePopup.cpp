@@ -4,8 +4,7 @@
 #define CORNER_SIZE 1.5f
 #define SLIDER_RANGE 50.0f
 
-void EditSafeZonePopup::customSetup()
-{
+void EditSafeZonePopup::customSetup() {
     this->stopAllActions();
     this->runAction(CCFadeTo::create(0.25f, 100));
     this->scheduleUpdate();
@@ -15,7 +14,7 @@ void EditSafeZonePopup::customSetup()
     CCLabelBMFont* label;
 
     bottomLeft = CCNode::create();
-    
+
     node = CCLayerColor::create(ccc4(150, 150, 150, 255), CORNER_SIZE, CORNER_SIZE * 8);
     node->ignoreAnchorPointForPosition(false);
     node->setAnchorPoint(ccp(0, 0));
@@ -30,7 +29,7 @@ void EditSafeZonePopup::customSetup()
 
     bottomRight = CCNode::create();
     bottomRight->setRotation(-90);
-    
+
     node = CCLayerColor::create(ccc4(150, 150, 150, 255), CORNER_SIZE, CORNER_SIZE * 8);
     node->ignoreAnchorPointForPosition(false);
     node->setAnchorPoint(ccp(0, 0));
@@ -45,7 +44,7 @@ void EditSafeZonePopup::customSetup()
 
     topRight = CCNode::create();
     topRight->setRotation(-180);
-    
+
     node = CCLayerColor::create(ccc4(150, 150, 150, 255), CORNER_SIZE, CORNER_SIZE * 8);
     node->ignoreAnchorPointForPosition(false);
     node->setAnchorPoint(ccp(0, 0));
@@ -60,7 +59,7 @@ void EditSafeZonePopup::customSetup()
 
     topLeft = CCNode::create();
     topLeft->setRotation(-270);
-    
+
     node = CCLayerColor::create(ccc4(150, 150, 150, 255), CORNER_SIZE, CORNER_SIZE * 8);
     node->ignoreAnchorPointForPosition(false);
     node->setAnchorPoint(ccp(0, 0));
@@ -131,8 +130,7 @@ void EditSafeZonePopup::customSetup()
     this->addChild(rightSlider);
 }
 
-void EditSafeZonePopup::onSliderChanged(CCObject* sender)
-{
+void EditSafeZonePopup::onSliderChanged(CCObject* sender) {
     Labels::get()->safeZone.origin.x = leftSlider->getThumb()->getValue() * SLIDER_RANGE;
     Labels::get()->safeZone.origin.y = bottomSlider->getThumb()->getValue() * SLIDER_RANGE;
     Labels::get()->safeZone.size.width = rightSlider->getThumb()->getValue() * SLIDER_RANGE;
@@ -141,20 +139,19 @@ void EditSafeZonePopup::onSliderChanged(CCObject* sender)
     Labels::get()->save();
 }
 
-void EditSafeZonePopup::update(float dt)
-{
+void EditSafeZonePopup::update(float dt) {
     bottomLeft->setPosition(Labels::get()->safeZone.origin);
-    bottomRight->setPosition(ccp(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width, Labels::get()->safeZone.origin.y));
-    topLeft->setPosition(ccp(Labels::get()->safeZone.origin.x, CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height));
+    bottomRight->setPosition(ccp(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width,
+                                 Labels::get()->safeZone.origin.y));
+    topLeft->setPosition(ccp(Labels::get()->safeZone.origin.x,
+                             CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height));
     topRight->setPosition(CCDirector::get()->getWinSize() - Labels::get()->safeZone.size);
 }
 
-EditSafeZonePopup* EditSafeZonePopup::create()
-{
+EditSafeZonePopup* EditSafeZonePopup::create() {
     auto pRet = new EditSafeZonePopup();
 
-    if (pRet && pRet->initWithSizeAndName(ccp(0, CCDirector::get()->getWinSize().height - 35), "", true, false, true))
-    {
+    if (pRet && pRet->initWithSizeAndName(ccp(0, CCDirector::get()->getWinSize().height - 35), "", true, false, true)) {
         pRet->autorelease();
         return pRet;
     }
@@ -163,8 +160,7 @@ EditSafeZonePopup* EditSafeZonePopup::create()
     return nullptr;
 }
 
-EditSafeZonePopup* EditSafeZonePopup::addToScene()
-{
+EditSafeZonePopup* EditSafeZonePopup::addToScene() {
     auto pRet = EditSafeZonePopup::create();
 
     CCScene::get()->addChild(pRet, 99999);

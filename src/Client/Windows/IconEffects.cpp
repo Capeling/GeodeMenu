@@ -8,8 +8,7 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
 
     v *= speeds[mode];
 
-    switch (mode)
-    {
+    switch (mode) {
         case 0:
             sel = primary;
             break;
@@ -32,10 +31,8 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
 
     auto gameManager = GameManager::get();
 
-    if (sel == 0)
-    {
-        switch (mode)
-        {
+    if (sel == 0) {
+        switch (mode) {
             case 0:
                 return gameManager->colorForIdx(gameManager->m_playerColor.value());
             case 1:
@@ -43,9 +40,13 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
             case 2:
                 return gameManager->colorForIdx(gameManager->m_playerGlowColor.value());
             case 3:
-                return gameManager->colorForIdx(sameDual ? gameManager->m_playerColor2.value() : (player2 ? gameManager->m_playerColor.value() : gameManager->m_playerColor2.value()));
+                return gameManager->colorForIdx(
+                    sameDual ? gameManager->m_playerColor2.value()
+                             : (player2 ? gameManager->m_playerColor.value() : gameManager->m_playerColor2.value()));
             default:
-                return gameManager->colorForIdx(sameDual ? gameManager->m_playerColor.value() : (player2 ? gameManager->m_playerColor2.value() : gameManager->m_playerColor.value()));
+                return gameManager->colorForIdx(
+                    sameDual ? gameManager->m_playerColor.value()
+                             : (player2 ? gameManager->m_playerColor2.value() : gameManager->m_playerColor.value()));
         }
     }
 
@@ -55,8 +56,7 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
     if (sel == 2)
         return ColourUtility::getPastelColour(abs(v));
 
-    if (sel == 3)
-    {
+    if (sel == 3) {
         auto fadeIn = fmt::format("fadeColour1{}", mode);
         auto fadeOut = fmt::format("fadeColour2{}", mode);
 
@@ -67,50 +67,40 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
         //fade
     }
 
-    if (sel == 4)
-    {
+    if (sel == 4) {
         //custom colour
     }
 
     return {0, 0, 0};
 }
 
-constexpr std::array mods =
-{
-    "rooot.custom-gamemode-colors",
-    "gdemerald.custom_icon_colors",
-    "capeling.coloured-wave-trail",
-    "weebify.separate_dual_icons",
-    "naxrin.progress_bar_color",
-    "naxrin.rgb_icons",
-    "asaki_zuki.same_dual_color",
-    "saumondeluxe.rainbow_icon",
-    "terma.ambienticons",
-    "acaruso.pride",
-    "the_bearodactyl.gay-wave-trail"
-};
+constexpr std::array mods = {"rooot.custom-gamemode-colors",
+                             "gdemerald.custom_icon_colors",
+                             "capeling.coloured-wave-trail",
+                             "weebify.separate_dual_icons",
+                             "naxrin.progress_bar_color",
+                             "naxrin.rgb_icons",
+                             "asaki_zuki.same_dual_color",
+                             "saumondeluxe.rainbow_icon",
+                             "terma.ambienticons",
+                             "acaruso.pride",
+                             "the_bearodactyl.gay-wave-trail"};
 
-bool EffectUI::getIncompatibleModLoaded()
-{
-    for (auto mod : mods)
-    {
-        if (Loader::get()->isModLoaded(mod))
-        {
+bool EffectUI::getIncompatibleModLoaded() {
+    for (auto mod : mods) {
+        if (Loader::get()->isModLoaded(mod)) {
             return true;
         }
     }
-    
+
     return false;
 }
 
-std::string EffectUI::getIncompatibleMods()
-{
+std::string EffectUI::getIncompatibleMods() {
     std::stringstream ss;
 
-    for (auto mod : mods)
-    {
-        if (auto mod2 = Loader::get()->getLoadedMod(mod))
-        {
+    for (auto mod : mods) {
+        if (auto mod2 = Loader::get()->getLoadedMod(mod)) {
             ss << "<cp>";
             ss << mod2->getName();
             ss << "</c>\n";
@@ -120,8 +110,7 @@ std::string EffectUI::getIncompatibleMods()
     return ss.str();
 }
 
-void EffectUI::updateValues()
-{
+void EffectUI::updateValues() {
     primary = Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 0), 0);
     secondary = Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 1), 0);
     glow = Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 2), 0);
@@ -131,21 +120,17 @@ void EffectUI::updateValues()
     sameDual = Mod::get()->getSavedValue<bool>("same-dual");
 
     // cache values for performance
-    for (int i = 0; i < 5; i++)
-    {
+    for (int i = 0; i < 5; i++) {
         speeds[i] = Mod::get()->getSavedValue<float>(fmt::format("icon-effect-speed_{}", i), 1);
     }
 }
 
-class $modify (GJBaseGameLayer)
-{
-    virtual void update(float p0)
-    {
+class $modify(GJBaseGameLayer) {
+    virtual void update(float p0) {
         auto plr1 = EffectUI::getColourForSelected(0);
         auto plr2 = EffectUI::getColourForSelected(1);
 
-        if (m_player1)
-        {
+        if (m_player1) {
             m_player1->setColor(plr1);
             m_player1->setSecondColor(plr2);
             m_player1->m_glowColor = EffectUI::getColourForSelected(2);
@@ -154,17 +139,13 @@ class $modify (GJBaseGameLayer)
             m_player1->m_waveTrail->setColor(EffectUI::getColourForSelected(4));
         }
 
-        if (m_player2)
-        {
-            if (!EffectUI::sameDual)
-            {
+        if (m_player2) {
+            if (!EffectUI::sameDual) {
                 m_player2->setColor(EffectUI::getColourForSelected(1, true));
                 m_player2->setSecondColor(EffectUI::getColourForSelected(0, true));
                 m_player2->m_glowColor = EffectUI::getColourForSelected(2, true);
                 m_player2->updateGlowColor();
-            }
-            else
-            {
+            } else {
                 m_player2->setColor(EffectUI::getColourForSelected(0, true));
                 m_player2->setSecondColor(EffectUI::getColourForSelected(1, true));
                 m_player2->m_glowColor = EffectUI::getColourForSelected(2, true);
@@ -175,11 +156,10 @@ class $modify (GJBaseGameLayer)
             m_player2->m_waveTrail->setColor(EffectUI::getColourForSelected(4, true));
         }
 
-        if (m_effectManager)
-        {
+        if (m_effectManager) {
             if (auto action = m_effectManager->getColorAction(1005))
                 action->m_color = plr1;
-            
+
             if (auto action = m_effectManager->getColorAction(1006))
                 action->m_color = plr2;
         }
@@ -189,18 +169,15 @@ class $modify (GJBaseGameLayer)
 
     static void onModify(auto& self) {
         EffectUI::_hook = self.getHook("GJBaseGameLayer::update").unwrap();
-        (void)self.setHookPriority("GJBaseGameLayer::update", 69420);
+        (void) self.setHookPriority("GJBaseGameLayer::update", 69420);
     }
 };
 
-class $modify (MenuLayer)
-{
-    bool init()
-    {
-        if (EffectUI::getIncompatibleModLoaded())
-        {
+class $modify(MenuLayer) {
+    bool init() {
+        if (EffectUI::getIncompatibleModLoaded()) {
             EffectUI::_hook->setAutoEnable(false);
-            (void)EffectUI::_hook->disable();
+            (void) EffectUI::_hook->disable();
 
             log::error("Incompatible mod loaded, disabling icon effects");
         }
@@ -209,7 +186,6 @@ class $modify (MenuLayer)
     }
 };
 
-$execute
-{
+$execute {
     EffectUI::updateValues();
 };

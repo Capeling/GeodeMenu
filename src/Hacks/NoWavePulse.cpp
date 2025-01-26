@@ -1,6 +1,6 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/HardStreak.hpp>
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
+#include <Geode/modify/HardStreak.hpp>
 #include "../Client/Client.h"
 
 using namespace geode::prelude;
@@ -8,12 +8,9 @@ using namespace geode::prelude;
 Module* noWaveMod = nullptr;
 SliderModule* noWaveEffect = nullptr;
 
-class $modify (HardStreak)
-{
-    void updateStroke(float p0)
-    {
-        if (!noWaveMod)
-        {
+class $modify(HardStreak) {
+    void updateStroke(float p0) {
+        if (!noWaveMod) {
             noWaveMod = Client::GetModule("no-wave-pulse");
             noWaveEffect = as<SliderModule*>(noWaveMod->options[0]);
         }

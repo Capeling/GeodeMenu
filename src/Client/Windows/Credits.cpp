@@ -5,18 +5,16 @@ using namespace geode::prelude;
 void Credits::onCredit(CCObject* sender) {
     auto tag = static_cast<CCNode*>(sender)->getID();
 
-    if (tag.starts_with("gd"))
-    {
+    if (tag.starts_with("gd")) {
         log::info("open gd profile: {}", std::stoi(tag.c_str() + 2));
         ProfilePage::create(std::stoi(tag.c_str() + 2), false)->show();
-    }
-    else
-    {
+    } else {
         CCApplication::sharedApplication()->openURL(tag.c_str());
     }
 }
 
-void Credits::createPanel(CCMenu* menu, CCPoint pos, char const * title, char const * name, CCNode* img, float scale, std::string v) {
+void Credits::createPanel(
+    CCMenu* menu, CCPoint pos, char const* title, char const* name, CCNode* img, float scale, std::string v) {
     auto t = CCLabelBMFont::create(title, "bigFont.fnt");
     t->setPosition(pos + ccp(0, 28));
     t->limitLabelWidth(110, 0.5f, 0.1f);
@@ -54,8 +52,13 @@ void Credits::cocosCreate(CCMenu* menu) {
 
     createPanel(menu, ccp(55, menu->getContentSize().height - 45), "Name", "PrometheusSV", promImg, 1.0f, "gd7107344");
 
-    createPanel(menu, ccp(55 + (230 / 2) * 1, menu->getContentSize().height - 45), "Pastel", "Absolllute", CCSprite::createWithSpriteFrameName("absolllute.png"_spr), 0.45f, "https://gist.github.com/absoIute/657a4c95bb92755f96e20772adbf5f32");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 1, menu->getContentSize().height - 45),
+                "Pastel",
+                "Absolllute",
+                CCSprite::createWithSpriteFrameName("absolllute.png"_spr),
+                0.45f,
+                "https://gist.github.com/absoIute/657a4c95bb92755f96e20772adbf5f32");
 
     auto fireeImg = SimplePlayer::create(98);
     fireeImg->setColor({125, 0, 255});
@@ -63,8 +66,13 @@ void Credits::cocosCreate(CCMenu* menu) {
     fireeImg->setGlowOutline({255, 255, 255});
     fireeImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 2, menu->getContentSize().height - 45), "Copy Hack", "FireeDev", fireeImg, 1.0f, "gd6253758");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 2, menu->getContentSize().height - 45),
+                "Copy Hack",
+                "FireeDev",
+                fireeImg,
+                1.0f,
+                "gd6253758");
 
     auto catImg = SimplePlayer::create(98);
     catImg->setColor({255, 0, 0});
@@ -72,8 +80,13 @@ void Credits::cocosCreate(CCMenu* menu) {
     catImg->setGlowOutline({0, 255, 255});
     catImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 0, menu->getContentSize().height - 45 - (85 * 1)), "", "CatXus", catImg, 1.0f, "gd14467409");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 0, menu->getContentSize().height - 45 - (85 * 1)),
+                "",
+                "CatXus",
+                catImg,
+                1.0f,
+                "gd14467409");
 
     auto kmImg = SimplePlayer::create(233);
     kmImg->setColor({255, 125, 0});
@@ -81,24 +94,39 @@ void Credits::cocosCreate(CCMenu* menu) {
     kmImg->setGlowOutline({255, 255, 255});
     kmImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 1, menu->getContentSize().height - 45 - (85 * 1)), "Beta Testers", "km7dev", kmImg, 1.0f, "gd7236822");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 1, menu->getContentSize().height - 45 - (85 * 1)),
+                "Beta Testers",
+                "km7dev",
+                kmImg,
+                1.0f,
+                "gd7236822");
 
     auto mkrImg = SimplePlayer::create(242);
     mkrImg->setColor({125, 0, 255});
     mkrImg->setSecondColor({185, 0, 255});
     mkrImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 2, menu->getContentSize().height - 45 - (85 * 1)), "", "MrMkr", mkrImg, 1.0f, "gd21449475");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 2, menu->getContentSize().height - 45 - (85 * 1)),
+                "",
+                "MrMkr",
+                mkrImg,
+                1.0f,
+                "gd21449475");
 
     auto jaidImg = SimplePlayer::create(373);
     jaidImg->setColor({90, 90, 90});
     jaidImg->setSecondColor({182, 0, 255});
     jaidImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 0, menu->getContentSize().height - 45 - (85 * 2)), "", "Jaid", jaidImg, 1.0f, "gd7669473");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 0, menu->getContentSize().height - 45 - (85 * 2)),
+                "",
+                "Jaid",
+                jaidImg,
+                1.0f,
+                "gd7669473");
 
     auto zephImg = SimplePlayer::create(482);
     zephImg->setColor({77, 77, 90});
@@ -106,8 +134,13 @@ void Credits::cocosCreate(CCMenu* menu) {
     zephImg->setGlowOutline({0, 200, 255});
     zephImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 1, menu->getContentSize().height - 45 - (85 * 2)), "", "imzeph", zephImg, 1.0f, "gd23948408");
-
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 1, menu->getContentSize().height - 45 - (85 * 2)),
+                "",
+                "imzeph",
+                zephImg,
+                1.0f,
+                "gd23948408");
 
     auto devImg = SimplePlayer::create(5);
     devImg->setColor({125, 125, 255});
@@ -115,5 +148,11 @@ void Credits::cocosCreate(CCMenu* menu) {
     devImg->setGlowOutline({255, 255, 255});
     devImg->updateColors();
 
-    createPanel(menu, ccp(55 + (230 / 2) * 2, menu->getContentSize().height - 45 - (85 * 2)), "Developer", "TheSillyDoggo", devImg, 1.0f, "gd16778880");
+    createPanel(menu,
+                ccp(55 + (230 / 2) * 2, menu->getContentSize().height - 45 - (85 * 2)),
+                "Developer",
+                "TheSillyDoggo",
+                devImg,
+                1.0f,
+                "gd16778880");
 }

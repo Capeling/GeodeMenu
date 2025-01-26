@@ -5,18 +5,17 @@
 
 using namespace geode::prelude;
 
-class SliderModule : public Module
-{
-    public:
-        Slider* slider = nullptr;
-        float value = 1.0f;
+class SliderModule : public Module {
+public:
+    Slider* slider = nullptr;
+    float value = 1.0f;
 
-        SliderModule(std::string name, std::string id, float def);
+    SliderModule(std::string name, std::string id, float def);
 
-        void save();
-        void load();
+    void save();
+    void load();
 
-        void onSliderChanged(CCObject* sender);
+    void onSliderChanged(CCObject* sender);
 
-        void makeAndroid(CCNode* menu, CCPoint pos);
+    void makeAndroid(CCNode* menu, CCPoint pos);
 };

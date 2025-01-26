@@ -22,15 +22,13 @@ Module* _accurateMod;
     m_fields->fromPercent = getCurrentPercent();
 }*/
 
-void BestPlayLayer::resetLevel()
-{
+void BestPlayLayer::resetLevel() {
     PlayLayer::resetLevel();
 
     m_fields->fromPercent = getCurrentPercent();
 }
 
-void BestPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
-{
+void BestPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1) {
     if (p1 == m_anticheatSpike)
         return PlayLayer::destroyPlayer(p0, p1);
 
@@ -38,8 +36,7 @@ void BestPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
 
     auto length = m_fields->toPercent - m_fields->fromPercent;
 
-    if (length > m_fields->bestLength)
-    {
+    if (length > m_fields->bestLength) {
         m_fields->bestLength = length;
         m_fields->bestFrom = m_fields->fromPercent;
         m_fields->bestTo = m_fields->toPercent;
@@ -48,15 +45,13 @@ void BestPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
     PlayLayer::destroyPlayer(p0, p1);
 }
 
-std::string BestPlayLayer::getRoundedString(float f)
-{
+std::string BestPlayLayer::getRoundedString(float f) {
     int places = 0;
 
     if (!_accurateMod)
         _accurateMod = Client::GetModule("accurate-percentage");
 
-    if (Client::GetModuleEnabled("best-run-decimals") && _accurateMod)
-    {
+    if (Client::GetModuleEnabled("best-run-decimals") && _accurateMod) {
         places = as<InputModule*>(_accurateMod->options[0])->getIntValue();
 
         if (!_accurateMod->enabled)
@@ -65,12 +60,11 @@ std::string BestPlayLayer::getRoundedString(float f)
 
     if (places == 0)
         return fmt::format("{}", as<int>(f));
-    
+
     return utils::numToString<float>(f, places);
 }
 
-std::string BestPlayLayer::getRunString()
-{
+std::string BestPlayLayer::getRunString() {
     auto fields = m_fields.self();
 
     if (fields->bestLength == 0)

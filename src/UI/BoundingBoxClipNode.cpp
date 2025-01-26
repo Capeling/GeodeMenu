@@ -1,7 +1,6 @@
 #include "BoundingBoxClipNode.hpp"
 
-bool BoundingBoxClipNode::init()
-{
+bool BoundingBoxClipNode::init() {
     if (!CCNode::init())
         return false;
 
@@ -11,8 +10,7 @@ bool BoundingBoxClipNode::init()
     return true;
 }
 
-void BoundingBoxClipNode::visit()
-{
+void BoundingBoxClipNode::visit() {
     node->setPosition(-ccp(boundingBox().getMinX(), boundingBox().getMinY()));
 
     GameToolbox::preVisitWithClippingRect(node, boundingBox());

@@ -1,10 +1,9 @@
-#include <rift/config.hpp>
 #include <Geode/Geode.hpp>
+#include <rift/config.hpp>
 
 using namespace geode::prelude;
 
-rift::Value cowsay(std::span<rift::Value> args)
-{
+rift::Value cowsay(std::span<rift::Value> args) {
     if (args.size() != 1)
         return rift::Value::string("Error: Cowsay requires one (1) string parameter.");
 
@@ -16,8 +15,7 @@ rift::Value cowsay(std::span<rift::Value> args)
     std::stringstream ss;
     ss << " ";
 
-    for (size_t i = 0; i < str.size() + 2; i++)
-    {
+    for (size_t i = 0; i < str.size() + 2; i++) {
         ss << "-";
     }
 
@@ -25,11 +23,10 @@ rift::Value cowsay(std::span<rift::Value> args)
     ss << "< ";
     ss << str;
     ss << " >";
-    
+
     ss << "\n ";
 
-    for (size_t i = 0; i < str.size() + 2; i++)
-    {
+    for (size_t i = 0; i < str.size() + 2; i++) {
         ss << "-";
     }
 
@@ -43,8 +40,7 @@ rift::Value cowsay(std::span<rift::Value> args)
     return rift::Value::string(ss.str());
 }
 
-rift::Value getPathProgress(std::span<rift::Value> args)
-{
+rift::Value getPathProgress(std::span<rift::Value> args) {
     if (args.size() != 1)
         return rift::Value::string("Error: getPathProgress requires one (1) string parameter.");
 
@@ -79,15 +75,12 @@ rift::Value getPathProgress(std::span<rift::Value> args)
     return rift::Value::string("Unknown Path");
 }
 
-rift::Value isPathActive(std::span<rift::Value> args)
-{
+rift::Value isPathActive(std::span<rift::Value> args) {
     return rift::Value::boolean(GameStatsManager::get()->m_activePath != 0);
 }
 
-rift::Value getActivePath(std::span<rift::Value> args)
-{
-    switch (GameStatsManager::get()->m_activePath)
-    {
+rift::Value getActivePath(std::span<rift::Value> args) {
+    switch (GameStatsManager::get()->m_activePath) {
         case 30:
             return rift::Value::string("Fire");
 
@@ -123,8 +116,7 @@ rift::Value getActivePath(std::span<rift::Value> args)
     }
 }
 
-$on_mod(Loaded)
-{
+$on_mod(Loaded) {
     rift::config::addRuntimeFunction("cowsay", cowsay);
     rift::config::addRuntimeFunction("getPathProgress", getPathProgress);
     rift::config::addRuntimeFunction("isPathActive", isPathActive);

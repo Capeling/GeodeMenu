@@ -4,12 +4,9 @@
 
 using namespace geode::prelude;
 
-class $modify (PlayerObject)
-{
-    void toggleGhostEffect(GhostType p0)
-    {
-        if (PlayLayer::get())
-        {
+class $modify(PlayerObject) {
+    void toggleGhostEffect(GhostType p0) {
+        if (PlayLayer::get()) {
             if (Client::GetModuleEnabled("ghost-on"))
                 p0 = GhostType::Enabled;
 

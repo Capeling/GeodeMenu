@@ -1,11 +1,10 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#include "SetBindSetting.hpp"
-#include "KeyInfoPopup.hpp"
-#include "RecordKeyPopup.hpp"
+#    include "SetBindSetting.hpp"
+#    include "KeyInfoPopup.hpp"
+#    include "RecordKeyPopup.hpp"
 
-bool SetBindNode::init(SetBindValue* value, float width)
-{
+bool SetBindNode::init(SetBindValue* value, float width) {
     if (!SettingNode::init(value))
         return false;
 
@@ -30,8 +29,7 @@ bool SetBindNode::init(SetBindValue* value, float width)
     auto setBtn = CCMenuItemSpriteExtra::create(set, this, menu_selector(SetBindNode::onAddBtn));
     menu->addChild(setBtn);
 
-    for (auto btn : value->buttons)
-    {
+    for (auto btn : value->buttons) {
         auto lbl = CCLabelBMFont::create(nameForKey(btn).c_str(), "bigFont.fnt");
 
         auto lblBG = CCScale9Sprite::create("geode.loader/white-square.png");
@@ -48,35 +46,36 @@ bool SetBindNode::init(SetBindValue* value, float width)
         btns.insert(std::pair<int, CCNode*>(btn, lblBtn));
     }
 
-    menu->setLayout(AxisLayout::create()->setAxis(Axis::Row)->setAutoScale(false)->setAxisReverse(true)->setAxisAlignment(AxisAlignment::End));
+    menu->setLayout(
+        AxisLayout::create()->setAxis(Axis::Row)->setAutoScale(false)->setAxisReverse(true)->setAxisAlignment(
+            AxisAlignment::End));
 
     this->addChildAtPosition(label, Anchor::Left, ccp(15, 0));
     this->addChildAtPosition(menu, Anchor::Right, ccp(-10, 0));
     return true;
 }
 
-void SetBindNode::onAddBtn(CCObject* sender)
-{
+void SetBindNode::onAddBtn(CCObject* sender) {
     auto addPopup = RecordKeyPopup::create(menu_selector(SetBindNode::onKeySubmit));
     addPopup->setUserData(this);
 
     CCScene::get()->addChild(addPopup, CCScene::get()->getHighestChildZ() + 1);
 }
 
-void SetBindNode::onSetBtn(CCObject* sender)
-{
+void SetBindNode::onSetBtn(CCObject* sender) {
     auto keyInfo = KeyInfoPopup::createWithKeyAndBind(as<CCNode*>(sender)->getTag(), this);
     CCScene::get()->addChild(keyInfo, CCScene::get()->getHighestChildZ() + 1);
 }
 
-void SetBindNode::onKeySubmit(CCObject* sender)
-{
+void SetBindNode::onKeySubmit(CCObject* sender) {
     auto key = as<CCNode*>(sender)->getTag();
     auto buttons = as<SetBindNode*>(as<CCNode*>(sender)->getUserData())->buttons;
     auto ins = as<SetBindNode*>(as<CCNode*>(sender)->getUserData());
 
     if (key == -1)
-        return FLAlertLayer::create("Keybind Error", "<cr>Unsupported key</c>\nCocos2d-x doesn't support this key.", "OK")->show();
+        return FLAlertLayer::create(
+                   "Keybind Error", "<cr>Unsupported key</c>\nCocos2d-x doesn't support this key.", "OK")
+            ->show();
 
     if (std::find(buttons.begin(), buttons.end(), key) != buttons.end())
         return FLAlertLayer::create("Keybind Error", "You already have this key added", "OK")->show();
@@ -102,12 +101,11 @@ void SetBindNode::onKeySubmit(CCObject* sender)
     ins->btns.insert(std::pair<int, CCNode*>(key, lblBtn));
 }
 
-std::string SetBindNode::nameForKey(int key)
-{
+std::string SetBindNode::nameForKey(int key) {
     if (key == -1)
         return "Unknown";
 
-    #ifndef GEODE_IS_IOS
+#    ifndef GEODE_IS_IOS
 
     auto k = CCKeyboardDispatcher::get()->keyToString(as<enumKeyCodes>(key));
 
@@ -116,24 +114,19 @@ std::string SetBindNode::nameForKey(int key)
 
     return std::string(k);
 
-    #else
+#    else
 
     return "";
 
-    #endif
+#    endif
 }
 
-SettingNode* SetBindValue::createNode(float width)
-{
+SettingNode* SetBindValue::createNode(float width) {
     return SetBindNode::create(this, width);
 }
 
-$execute
-{
-    Mod::get()->registerCustomSetting(
-        "set-bind",
-        std::make_unique<SetBindValue>("set-bind", Mod::get()->getID())
-    );
+$execute {
+    Mod::get()->registerCustomSetting("set-bind", std::make_unique<SetBindValue>("set-bind", Mod::get()->getID()));
 }
 
 #endif

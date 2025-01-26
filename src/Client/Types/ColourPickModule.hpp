@@ -5,24 +5,23 @@
 
 using namespace geode::prelude;
 
-class ColourModule : public Module, public ColorPickPopupDelegate
-{
-    public:
-        static inline ColourModule* selected = nullptr;
+class ColourModule : public Module, public ColorPickPopupDelegate {
+public:
+    static inline ColourModule* selected = nullptr;
 
-        ccColor3B colour = ccc3(255, 255, 255);
-        ccColor3B def = ccc3(255, 255, 255);
+    ccColor3B colour = ccc3(255, 255, 255);
+    ccColor3B def = ccc3(255, 255, 255);
 
-        CCSprite* btnSpr = nullptr;
+    CCSprite* btnSpr = nullptr;
 
-        ColourModule(std::string name, std::string id, ccColor3B def);
+    ColourModule(std::string name, std::string id, ccColor3B def);
 
-        virtual void save();
-        virtual void load();
+    virtual void save();
+    virtual void load();
 
-        void onPickColourAndroid(cocos2d::CCObject* sender);
+    void onPickColourAndroid(cocos2d::CCObject* sender);
 
-        void makeAndroid(CCNode* menu, CCPoint pos);
+    void makeAndroid(CCNode* menu, CCPoint pos);
 
-        virtual void updateColor(cocos2d::ccColor4B const& color);
+    virtual void updateColor(cocos2d::ccColor4B const& color);
 };

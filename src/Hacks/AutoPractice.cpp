@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (PlayLayer)
-{
-    bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects)
-    {
+class $modify(PlayLayer) {
+    bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
         if (!PlayLayer::init(level, useReplay, dontCreateObjects))
             return false;
 

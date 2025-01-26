@@ -4,15 +4,12 @@
 
 using namespace geode::prelude;
 
-class $modify (UILayer)
-{
-    bool init(GJBaseGameLayer* p0)
-    {
+class $modify(UILayer) {
+    bool init(GJBaseGameLayer* p0) {
         if (!UILayer::init(p0))
             return false;
 
-        if (auto menu = this->getChildByType<CCMenu>(0); auto btn = menu->getChildByType<CCMenuItemSpriteExtra>(0))
-        {
+        if (auto menu = this->getChildByType<CCMenu>(0); auto btn = menu->getChildByType<CCMenuItemSpriteExtra>(0)) {
             btn->getNormalImage()->setVisible(false);
         }
 

@@ -1,30 +1,27 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/CCTouchDispatcher.hpp>
 #include <Geode/modify/CCMotionStreak.hpp>
-#include "../../Client/Client.h"
+#include <Geode/modify/CCTouchDispatcher.hpp>
 #include "TouchTrail.hpp"
+#include "../../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (CCTouchDispatcher)
-{
-    void touches(CCSet* touches, CCEvent* event, unsigned int type)
-    {
+class $modify(CCTouchDispatcher) {
+    void touches(CCSet* touches, CCEvent* event, unsigned int type) {
         if (!CCScene::get())
-            return CCTouchDispatcher::touches(touches, event, type);;
+            return CCTouchDispatcher::touches(touches, event, type);
+        ;
 
         if (CCScene::get()->getChildByType<LoadingLayer>(0))
-            return CCTouchDispatcher::touches(touches, event, type);;
+            return CCTouchDispatcher::touches(touches, event, type);
+        ;
 
-        if (auto touch = as<CCTouch*>(touches->anyObject()))
-        {
-            if (type == CCTOUCHBEGAN)
-            {
+        if (auto touch = as<CCTouch*>(touches->anyObject())) {
+            if (type == CCTOUCHBEGAN) {
                 CCScene::get()->addChild(CCTouchTrail::create(touch), CCScene::get()->getHighestChildZ() + 1);
             }
 
-            if (type >= CCTOUCHENDED)
-            {
+            if (type >= CCTOUCHENDED) {
                 CCTouchTrail::remove(touch);
             }
         }

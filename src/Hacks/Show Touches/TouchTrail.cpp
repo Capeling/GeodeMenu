@@ -1,12 +1,11 @@
 #include "TouchTrail.hpp"
 
-bool CCTouchTrail::init(CCTouch* touch)
-{
+bool CCTouchTrail::init(CCTouch* touch) {
     if (!CCNode::init())
         return false;
 
     touches.emplace(touch, this);
-    
+
     this->touch = touch;
     this->scheduleUpdate();
 
@@ -28,16 +27,14 @@ bool CCTouchTrail::init(CCTouch* touch)
     return true;
 }
 
-void CCTouchTrail::update(float dt)
-{
+void CCTouchTrail::update(float dt) {
     auto pos = touch->getLocation();
 
     streak->setPosition(pos);
     circle->setPosition(pos);
 }
 
-CCTouchTrail* CCTouchTrail::create(CCTouch* touch)
-{
+CCTouchTrail* CCTouchTrail::create(CCTouch* touch) {
     auto pRet = new CCTouchTrail();
 
     pRet->init(touch);
@@ -45,8 +42,7 @@ CCTouchTrail* CCTouchTrail::create(CCTouch* touch)
     return pRet;
 }
 
-void CCTouchTrail::remove(CCTouch* touch)
-{
+void CCTouchTrail::remove(CCTouch* touch) {
     if (!touches.contains(touch))
         return;
 

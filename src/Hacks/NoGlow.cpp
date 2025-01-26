@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify(PlayLayer)
-{
-    void addObject(GameObject* obj)
-    {
+class $modify(PlayLayer) {
+    void addObject(GameObject* obj) {
         obj->m_hasNoGlow = true;
 
         PlayLayer::addObject(obj);

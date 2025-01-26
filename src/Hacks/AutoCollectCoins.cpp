@@ -4,29 +4,24 @@
 
 using namespace geode::prelude;
 
-class $modify (PlayLayer)
-{
-    struct Fields
-    {
+class $modify(PlayLayer) {
+    struct Fields {
         std::vector<EffectGameObject*> coins;
     };
 
-    void addObject(GameObject* p0)
-    {
+    void addObject(GameObject* p0) {
         PlayLayer::addObject(p0);
 
-        if (p0->m_objectType == GameObjectType::UserCoin || p0->m_objectType == GameObjectType::SecretCoin) // 142 
+        if (p0->m_objectType == GameObjectType::UserCoin || p0->m_objectType == GameObjectType::SecretCoin) // 142
         {
-           m_fields->coins.push_back(as<EffectGameObject*>(p0));
+            m_fields->coins.push_back(as<EffectGameObject*>(p0));
         }
     }
 
-    void resetLevel()
-    {
+    void resetLevel() {
         PlayLayer::resetLevel();
 
-        for (auto coin : m_fields->coins)
-        {
+        for (auto coin : m_fields->coins) {
             pickupItem(coin);
             destroyObject(coin);
         }

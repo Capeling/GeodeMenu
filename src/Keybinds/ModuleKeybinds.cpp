@@ -1,12 +1,10 @@
 #include "ModuleKeybinds.hpp"
 
-bool QOLModKeybinds::isKeybindsLoaded()
-{
+bool QOLModKeybinds::isKeybindsLoaded() {
     return Loader::get()->getLoadedMod("geode.custom-keybinds");
 }
 
-void QOLModKeybinds::setupKeybinds()
-{
+void QOLModKeybinds::setupKeybinds() {
     hasSetupKeybinds = true;
 
     /*Category category;

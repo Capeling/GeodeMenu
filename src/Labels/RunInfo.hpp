@@ -7,12 +7,10 @@
 
 using namespace geode::prelude;
 
-class $modify (RunPlayLayer, PlayLayer)
-{
-	struct Fields
-    {
+class $modify(RunPlayLayer, PlayLayer) {
+    struct Fields {
         float fromPercent;
-	};
+    };
 
-	void resetLevel();
+    void resetLevel();
 };

@@ -3,8 +3,7 @@
 using namespace geode::prelude;
 
 void Uncomplete::FLAlert_Clicked(FLAlertLayer* p0, bool p1) {
-    if (p1)
-    {
+    if (p1) {
         log::info("uncomplete");
 
         GJGameLevel* level = nullptr;

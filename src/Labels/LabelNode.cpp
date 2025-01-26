@@ -1,20 +1,17 @@
 #include "LabelNode.hpp"
-#include "LabelLayer.hpp"
-#include "../Hacks/Noclip/Noclip.hpp"
 #include "../Client/Windows/Labels.hpp"
+#include "../Hacks/Noclip/Noclip.hpp"
+#include "LabelLayer.hpp"
 #include <chrono>
 
-bool LabelNode::init(LabelModule* mod)
-{
+bool LabelNode::init(LabelModule* mod) {
     if (!CCNode::init())
         return false;
 
-    if (Labels::get()->createFuncCommentEmojis)
-    {
+    if (Labels::get()->createFuncCommentEmojis) {
         label = Labels::get()->createFuncCommentEmojis();
         label->setFntFile(mod->getFont().c_str());
-    }
-    else
+    } else
         label = CCLabelBMFont::create("l", mod->getFont().c_str());
 
     label->setAnchorPoint(ccp(0, 0));
@@ -28,8 +25,7 @@ bool LabelNode::init(LabelModule* mod)
     return true;
 }
 
-std::string LabelNode::getFormatString()
-{
+std::string LabelNode::getFormatString() {
     return mod->format;
 
     if (mod->presetType == 1)
@@ -53,22 +49,20 @@ std::string LabelNode::getFormatString()
     return mod->format;
 }
 
-void LabelNode::update(float dt)
-{
+void LabelNode::update(float dt) {
     if (!getActionByTag(800851))
         label->setOpacity(mod->getOpacity() * 255.0f);
 
     label->setString("L");
     float fontHeight = label->getContentHeight();
-    
+
     this->setScale(mod->getScale() * 0.5f * (32.5f / label->getContentHeight()));
 
     auto res = rift::compile(getFormatString());
 
     script = res.unwrapOr(nullptr);
-    
-    if (!script)
-    {
+
+    if (!script) {
         CC_SAFE_DELETE(script);
 
         return label->setString(fmt::format("Error Compiling Script: {}", res.getMessage()).c_str());
@@ -89,7 +83,7 @@ void LabelNode::update(float dt)
     std::tm* localTime = std::localtime(&currentTime);
 
     script->setVariable("neofetch", rift::Value::string(LabelLayer::get()->neofetchOutput));
-    
+
     script->setVariable("attempt", rift::Value::integer(LabelLayer::get()->getAttempts()));
     script->setVariable("fps", rift::Value::floating(LabelLayer::get()->getFPS()));
 
@@ -112,13 +106,16 @@ void LabelNode::update(float dt)
     script->setVariable("isEditor", rift::Value::boolean(LevelEditorLayer::get()));
     script->setVariable("isLevel", rift::Value::boolean(PlayLayer::get()));
 
-    script->setVariable("noclip_deaths", rift::Value::integer(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipDeaths()));
-    script->setVariable("noclip_accuracy", rift::Value::floating(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipAccuracy() * 100));
+    script->setVariable("noclip_deaths",
+                        rift::Value::integer(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipDeaths()));
+    script->setVariable(
+        "noclip_accuracy",
+        rift::Value::floating(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipAccuracy() * 100));
 
-    if (auto lvl = GJBaseGameLayer::get()->m_level)
-    {
+    if (auto lvl = GJBaseGameLayer::get()->m_level) {
         script->setVariable("level_name", rift::Value::string(lvl->m_levelName));
-        script->setVariable("level_creator", rift::Value::string(lvl->m_creatorName.empty() ? "RobTop" : lvl->m_creatorName));
+        script->setVariable("level_creator",
+                            rift::Value::string(lvl->m_creatorName.empty() ? "RobTop" : lvl->m_creatorName));
         script->setVariable("level_description", rift::Value::string(lvl->getUnpackedLevelDescription()));
         script->setVariable("level_upload", rift::Value::string(lvl->m_uploadDate));
         script->setVariable("level_update", rift::Value::string(lvl->m_updateDate));
@@ -130,17 +127,20 @@ void LabelNode::update(float dt)
         script->setVariable("level_version", rift::Value::integer(lvl->m_levelVersion));
         script->setVariable("level_game_version", rift::Value::integer(lvl->m_gameVersion));
 
-        script->setVariable("normal_best", rift::Value::integer(GJBaseGameLayer::get()->m_level->m_normalPercent.value()));
+        script->setVariable("normal_best",
+                            rift::Value::integer(GJBaseGameLayer::get()->m_level->m_normalPercent.value()));
         script->setVariable("practice_best", rift::Value::integer(GJBaseGameLayer::get()->m_level->m_practicePercent));
     }
 
-    if (PlayLayer::get())
-    {
-        script->setVariable("bestRun_from", rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestFrom));
-        script->setVariable("bestRun_to", rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestTo));
+    if (PlayLayer::get()) {
+        script->setVariable("bestRun_from",
+                            rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestFrom));
+        script->setVariable("bestRun_to",
+                            rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestTo));
         script->setVariable("percentage", rift::Value::floating(PlayLayer::get()->getCurrentPercent()));
         script->setVariable("last_percentage", rift::Value::floating(LabelLayer::get()->getLastPercentage()));
-        script->setVariable("run_from", rift::Value::floating(as<RunPlayLayer*>(PlayLayer::get())->m_fields->fromPercent));
+        script->setVariable("run_from",
+                            rift::Value::floating(as<RunPlayLayer*>(PlayLayer::get())->m_fields->fromPercent));
     }
 
     auto res2 = script->run();
@@ -150,8 +150,7 @@ void LabelNode::update(float dt)
 
     this->setContentSize(label->getContentSize());
 
-    if (!getActionByTag(80085))
-    {
+    if (!getActionByTag(80085)) {
         if (mod->isCheatIndicator)
             label->setColor(mod->getColour());
     }
@@ -160,8 +159,7 @@ void LabelNode::update(float dt)
 
     this->setVisible(mod->noclipOnly ? Client::GetModuleEnabled("noclip") && mod->visible : mod->visible);
 
-    if (label->getChildrenCount() == 1 && res2 == ".")
-    {
+    if (label->getChildrenCount() == 1 && res2 == ".") {
         as<CCNode*>(label->getChildren()->objectAtIndex(0))->setScale(2.25f);
         as<CCNode*>(label->getChildren()->objectAtIndex(0))->setAnchorPoint(ccp(0.2f, 0.35f));
     }
@@ -169,12 +167,10 @@ void LabelNode::update(float dt)
     CC_SAFE_DELETE(script);
 }
 
-LabelNode* LabelNode::create(LabelModule* mod)
-{
+LabelNode* LabelNode::create(LabelModule* mod) {
     auto pRet = new LabelNode();
 
-    if (pRet && pRet->init(mod))
-    {
+    if (pRet && pRet->init(mod)) {
         pRet->autorelease();
         return pRet;
     }
@@ -183,7 +179,6 @@ LabelNode* LabelNode::create(LabelModule* mod)
     return nullptr;
 }
 
-LabelNode::~LabelNode()
-{
+LabelNode::~LabelNode() {
     mod->labelNode = nullptr;
 }

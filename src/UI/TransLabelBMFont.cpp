@@ -1,6 +1,6 @@
 #include "TransLabelBMFont.hpp"
-#include "../Utils/Utils.hpp"
 #include "../Utils/TranslationManager.hpp"
+#include "../Utils/Utils.hpp"
 #include <regex>
 
 /*
@@ -51,8 +51,7 @@ class CachedLabelTTF : public CCLabelTTF
 
 */
 
-CCLabelTTF* TransLabelBMFont::createTTF(std::string font, float fontSize)
-{
+CCLabelTTF* TransLabelBMFont::createTTF(std::string font, float fontSize) {
     return CCLabelTTF::create("", font.c_str(), fontSize);
 
     /*
@@ -71,8 +70,7 @@ CCLabelTTF* TransLabelBMFont::createTTF(std::string font, float fontSize)
     */
 }
 
-bool TransLabelBMFont::init(std::string text, std::string font)
-{
+bool TransLabelBMFont::init(std::string text, std::string font) {
     if (!CCNode::init())
         return false;
 
@@ -99,8 +97,7 @@ bool TransLabelBMFont::init(std::string text, std::string font)
     return true;
 }
 
-void TransLabelBMFont::limitLabelWidth(float width, float defaultScale, float minScale)
-{
+void TransLabelBMFont::limitLabelWidth(float width, float defaultScale, float minScale) {
     this->setScale(clamp<float>(width / getContentWidth(), minScale, defaultScale));
 
     isLimited = true;
@@ -109,16 +106,12 @@ void TransLabelBMFont::limitLabelWidth(float width, float defaultScale, float mi
     limitMinScale = minScale;
 }
 
-void TransLabelBMFont::updateTTFVisible()
-{
+void TransLabelBMFont::updateTTFVisible() {
     useTtf = false;
 
-    if (forceTtf)
-    {
+    if (forceTtf) {
         useTtf = true;
-    }
-    else
-    {
+    } else {
         useTtf = !std::regex_match(text, std::regex(ENGLISH_REGEX));
     }
 
@@ -133,33 +126,27 @@ void TransLabelBMFont::updateTTFVisible()
     this->setContentSize(useTtf ? ttf->getScaledContentSize() : label->getScaledContentSize());
 }
 
-void TransLabelBMFont::setOpacity(int opacity)
-{
+void TransLabelBMFont::setOpacity(int opacity) {
     label->setOpacity(opacity);
     ttf->setOpacity(opacity);
 }
 
-void TransLabelBMFont::setColor(ccColor3B colour)
-{
+void TransLabelBMFont::setColor(ccColor3B colour) {
     label->setColor(colour);
     ttf->setColor(colour);
 }
 
-std::string TransLabelBMFont::getString()
-{
+std::string TransLabelBMFont::getString() {
     return text;
 }
 
-
-void TransLabelBMFont::setString(std::string str)
-{
+void TransLabelBMFont::setString(std::string str) {
     this->text = str;
     this->originalText = str;
 
     auto trans = TranslationManager::get()->getTranslatedString(str);
 
-    if (TranslationManager::get()->isRightToLeft() && TranslationManager::get()->hasTranslationForString(str))
-    {
+    if (TranslationManager::get()->isRightToLeft() && TranslationManager::get()->hasTranslationForString(str)) {
         trans = applyRTLFix(trans);
     }
 
@@ -168,36 +155,29 @@ void TransLabelBMFont::setString(std::string str)
     updateTTFVisible();
 }
 
-void TransLabelBMFont::setForceTTF(bool force)
-{
+void TransLabelBMFont::setForceTTF(bool force) {
     forceTtf = force;
 
     updateTTFVisible();
 }
 
-bool TransLabelBMFont::getForceTTF()
-{
+bool TransLabelBMFont::getForceTTF() {
     return forceTtf;
 }
 
-void TransLabelBMFont::setOnLabelUpdated(std::function<void()> callback)
-{
+void TransLabelBMFont::setOnLabelUpdated(std::function<void()> callback) {
     this->onLabelUpdated = callback;
 }
 
-TransLabelBMFont::~TransLabelBMFont()
-{
+TransLabelBMFont::~TransLabelBMFont() {
     instances.erase(std::find(instances.begin(), instances.end(), this));
 }
 
-void TransLabelBMFont::updateAllLabels()
-{
-    for (auto label : instances)
-    {
+void TransLabelBMFont::updateAllLabels() {
+    for (auto label : instances) {
         label->setString(label->originalText.c_str());
 
-        if (label->isLimited)
-        {
+        if (label->isLimited) {
             label->limitLabelWidth(label->limitWidth, label->limitDefaultScale, label->limitMinScale);
         }
 
@@ -206,12 +186,10 @@ void TransLabelBMFont::updateAllLabels()
     }
 }
 
-TransLabelBMFont* TransLabelBMFont::create(std::string text, std::string font)
-{
+TransLabelBMFont* TransLabelBMFont::create(std::string text, std::string font) {
     auto pRet = new TransLabelBMFont();
 
-    if (pRet && pRet->init(text, font))
-    {
+    if (pRet && pRet->init(text, font)) {
         pRet->autorelease();
         return pRet;
     }

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Geode/Geode.hpp>
-#include "../Client/Client.h"
 #include "../Utils/OffsetManager.hpp"
+#include "../Client/Client.h"
 
 using namespace geode::prelude;
 

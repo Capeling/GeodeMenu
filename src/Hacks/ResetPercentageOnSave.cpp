@@ -4,10 +4,8 @@
 
 using namespace geode::prelude;
 
-class $modify (EditorPauseLayer)
-{
-    void saveLevel()
-    {
+class $modify(EditorPauseLayer) {
+    void saveLevel() {
         if (LevelEditorLayer::get()->m_level->m_levelType == GJLevelType::Editor)
             LevelEditorLayer::get()->m_level->m_normalPercent = 0;
 

@@ -3,22 +3,21 @@
 
 using namespace geode::prelude;
 
-class CountdownLayer : public CCLayer
-{
-    public:
-        CCLabelBMFont* label;
-        int count = 3;
+class CountdownLayer : public CCLayer {
+public:
+    CCLabelBMFont* label;
+    int count = 3;
 
-        void onDecrement(float);
-        void applyAnimation();
+    void onDecrement(float);
+    void applyAnimation();
 
-        virtual bool init();
-        virtual void onCountReachedZero();
-        virtual void keyBackClicked();
-        virtual void visit();
+    virtual bool init();
+    virtual void onCountReachedZero();
+    virtual void keyBackClicked();
+    virtual void visit();
 
-        ~CountdownLayer();
+    ~CountdownLayer();
 
-        CREATE_FUNC(CountdownLayer);
-        static CountdownLayer* get();
+    CREATE_FUNC(CountdownLayer);
+    static CountdownLayer* get();
 };

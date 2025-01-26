@@ -1,142 +1,121 @@
 #pragma once
 
-#include "ColourUtility.h"
 #include <Geode/ui/TextInput.hpp>
-#include "../UI/UIComponent.hpp"
-#include "../Keybinds/KeyStruct.hpp"
 #include <imgui-cocos.hpp>
+#include "../Keybinds/KeyStruct.hpp"
+#include "../UI/UIComponent.hpp"
+#include "ColourUtility.h"
 
 using namespace geode::prelude;
 
-class ModuleChangeDelegate
-{
-    public:
-        // cant
-        UIComponent* _module;
+class ModuleChangeDelegate {
+public:
+    // cant
+    UIComponent* _module;
 
-        virtual void onModuleChanged(bool enabled)
-        {
+    virtual void onModuleChanged(bool enabled) {}
 
-        }
-
-        virtual void initOptionsLayer(CCLayer* options)
-        {
-
-        }
+    virtual void initOptionsLayer(CCLayer* options) {}
 };
 
-class Module : public UIComponent
-{
-    protected:
-        std::vector<geode::Hook*> hooks = {};
-        std::vector<geode::Patch*> patches = {};
-    public:
-        static inline std::string descMod = "";
+class Module : public UIComponent {
+protected:
+    std::vector<geode::Hook*> hooks = {};
+    std::vector<geode::Patch*> patches = {};
 
-        ImVec2 lastRenderedPosition;
+public:
+    static inline std::string descMod = "";
 
-        std::vector<Module*> options = {};
+    ImVec2 lastRenderedPosition;
 
-        std::string name;
-        std::string id;
-        std::string description;
-        std::string alert;
-        std::string inCompAlert;
-        bool enabled;
-        bool useAlert;
-        bool onceAlert;
-        bool isInComp;
+    std::vector<Module*> options = {};
 
-        KeyStruct keybind;
+    std::string name;
+    std::string id;
+    std::string description;
+    std::string alert;
+    std::string inCompAlert;
+    bool enabled;
+    bool useAlert;
+    bool onceAlert;
+    bool isInComp;
 
-        bool vAlert;
+    KeyStruct keybind;
 
-        bool def;
-        float value = 1.0f;
+    bool vAlert;
 
-        bool mouseHeldDown = false;
+    bool def;
+    float value = 1.0f;
 
-        std::function<void(bool)> onToggle;
-        ModuleChangeDelegate* delegate = nullptr;
+    bool mouseHeldDown = false;
 
-        CCSize optionSizeForce = CCSizeZero;
+    std::function<void(bool)> onToggle;
+    ModuleChangeDelegate* delegate = nullptr;
 
-        void addHookRaw(Result<Hook*> hook);
+    CCSize optionSizeForce = CCSizeZero;
 
-        void addHook(Hook* hook);
-        void addPatch(Patch* patch);
+    void addHookRaw(Result<Hook*> hook);
 
-        void disableHooks();
-        void enableHooks();
+    void addHook(Hook* hook);
+    void addPatch(Patch* patch);
 
-        void disablePatches();
-        void enablePatches();
+    void disableHooks();
+    void enableHooks();
 
-        virtual void drawImGui();
+    void disablePatches();
+    void enablePatches();
 
-        Module()
-        {
+    virtual void drawImGui();
 
-        }
+    Module() {}
 
-        Module(std::string n, std::string i)
-        {
-            name = n;
-            id = i;
-            enabled = false;
+    Module(std::string n, std::string i) {
+        name = n;
+        id = i;
+        enabled = false;
 
-            this->load();
-        }
+        this->load();
+    }
 
-        Module(std::string n, std::string i, std::string d, bool _def = false, std::string a = "", bool as = false)
-        {
-            name = n;
-            id = i;
-            description = d;
-            enabled = _def;
-            def = _def;
-            useAlert = as;
-            alert = a;
+    Module(std::string n, std::string i, std::string d, bool _def = false, std::string a = "", bool as = false) {
+        name = n;
+        id = i;
+        description = d;
+        enabled = _def;
+        def = _def;
+        useAlert = as;
+        alert = a;
 
-            this->load();
-        }
+        this->load();
+    }
 
+    // options
+    CCSize sizeForOptionsPage();
 
-        // options
-        CCSize sizeForOptionsPage();
+    virtual void onChange() {
+        if (delegate)
+            delegate->onModuleChanged(this->enabled);
+    }
 
-        virtual void onChange()
-        {
-            if (delegate)
-                delegate->onModuleChanged(this->enabled);
-        }
+    virtual void save();
+    virtual void load();
 
-        virtual void save();
-        virtual void load();
+    void onInfoAndroid(CCObject* sender);
+    void onOptionsAndroid(CCObject* sender);
+    void onToggleAndroid(CCObject* sender);
 
-        void onInfoAndroid(CCObject* sender);
-        void onOptionsAndroid(CCObject* sender);
-        void onToggleAndroid(CCObject* sender);
+    void setIncompatible(std::string str);
 
-        void setIncompatible(std::string str);
-
-        virtual void makeAndroid(CCNode* menu, CCPoint pos);
+    virtual void makeAndroid(CCNode* menu, CCPoint pos);
 };
 
-class InfoModule : public Module
-{
-    public:
+class InfoModule : public Module {
+public:
+    InfoModule(std::string n, std::string d) {
+        name = n;
+        description = d;
+    }
 
-        InfoModule(std::string n, std::string d)
-        {
-            name = n;
-            description = d;
-        }
-
-        void save()
-        {
-        }
-        void load()
-        {
-        }
+    void save() {}
+    void load() {}
 };

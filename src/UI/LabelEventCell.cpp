@@ -1,8 +1,7 @@
 #include "LabelEventCell.hpp"
 #include "../Layers/EditLabelPopup.hpp"
 
-bool LabelEventCell::initWithEvent(LabelEvent* event)
-{
+bool LabelEventCell::initWithEvent(LabelEvent* event) {
     if (!CCNode::init())
         return false;
 
@@ -19,7 +18,7 @@ bool LabelEventCell::initWithEvent(LabelEvent* event)
     bg->setContentSize(getContentSize() + ccp(-5, -5));
     bg->setContentSize(bg->getContentSize() * 2.5f);
     bg->setZOrder(-42069);
-    
+
     auto menu = CCMenu::create();
     menu->setPosition(CCPointZero);
 
@@ -75,22 +74,19 @@ bool LabelEventCell::initWithEvent(LabelEvent* event)
     inputHold->setCommonFilter(CommonFilter::Float);
     inputFadeOut->setCommonFilter(CommonFilter::Float);
 
-    inputFadeIn->setCallback([this, event](const std::string& str)
-    {
+    inputFadeIn->setCallback([this, event](const std::string& str) {
         event->fadeIn = numFromString<float>(str).unwrapOr(event->fadeIn);
 
         updateSliders();
     });
 
-    inputHold->setCallback([this, event](const std::string& str)
-    {
+    inputHold->setCallback([this, event](const std::string& str) {
         event->hold = numFromString<float>(str).unwrapOr(event->hold);
 
         updateSliders();
     });
 
-    inputFadeOut->setCallback([this, event](const std::string& str)
-    {
+    inputFadeOut->setCallback([this, event](const std::string& str) {
         event->fadeOut = numFromString<float>(str).unwrapOr(event->fadeOut);
 
         updateSliders();
@@ -183,22 +179,19 @@ bool LabelEventCell::initWithEvent(LabelEvent* event)
     return true;
 }
 
-void LabelEventCell::updateSliders()
-{
+void LabelEventCell::updateSliders() {
     sliderFadeIn->setValue(clamp<float>(event->fadeIn / 5, 0, 1));
     sliderHold->setValue(clamp<float>(event->hold / 5, 0, 1));
     sliderFadeOut->setValue(clamp<float>(event->fadeOut / 5, 0, 1));
 }
 
-void LabelEventCell::updateInputs()
-{
+void LabelEventCell::updateInputs() {
     inputFadeIn->setString(fmt::format("{:.02f}", event->fadeIn));
     inputHold->setString(fmt::format("{:.02f}", event->hold));
     inputFadeOut->setString(fmt::format("{:.02f}", event->fadeOut));
 }
 
-void LabelEventCell::onSliderChanged(CCObject* sender)
-{
+void LabelEventCell::onSliderChanged(CCObject* sender) {
     event->fadeIn = sliderFadeIn->getThumb()->getValue() * 5;
     event->hold = sliderHold->getThumb()->getValue() * 5;
     event->fadeOut = sliderFadeOut->getThumb()->getValue() * 5;
@@ -206,8 +199,7 @@ void LabelEventCell::onSliderChanged(CCObject* sender)
     updateInputs();
 }
 
-void LabelEventCell::onInf(CCObject* sender)
-{
+void LabelEventCell::onInf(CCObject* sender) {
     if (sender->getTag() == 0)
         event->fadeIn = -1;
     else if (sender->getTag() == 1)
@@ -219,43 +211,36 @@ void LabelEventCell::onInf(CCObject* sender)
     updateInputs();
 }
 
-void LabelEventCell::onSetColour(CCObject* sender)
-{
+void LabelEventCell::onSetColour(CCObject* sender) {
     auto popup = ColorPickPopup::create(event->colour);
     popup->setDelegate(this);
 
     popup->show();
 }
 
-void LabelEventCell::updateColor(cocos2d::ccColor4B const& color)
-{
+void LabelEventCell::updateColor(cocos2d::ccColor4B const& color) {
     event->colour = ccc4(color.r, color.g, color.b, color.a);
     setColourBG->setColor(ccc3(event->colour.r, event->colour.g, event->colour.b));
 }
 
-void LabelEventCell::onDelete(CCObject* sender)
-{
+void LabelEventCell::onDelete(CCObject* sender) {
     geode::createQuickPopup("Delete Event",
-        "Are you sure you want to <cr>delete</c> this <cc>event</c>?",
-        "Cancel",
-        "Delete",
-        [this](FLAlertLayer* alert, bool right){
-            if (right)
-            {
-                std::erase(as<LabelModule*>(module)->events, *event);
+                            "Are you sure you want to <cr>delete</c> this <cc>event</c>?",
+                            "Cancel",
+                            "Delete",
+                            [this](FLAlertLayer* alert, bool right) {
+                                if (right) {
+                                    std::erase(as<LabelModule*>(module)->events, *event);
 
-                as<EditLabelPopup*>(layer)->updateList();
-            }
-        }
-    );
+                                    as<EditLabelPopup*>(layer)->updateList();
+                                }
+                            });
 }
 
-LabelEventCell* LabelEventCell::createWithEvent(LabelEvent* event)
-{
+LabelEventCell* LabelEventCell::createWithEvent(LabelEvent* event) {
     auto pRet = new LabelEventCell();
 
-    if (pRet && pRet->initWithEvent(event))
-    {
+    if (pRet && pRet->initWithEvent(event)) {
         pRet->autorelease();
         return pRet;
     }

@@ -5,10 +5,8 @@
 
 using namespace geode::prelude;
 
-class $modify (GameStatsManager)
-{
-    void incrementStat(char const* p0, int p1)
-    {
+class $modify(GameStatsManager) {
+    void incrementStat(char const* p0, int p1) {
         if (strcmp(p0, "2") == 0)
             return;
 
@@ -18,10 +16,8 @@ class $modify (GameStatsManager)
     QOLMOD_MOD_ALL_HOOKS("freeze-attempts")
 };
 
-class $modify (PlayLayer)
-{
-    void resetLevel()
-    {
+class $modify(PlayLayer) {
+    void resetLevel() {
         auto atts = m_level->m_attempts;
 
         PlayLayer::resetLevel();
