@@ -138,16 +138,14 @@ void LayoutPlayLayer::addObject(GameObject* object) {
     if (object->m_objectID == 749 || object->m_objectID == 44)
         dontAdd = false;
 
-    if (object->m_isHide && object->m_objectType != GameObjectType::Modifier &&
-        object->m_objectType != GameObjectType::Special)
+    if (object->m_isHide && object->m_objectType != GameObjectType::Modifier && object->m_objectType != GameObjectType::Special)
         addToSpecial = true;
 
     if (object->m_isNoTouch)
         dontAdd = true;
 
     if (object->m_groups && m_levelSettings->m_spawnGroup != 0 && object->m_groupCount > 0) {
-        if (std::find(object->m_groups->begin(), object->m_groups->end(), m_levelSettings->m_spawnGroup) !=
-            object->m_groups->end())
+        if (std::find(object->m_groups->begin(), object->m_groups->end(), m_levelSettings->m_spawnGroup) != object->m_groups->end())
             dontAdd = false;
     }
 

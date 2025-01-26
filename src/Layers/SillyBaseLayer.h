@@ -41,6 +41,5 @@ public:
 
     virtual bool setup();
 
-    bool initWithSizeAndName(
-        CCPoint size, std::string _title, bool createWithOK = true, bool animate = true, bool noBlur = false);
+    bool initWithSizeAndName(CCPoint size, std::string _title, bool createWithOK = true, bool animate = true, bool noBlur = false);
 };

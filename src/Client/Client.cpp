@@ -119,13 +119,10 @@ void Client::drawImGui() {
     }
 
     if (optionsModule) {
-        ImGui::SetNextWindowPos(
-            ImVec2(optionsModule->lastRenderedPosition.x + widgetSize.y, optionsModule->lastRenderedPosition.y));
+        ImGui::SetNextWindowPos(ImVec2(optionsModule->lastRenderedPosition.x + widgetSize.y, optionsModule->lastRenderedPosition.y));
         ImGui::SetNextWindowSize(ImVec2(widgetSize.x, widgetSize.y * optionsModule->options.size()));
 
-        ImGui::Begin("Module Options",
-                     nullptr,
-                     ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
+        ImGui::Begin("Module Options", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
         for (auto module : optionsModule->options) {
             ImGui::PushItemWidth(widgetSize.x);
@@ -187,9 +184,8 @@ void Client::sortWindows(bool instant) {
     std::map<float, float> yMap;
     bool stacking = false;
 
-    std::sort(Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) {
-        return a->priority < b->priority;
-    });
+    std::sort(
+        Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) { return a->priority < b->priority; });
 
     for (auto window : windows) {
         if (!yMap.contains(x))
@@ -243,8 +239,7 @@ void Client::toggleWindowVisibility(WindowTransitionType type, bool instant) {
 
     std::vector<Window*> windows = this->windows;
 
-    std::sort(
-        windows.begin(), windows.end(), [](Window* a, Window* b) { return a->getPosition().x < b->getPosition().x; });
+    std::sort(windows.begin(), windows.end(), [](Window* a, Window* b) { return a->getPosition().x < b->getPosition().x; });
 
     bool verticalUp;
     float lastX = 0;
@@ -263,24 +258,21 @@ void Client::toggleWindowVisibility(WindowTransitionType type, bool instant) {
 
                 bool verticalUp = window->getPosition().y > ImGui::GetIO().DisplaySize.y / 2;
 
-                if (window->windowPos.x == window->actualWindowPos.x &&
-                    window->windowPos.y == window->actualWindowPos.y) {
-                    window->setPosition(
-                        ccp(window->actualWindowPos.x,
-                            window->actualWindowPos.y +
-                                (!isWindowOpen ? 0
-                                               : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) *
-                                                     (verticalUp ? 1 : -1))));
+                if (window->windowPos.x == window->actualWindowPos.x && window->windowPos.y == window->actualWindowPos.y) {
+                    window->setPosition(ccp(
+                        window->actualWindowPos.x,
+                        window->actualWindowPos.y +
+                            (!isWindowOpen ? 0
+                                           : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) * (verticalUp ? 1 : -1))));
                 }
 
                 verticalMove = CCEaseInOut::create(
                     CCMoveTo::create(
                         instant ? 0 : 0.5f,
                         ccp(window->actualWindowPos.x,
-                            window->actualWindowPos.y +
-                                (isWindowOpen ? 0
-                                              : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) *
-                                                    (verticalUp ? 1 : -1)))),
+                            window->actualWindowPos.y + (isWindowOpen ? 0
+                                                                      : (ImGui::GetIO().DisplaySize.y + window->getDesiredWindowSize().y) *
+                                                                            (verticalUp ? 1 : -1)))),
                     2);
                 verticalMove->setTag(69);
 
@@ -302,8 +294,8 @@ void Client::setUIScale(float scale) {
     ImGuiCocos::get().setUIScale(scale);
 
     if (!font) {
-        font = ImGui::GetIO().Fonts->AddFontFromFileTTF(
-            (Mod::get()->getResourcesDir() / "Poppins-Regular.ttf").string().c_str(), 16.0f * scale);
+        font = ImGui::GetIO().Fonts->AddFontFromFileTTF((Mod::get()->getResourcesDir() / "Poppins-Regular.ttf").string().c_str(),
+                                                        16.0f * scale);
         ImGui::GetIO().FontDefault = font;
     }
 
@@ -318,9 +310,8 @@ void Client::setUIScale(float scale) {
         [this, oldScale, scale] { Loader::get()->queueInMainThread([this, oldScale, scale] { sortWindows(false); }); });
 }
 
-#define THEME_COLOUR(__name__)                                                                                         \
-    style->Colors[ImGuiCol_##__name__] =                                                                               \
-        ccc4ToVec(getThemeColour(#__name__, vecToCCC4(style->Colors[ImGuiCol_##__name__])))
+#define THEME_COLOUR(__name__)                                                                                                             \
+    style->Colors[ImGuiCol_##__name__] = ccc4ToVec(getThemeColour(#__name__, vecToCCC4(style->Colors[ImGuiCol_##__name__])))
 
 ccColor4B Client::getThemeColour(std::string key, ccColor4B def) {
     if (!ini->hasKey(fmt::format("Colors::{}", key)))
@@ -347,8 +338,7 @@ void Client::loadImGuiTheme(std::string theme) {
 
     ini->addVariable("accent_colour", fmt::format("#{}", cc4bToHexString(accentColour)));
 
-    widgetSize =
-        ImVec2(ini->getKeyValueFloat("WidgetSize::Width", "215"), ini->getKeyValueFloat("WidgetSize::Height", "25"));
+    widgetSize = ImVec2(ini->getKeyValueFloat("WidgetSize::Width", "215"), ini->getKeyValueFloat("WidgetSize::Height", "25"));
 
     auto style = &ImGui::GetStyle();
 

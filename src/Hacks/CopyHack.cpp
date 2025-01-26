@@ -11,8 +11,7 @@ class $modify(LevelInfoLayer) {
             return false;
 
         if (auto menu = getChildByID("left-side-menu")) {
-            if (auto locked = typeinfo_cast<CCMenuItemSpriteExtra*>(
-                    getChildBySpriteFrameName(menu, "GJ_duplicateLockedBtn_001.png"));
+            if (auto locked = typeinfo_cast<CCMenuItemSpriteExtra*>(getChildBySpriteFrameName(menu, "GJ_duplicateLockedBtn_001.png"));
                 locked && locked->isVisible()) {
                 locked->m_pfnSelector = menu_selector(LevelInfoLayer::confirmClone);
                 locked->setSprite(CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"));
@@ -20,13 +19,11 @@ class $modify(LevelInfoLayer) {
                 return true;
             }
 
-            if (auto unlocked =
-                    typeinfo_cast<CCMenuItemSpriteExtra*>(getChildBySpriteFrameName(menu, "GJ_duplicateBtn_001.png"))) {
+            if (auto unlocked = typeinfo_cast<CCMenuItemSpriteExtra*>(getChildBySpriteFrameName(menu, "GJ_duplicateBtn_001.png"))) {
                 unlocked->setVisible(true);
             } else {
-                auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"),
-                                                         this,
-                                                         menu_selector(LevelInfoLayer::confirmClone));
+                auto btn = CCMenuItemSpriteExtra::create(
+                    CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"), this, menu_selector(LevelInfoLayer::confirmClone));
                 btn->setID("copy-button");
 
                 m_cloneBtn = btn;
@@ -45,9 +42,8 @@ class $modify(LevelInfoLayer) {
         if (m_cloneBtn == nullptr)
             return true;
 
-        auto aCloneBtn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"),
-                                                       this,
-                                                       menu_selector(LevelInfoLayer::confirmClone));
+        auto aCloneBtn = CCMenuItemSpriteExtra::create(
+            CCSprite::createWithSpriteFrameName("GJ_duplicateBtn_001.png"), this, menu_selector(LevelInfoLayer::confirmClone));
         aCloneBtn->setPosition(m_cloneBtn->getPosition());
         m_cloneBtn->getParent()->addChild(aCloneBtn);
         m_cloneBtn->setVisible(false);
@@ -62,9 +58,7 @@ class $modify(ShowPasswordLayer, NumberInputLayer) {
     void onShowPassword(CCObject* sender) {
         auto v = as<CCNode*>(sender)->getTag();
 
-        FLAlertLayer::create("Level Password",
-                             fmt::format("The Level Password is <cl>{}</c>.", fmt::format("{}", v).substr(1)),
-                             "Thanks")
+        FLAlertLayer::create("Level Password", fmt::format("The Level Password is <cl>{}</c>.", fmt::format("{}", v).substr(1)), "Thanks")
             ->show();
     }
 
@@ -76,9 +70,8 @@ class $modify(ShowPasswordLayer, NumberInputLayer) {
             return true;
 
         if (auto l = CCScene::get()->getChildByType<LevelInfoLayer>(0)) {
-            auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"),
-                                                     this,
-                                                     menu_selector(ShowPasswordLayer::onShowPassword));
+            auto btn = CCMenuItemSpriteExtra::create(
+                CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(ShowPasswordLayer::onShowPassword));
             btn->setTag(l->m_level->m_password.value());
             btn->setPosition(ccp(119, 117));
 

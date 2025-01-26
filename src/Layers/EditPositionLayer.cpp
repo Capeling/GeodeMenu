@@ -34,16 +34,14 @@ void EditPositionLayer::customSetup() {
         scaleSlider->setValue(unscaleValue(scale));
         scaleSlider->setScale(0.55f);
         scaleSlider->setAnchorPoint(ccp(0, 0));
-        scaleSlider->setPosition(
-            ccp(CCDirector::get()->getWinSize().width / 2 + 55, CCDirector::get()->getWinSize().height - 70));
+        scaleSlider->setPosition(ccp(CCDirector::get()->getWinSize().width / 2 + 55, CCDirector::get()->getWinSize().height - 70));
 
         opacitySlider = Slider::create(this, menu_selector(EditPositionLayer::sliderValueChanged));
         opacitySlider->getThumb()->setTag(2);
         opacitySlider->setValue(opacity);
         opacitySlider->setScale(0.55f);
         opacitySlider->setAnchorPoint(ccp(0, 0));
-        opacitySlider->setPosition(
-            ccp(CCDirector::get()->getWinSize().width / 2 + 55, CCDirector::get()->getWinSize().height - 70 - 30));
+        opacitySlider->setPosition(ccp(CCDirector::get()->getWinSize().width / 2 + 55, CCDirector::get()->getWinSize().height - 70 - 30));
 
         auto scaleLabel = CCLabelBMFont::create("Scale:", "chatFont.fnt");
         scaleLabel->setAnchorPoint(ccp(1, 0.5f));
@@ -69,8 +67,7 @@ void EditPositionLayer::customSetup() {
         scaleSlider->setValue(unscaleValue(scale));
         scaleSlider->setScale(0.55f);
         scaleSlider->setAnchorPoint(ccp(0, 0));
-        scaleSlider->setPosition(
-            ccp(CCDirector::get()->getWinSize().width / 2 + 55, CCDirector::get()->getWinSize().height - 70));
+        scaleSlider->setPosition(ccp(CCDirector::get()->getWinSize().width / 2 + 55, CCDirector::get()->getWinSize().height - 70));
 
         auto scaleLabel = CCLabelBMFont::create("Scale:", "chatFont.fnt");
         scaleLabel->setAnchorPoint(ccp(1, 0.5f));
@@ -84,8 +81,7 @@ void EditPositionLayer::customSetup() {
 
     auto topRightMenu = CCMenu::create();
     topRightMenu->setPosition(CCDirector::get()->getWinSize() + ccp(-32, -35));
-    topRightMenu->addChild(
-        CCMenuItemToggler::createWithStandardSprites(this, menu_selector(EditPositionLayer::onTogglePreview), 0.75f));
+    topRightMenu->addChild(CCMenuItemToggler::createWithStandardSprites(this, menu_selector(EditPositionLayer::onTogglePreview), 0.75f));
 
     auto previewLabel = CCLabelBMFont::create("Preview", "bigFont.fnt");
     previewLabel->setPosition(topRightMenu->getPosition() + ccp(0, 23));
@@ -132,9 +128,8 @@ void EditPositionLayer::onReset(CCObject*) {
         Mod::get()->setSavedValue<float>("startpos-scale", 1);
         Mod::get()->setSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
-        position =
-            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
-                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                       Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
@@ -170,9 +165,8 @@ void EditPositionLayer::update(float dt) {
 
 CCMenu* EditPositionLayer::getNodeForType() {
     if (type == EditPositionType::StartposSwitcher) {
-        position =
-            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
-                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                       Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
@@ -238,14 +232,13 @@ CCMenu* EditPositionLayer::getNodeForType() {
         menu->addChildAtPosition(right, Anchor::Center);
         menu->addChildAtPosition(label, Anchor::Center);
 
-        auto area = TextArea::create(
-            "Keybinds are:\n<cl>N</c> : Previous Frame\n<cl>M</c> : Step Frame\n<cl>B</c> : Toggle Paused",
-            "chatFont.fnt",
-            1.0f,
-            1000,
-            ccp(0.5f, 0.5f),
-            20,
-            false);
+        auto area = TextArea::create("Keybinds are:\n<cl>N</c> : Previous Frame\n<cl>M</c> : Step Frame\n<cl>B</c> : Toggle Paused",
+                                     "chatFont.fnt",
+                                     1.0f,
+                                     1000,
+                                     ccp(0.5f, 0.5f),
+                                     20,
+                                     false);
         area->setPosition(ccp(CCDirector::get()->getWinSize().width / 2, CCDirector::get()->getWinSize().height - 120));
         this->addChild(area, 12);
 

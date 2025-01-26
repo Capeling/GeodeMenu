@@ -23,6 +23,5 @@ public:
     bool init(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback);
 
     // Callback is always run on main thread
-    static ThreadedLabelBMFont*
-    create(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback = nullptr);
+    static ThreadedLabelBMFont* create(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback = nullptr);
 };

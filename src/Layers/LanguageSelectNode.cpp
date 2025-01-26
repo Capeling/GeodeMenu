@@ -71,8 +71,7 @@ void LanguageSelectNode::goToPage(int page) {
 
     if (page == 0)
         layer = TranslationCreditsLayer::create(
-            matjson::parse(
-                "{ \"display_name_english\": \"Default\", \"display_name_native\": \"English\", \"contributors\": [] }")
+            matjson::parse("{ \"display_name_english\": \"Default\", \"display_name_native\": \"English\", \"contributors\": [] }")
                 .unwrapOr("{}"),
             "none");
     else {
@@ -97,8 +96,8 @@ void LanguageSelectNode::goToPage(int page) {
 
     layer->background->setColor(c);
 
-    for (auto child : CCArrayExt<CCSprite*>(
-             layer->ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren())) {
+    for (auto child :
+         CCArrayExt<CCSprite*>(layer->ground->getChildByType<CCSpriteBatchNode>(0)->getChildByType<CCSprite>(0)->getChildren())) {
         child->setColor(ccc3(c.r * 0.6f, c.g * 0.6f, c.b * 0.6f));
     }
 }

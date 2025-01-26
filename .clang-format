@@ -9,7 +9,7 @@ AlwaysBreakTemplateDeclarations: No
 BinPackArguments: false
 BinPackParameters: false
 BreakBeforeBraces: Attach
-ColumnLimit: 120
+ColumnLimit: 140
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 Cpp11BracedListStyle: true
 DerivePointerAlignment: false

@@ -2,17 +2,17 @@
 #include "../../Layers/LanguageSelectNode.hpp"
 #include "../AndroidBall.h"
 
-#define FADE_ICON(iconID, primary, secondary, glow, deathEffect)                                                       \
-    plr = SimplePlayer::create(iconID);                                                                                \
-    plr->setContentSize(ccp(30, 30));                                                                                  \
-    plr->setColor(GameManager::get()->colorForIdx(primary));                                                           \
-    plr->setSecondColor(GameManager::get()->colorForIdx(secondary));                                                   \
-    if (glow != -1)                                                                                                    \
-        plr->setGlowOutline(GameManager::get()->colorForIdx(glow));                                                    \
-    btn = CCMenuItemSpriteExtra::create(plr, this, menu_selector(Config::onRoxi));                                     \
-    btn->setTag(deathEffect);                                                                                          \
-    iconsMenu->addChild(btn);                                                                                          \
-    plr->setAnchorPoint(CCPointZero);                                                                                  \
+#define FADE_ICON(iconID, primary, secondary, glow, deathEffect)                                                                           \
+    plr = SimplePlayer::create(iconID);                                                                                                    \
+    plr->setContentSize(ccp(30, 30));                                                                                                      \
+    plr->setColor(GameManager::get()->colorForIdx(primary));                                                                               \
+    plr->setSecondColor(GameManager::get()->colorForIdx(secondary));                                                                       \
+    if (glow != -1)                                                                                                                        \
+        plr->setGlowOutline(GameManager::get()->colorForIdx(glow));                                                                        \
+    btn = CCMenuItemSpriteExtra::create(plr, this, menu_selector(Config::onRoxi));                                                         \
+    btn->setTag(deathEffect);                                                                                                              \
+    iconsMenu->addChild(btn);                                                                                                              \
+    plr->setAnchorPoint(CCPointZero);                                                                                                      \
     iconsMenu->updateLayout(btn)
 
 void Config::cocosCreate(CCMenu* menu) {
@@ -69,8 +69,7 @@ void Config::cocosCreate(CCMenu* menu) {
                                     menu_selector(Config::onDropdownChanged),
                                     Mod::get()->getSavedValue<int>("anim-mode", 2));
     animDropdown->setZOrder(42069);
-    menuTab->addChildAtPosition(
-        animDropdown, Anchor::TopLeft, ccp(5 + animTitle->getScaledContentSize().width + 2, -2 - 25));
+    menuTab->addChildAtPosition(animDropdown, Anchor::TopLeft, ccp(5 + animTitle->getScaledContentSize().width + 2, -2 - 25));
 
     CCPoint p;
 
@@ -256,8 +255,7 @@ void Config::cocosCreate(CCMenu* menu) {
     disableLabel->setScale(0.4f);
     disableLabel->setAnchorPoint(ccp(0, 0));
 
-    auto disableEditor =
-        CCMenuItemToggler::createWithStandardSprites(menu, menu_selector(Config::onDisableEditor), 0.69420f);
+    auto disableEditor = CCMenuItemToggler::createWithStandardSprites(menu, menu_selector(Config::onDisableEditor), 0.69420f);
     disableEditor->toggle(Mod::get()->getSavedValue<bool>("disable-editor_enabled", true));
 
     auto disableEditorLabel = CCLabelBMFont::create("Disable in editor:", "bigFont.fnt");
@@ -561,8 +559,8 @@ void Config::onDropdownChanged(CCObject*) {
 
 void Config::onLink(CCObject* sender) {
     auto a = geode::createQuickPopup("Hold Up!",
-                                     "Links are spooky! Are you sure you want to go to\n<cy>" +
-                                         std::string(as<CCNode*>(sender)->getID()) + "</c>?",
+                                     "Links are spooky! Are you sure you want to go to\n<cy>" + std::string(as<CCNode*>(sender)->getID()) +
+                                         "</c>?",
                                      "Cancel",
                                      "Yes",
                                      [](FLAlertLayer* a, bool btn2) {
@@ -604,10 +602,10 @@ void Config::onSliderChanged(CCObject* sender) {
     btn->stopAllActions();
     btnL->stopAllActions();
 
-    btn->runAction(CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f,
-                                    Mod::get()->getSavedValue<int>("normal-opacity", 255)));
-    btnL->runAction(CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f,
-                                     Mod::get()->getSavedValue<int>("normal-opacity", 255)));
+    btn->runAction(
+        CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f, Mod::get()->getSavedValue<int>("normal-opacity", 255)));
+    btnL->runAction(
+        CCFadeTo::create(Client::GetModuleEnabled("instant-fade") ? 0 : 0.35f, Mod::get()->getSavedValue<int>("normal-opacity", 255)));
 
     //"instant-fade"
 }
@@ -617,8 +615,7 @@ void Config::onDisableGP(CCObject* sender) {
 }
 
 void Config::onDisableEditor(CCObject* sender) {
-    Mod::get()->setSavedValue<bool>("disable-editor_enabled",
-                                    !Mod::get()->getSavedValue<bool>("disable-editor_enabled", true));
+    Mod::get()->setSavedValue<bool>("disable-editor_enabled", !Mod::get()->getSavedValue<bool>("disable-editor_enabled", true));
 }
 
 void Config::onChangeFile(CCObject*) {
@@ -666,8 +663,7 @@ void Config::drawImGui() {
         }
 
         setPosition(ccp(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y));
-        actualWindowPos =
-            ImVec2(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y);
+        actualWindowPos = ImVec2(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y);
     }
 
     float v = ImGuiCocos::get().getUIScale();

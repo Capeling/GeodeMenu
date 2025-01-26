@@ -9,11 +9,7 @@ Module* noWave = nullptr;
 Module* solidWave = nullptr;
 
 class $modify(CCDrawNode) {
-    bool drawPolygon(CCPoint* verts,
-                     unsigned int count,
-                     const ccColor4F& fillColor,
-                     float borderWidth,
-                     const ccColor4F& borderColor) {
+    bool drawPolygon(CCPoint* verts, unsigned int count, const ccColor4F& fillColor, float borderWidth, const ccColor4F& borderColor) {
         if (typeinfo_cast<HardStreak*>(this)) {
             if (!noWave)
                 noWave = Client::GetModule("no-wave");
@@ -25,8 +21,7 @@ class $modify(CCDrawNode) {
                 return true;
 
             if (solidWave->enabled) {
-                if (fillColor.r >= 1.0f && fillColor.g >= 1.0f && fillColor.b >= 1.0f &&
-                    this->getColor() != ccc3(255, 255, 255))
+                if (fillColor.r >= 1.0f && fillColor.g >= 1.0f && fillColor.b >= 1.0f && this->getColor() != ccc3(255, 255, 255))
                     return true;
 
                 if (this->getTag() != 1) {

@@ -145,8 +145,7 @@ void BlurLayer::draw() {
 
     GameToolbox::preVisitWithClippingRect(node, boundingBox());
 
-    rtex->getSprite()->setPosition(CCDirector::get()->getWinSize() / 2 -
-                                   ccp(boundingBox().getMinX(), boundingBox().getMinY()));
+    rtex->getSprite()->setPosition(CCDirector::get()->getWinSize() / 2 - ccp(boundingBox().getMinX(), boundingBox().getMinY()));
     rtex->visit();
 
     glDisable(0xc11);

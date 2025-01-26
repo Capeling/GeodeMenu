@@ -70,20 +70,14 @@ void LabelLayer::update(float dt) {
     nodes.at(LabelAnchor::BottomLeft)->setPosition(Labels::get()->safeZone.origin);
     nodes.at(LabelAnchor::CenterLeft)->setPositionX(Labels::get()->safeZone.origin.x);
     nodes.at(LabelAnchor::TopLeft)->setPositionX(Labels::get()->safeZone.origin.x);
-    nodes.at(LabelAnchor::TopLeft)
-        ->setPositionY(CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height);
+    nodes.at(LabelAnchor::TopLeft)->setPositionY(CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height);
     nodes.at(LabelAnchor::BottomCenter)->setPositionY(Labels::get()->safeZone.origin.y);
     nodes.at(LabelAnchor::BottomRight)->setPositionY(Labels::get()->safeZone.origin.y);
-    nodes.at(LabelAnchor::BottomRight)
-        ->setPositionX(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width);
-    nodes.at(LabelAnchor::CenterRight)
-        ->setPositionX(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width);
-    nodes.at(LabelAnchor::TopRight)
-        ->setPositionX(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width);
-    nodes.at(LabelAnchor::TopRight)
-        ->setPositionY(CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height);
-    nodes.at(LabelAnchor::TopCenter)
-        ->setPositionY(CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height);
+    nodes.at(LabelAnchor::BottomRight)->setPositionX(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width);
+    nodes.at(LabelAnchor::CenterRight)->setPositionX(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width);
+    nodes.at(LabelAnchor::TopRight)->setPositionX(CCDirector::get()->getWinSize().width - Labels::get()->safeZone.size.width);
+    nodes.at(LabelAnchor::TopRight)->setPositionY(CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height);
+    nodes.at(LabelAnchor::TopCenter)->setPositionY(CCDirector::get()->getWinSize().height - Labels::get()->safeZone.size.height);
 }
 
 void LabelLayer::triggerEvent(LabelEventType type) {
@@ -95,15 +89,13 @@ void LabelLayer::triggerEvent(LabelEventType type) {
                     array->retain();
 
                     if (event.fadeIn != -1)
-                        array->addObject(
-                            CCTintTo::create(event.fadeIn, event.colour.r, event.colour.g, event.colour.b));
+                        array->addObject(CCTintTo::create(event.fadeIn, event.colour.r, event.colour.g, event.colour.b));
 
                     if (event.hold != -1)
                         array->addObject(CCDelayTime::create(event.hold));
 
                     if (event.fadeOut != -1)
-                        array->addObject(CCTintTo::create(
-                            event.fadeOut, mod->getColour().r, mod->getColour().g, mod->getColour().b));
+                        array->addObject(CCTintTo::create(event.fadeOut, mod->getColour().r, mod->getColour().g, mod->getColour().b));
 
                     auto seq = CCSequence::create(array);
                     seq->setTag(80085);
@@ -269,12 +261,8 @@ CCNode* LabelLayer::createNodeForAnchor(LabelAnchor anchor) {
     if (point.y != 0)
         layout->setAxisReverse(true);
 
-    layout->setAxisAlignment(point.y == 0      ? AxisAlignment::Start
-                             : point.y == 0.5f ? AxisAlignment::Center
-                                               : AxisAlignment::End);
-    layout->setCrossAxisAlignment(point.x == 0      ? AxisAlignment::Start
-                                  : point.x == 0.5f ? AxisAlignment::Center
-                                                    : AxisAlignment::End);
+    layout->setAxisAlignment(point.y == 0 ? AxisAlignment::Start : point.y == 0.5f ? AxisAlignment::Center : AxisAlignment::End);
+    layout->setCrossAxisAlignment(point.x == 0 ? AxisAlignment::Start : point.x == 0.5f ? AxisAlignment::Center : AxisAlignment::End);
     layout->setCrossAxisLineAlignment(layout->getCrossAxisAlignment());
 
     node->setLayout(layout);

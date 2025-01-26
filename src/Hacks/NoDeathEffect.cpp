@@ -36,8 +36,7 @@ class $modify(PlayLayer) {
                     return;
                 } else {
                     auto act = CCSequence::create(
-                        CCDelayTime::create(
-                            as<InputModule*>(Client::GetModule("custom-respawn-time")->options[0])->getFloatValue()),
+                        CCDelayTime::create(as<InputModule*>(Client::GetModule("custom-respawn-time")->options[0])->getFloatValue()),
                         CCCallFunc::create(this, callfunc_selector(PlayLayer::delayedResetLevel)),
                         nullptr);
                     act->setTag(0x10);

@@ -58,8 +58,7 @@ class $modify(CCKeyboardDispatcher) {
                         // ui->onClose(nullptr);
                         ui->keyBackClicked();
 
-                        if (PlayLayer::get() && !PlayLayer::get()->m_isPaused &&
-                            !PlayLayer::get()->m_levelEndAnimationStarted &&
+                        if (PlayLayer::get() && !PlayLayer::get()->m_isPaused && !PlayLayer::get()->m_levelEndAnimationStarted &&
                             !GameManager::sharedState()->getGameVariable("0024"))
                             PlatformToolbox::hideCursor();
                     } else {
@@ -132,9 +131,8 @@ class $modify(MenuLayer) {
             }
 
             if (Client::GetModuleEnabled("save-pos")) {
-                AndroidBall::position =
-                    ccp(Mod::get()->getSavedValue("posX", 32),
-                        Mod::get()->getSavedValue("posY", CCDirector::get()->getWinSize().height / 2));
+                AndroidBall::position = ccp(Mod::get()->getSavedValue("posX", 32),
+                                            Mod::get()->getSavedValue("posY", CCDirector::get()->getWinSize().height / 2));
 
                 if (AndroidBall::position.x < 0)
                     AndroidBall::position.x = 0;

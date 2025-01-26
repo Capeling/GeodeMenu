@@ -23,14 +23,11 @@ void Level::onFix(CCObject*) {
 
 void Level::onUnc(CCObject* sender) {
     if (!(PlayLayer::get() || CCScene::get()->getChildByType<LevelInfoLayer>(0)))
-        return FLAlertLayer::create(
-                   "Uncomplete Level", "You must be in a level or on a level page to uncomplete a level", "OK")
-            ->show();
+        return FLAlertLayer::create("Uncomplete Level", "You must be in a level or on a level page to uncomplete a level", "OK")->show();
 
     auto protocol = new Uncomplete();
 
-    if (Mod::get()->getSavedValue<bool>("uncomplete-dont-show", false) &&
-        !CCKeyboardDispatcher::get()->getShiftKeyPressed()) {
+    if (Mod::get()->getSavedValue<bool>("uncomplete-dont-show", false) && !CCKeyboardDispatcher::get()->getShiftKeyPressed()) {
         protocol->FLAlert_Clicked(nullptr, true);
     } else {
         auto alert = ConfirmFLAlertLayer::create(

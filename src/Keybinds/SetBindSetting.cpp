@@ -47,8 +47,7 @@ bool SetBindNode::init(SetBindValue* value, float width) {
     }
 
     menu->setLayout(
-        AxisLayout::create()->setAxis(Axis::Row)->setAutoScale(false)->setAxisReverse(true)->setAxisAlignment(
-            AxisAlignment::End));
+        AxisLayout::create()->setAxis(Axis::Row)->setAutoScale(false)->setAxisReverse(true)->setAxisAlignment(AxisAlignment::End));
 
     this->addChildAtPosition(label, Anchor::Left, ccp(15, 0));
     this->addChildAtPosition(menu, Anchor::Right, ccp(-10, 0));
@@ -73,9 +72,7 @@ void SetBindNode::onKeySubmit(CCObject* sender) {
     auto ins = as<SetBindNode*>(as<CCNode*>(sender)->getUserData());
 
     if (key == -1)
-        return FLAlertLayer::create(
-                   "Keybind Error", "<cr>Unsupported key</c>\nCocos2d-x doesn't support this key.", "OK")
-            ->show();
+        return FLAlertLayer::create("Keybind Error", "<cr>Unsupported key</c>\nCocos2d-x doesn't support this key.", "OK")->show();
 
     if (std::find(buttons.begin(), buttons.end(), key) != buttons.end())
         return FLAlertLayer::create("Keybind Error", "You already have this key added", "OK")->show();

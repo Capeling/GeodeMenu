@@ -26,14 +26,8 @@ void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos) {
         ok->setAnchorPoint(ccp(0.43f, 0.2f));
 
         auto btn = CCMenuItemToggler::create(
-            ButtonSprite::create(reinterpret_cast<CCSprite*>(CCLabelBMFont::create("XY", "bigFont.fnt")),
-                                 30,
-                                 69,
-                                 30,
-                                 1,
-                                 false,
-                                 "GJ_button_05.png",
-                                 true),
+            ButtonSprite::create(
+                reinterpret_cast<CCSprite*>(CCLabelBMFont::create("XY", "bigFont.fnt")), 30, 69, 30, 1, false, "GJ_button_05.png", true),
             ButtonSprite::create(ok, 30, 69, 30, 1, false, "GJ_button_05.png", true),
             menu,
             menu_selector(SetValueModule::onScaleToggle));

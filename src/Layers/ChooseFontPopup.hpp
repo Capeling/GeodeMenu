@@ -16,8 +16,7 @@ public:
     std::vector<CCMenuItemToggler*> toggles;
 
     void setSelected(int id);
-    void setSelected(
-        std::string font); // selects the node based of a font name, if the font does not exist just sets it to bigFont
+    void setSelected(std::string font); // selects the node based of a font name, if the font does not exist just sets it to bigFont
 
     void onSelect(CCObject* sender);
 

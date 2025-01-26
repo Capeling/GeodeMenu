@@ -16,8 +16,7 @@ void LabelModule::setFont(std::string newFont) {
 }
 
 std::string LabelModule::getFont() {
-    return CCFileUtils::sharedFileUtils()->isFileExist(
-               CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false))
+    return CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false))
                ? font
                : "bigFont.fnt";
 }
@@ -170,9 +169,7 @@ void LabelModule::exportToFile() {
             if (res.isOk())
                 FLAlertLayer::create("Success!", "<cg>Success</c> exporting <cc>file</c>!", "OK")->show();
             else
-                FLAlertLayer::create("Failure!",
-                                     fmt::format("<cr>Failed</c> exporting <cc>file</c>!\n<cr>{}</c>", res.unwrapErr()),
-                                     "OK")
+                FLAlertLayer::create("Failure!", fmt::format("<cr>Failed</c> exporting <cc>file</c>!\n<cr>{}</c>", res.unwrapErr()), "OK")
                     ->show();
         }
     });

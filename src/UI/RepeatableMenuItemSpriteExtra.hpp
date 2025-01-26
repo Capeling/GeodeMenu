@@ -16,10 +16,7 @@ public:
 
     virtual void update(float dt);
 
-    static RepeatableMenuItemSpriteExtra* create(cocos2d::CCNode* sprite,
-                                                 cocos2d::CCNode* disabledSprite,
-                                                 cocos2d::CCObject* target,
-                                                 cocos2d::SEL_MenuHandler callback);
     static RepeatableMenuItemSpriteExtra*
-    create(cocos2d::CCNode* sprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback);
+    create(cocos2d::CCNode* sprite, cocos2d::CCNode* disabledSprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback);
+    static RepeatableMenuItemSpriteExtra* create(cocos2d::CCNode* sprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback);
 };

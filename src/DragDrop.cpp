@@ -60,8 +60,8 @@ class DropTarget : IDropTarget {
         HDROP drop = (HDROP) medium.hGlobal;
         wchar_t* fileName = NULL;
         //See https://docs.microsoft.com/en-us/windows/desktop/api/shellapi/nf-shellapi-dragqueryfilew
-        UINT filePathesCount = DragQueryFile(
-            drop, 0xFFFFFFFF, NULL, 512); //If "0xFFFFFFFF" as the second parameter: return the count of files dropped
+        UINT filePathesCount =
+            DragQueryFile(drop, 0xFFFFFFFF, NULL, 512); //If "0xFFFFFFFF" as the second parameter: return the count of files dropped
         UINT longestFileNameLength = 0;
 
         std::vector<std::string> paths;

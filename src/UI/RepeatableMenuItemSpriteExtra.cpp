@@ -54,8 +54,7 @@ RepeatableMenuItemSpriteExtra* RepeatableMenuItemSpriteExtra::create(cocos2d::CC
     return nullptr;
 }
 
-RepeatableMenuItemSpriteExtra* RepeatableMenuItemSpriteExtra::create(cocos2d::CCNode* sprite,
-                                                                     cocos2d::CCObject* target,
-                                                                     cocos2d::SEL_MenuHandler callback) {
+RepeatableMenuItemSpriteExtra*
+RepeatableMenuItemSpriteExtra::create(cocos2d::CCNode* sprite, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler callback) {
     return create(sprite, nullptr, target, callback);
 }

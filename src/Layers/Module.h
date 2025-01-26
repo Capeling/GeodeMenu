@@ -29,8 +29,7 @@ public:
 
         auto res = utils::file::writeString(p, str.c_str());
 
-        CCScene::get()->addChild(
-            TextAlertPopup::create("Successfully saved '" + inp->getString() + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
+        CCScene::get()->addChild(TextAlertPopup::create("Successfully saved '" + inp->getString() + ".gdr'", 0.5f, 0.6f, 150, ""), 9999999);
 
         this->removeFromParent();
     }
@@ -211,17 +210,15 @@ public:
         inp->getInputNode()->setID("IGNOREBYPASSES"_spr);
         l->addChild(inp);
 
-        errorLbl = CCLabelBMFont::create(GJReplayManager::replay.inputs.size() == 0 ? "Macro cannot be empty"
-                                                                                    : "Macro name cannot be empty",
-                                         "bigFont.fnt");
+        errorLbl = CCLabelBMFont::create(
+            GJReplayManager::replay.inputs.size() == 0 ? "Macro cannot be empty" : "Macro name cannot be empty", "bigFont.fnt");
         errorLbl->setColor(ccc3(255, 0, 0));
         errorLbl->setOpacity(100);
         errorLbl->setPosition(l->getContentSize() / 2 + ccp(0, -25));
         errorLbl->limitLabelWidth(725 * 0.375, 1.0f, 0.1f);
         l->addChild(errorLbl);
 
-        auto cancel =
-            CCMenuItemSpriteExtra::create(ButtonSprite::create("Cancel"), this, menu_selector(SaveMacroPopup::onClose));
+        auto cancel = CCMenuItemSpriteExtra::create(ButtonSprite::create("Cancel"), this, menu_selector(SaveMacroPopup::onClose));
         cancel->setPosition(l->getContentSize() / 2 + ccp(-40, -82));
         l->addChild(cancel);
 
@@ -232,9 +229,8 @@ public:
         ok->setEnabled(false);
         l->addChild(ok);
 
-        auto info = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"),
-                                                  this,
-                                                  menu_selector(SaveMacroPopup::onMacroInfo));
+        auto info = CCMenuItemSpriteExtra::create(
+            CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(SaveMacroPopup::onMacroInfo));
         l->addChildAtPosition(info, Anchor::TopRight, ccp(-10 - 6, -10 - 8));
 
         this->addChild(l);

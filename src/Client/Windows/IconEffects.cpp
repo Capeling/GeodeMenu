@@ -40,13 +40,13 @@ ccColor3B EffectUI::getColourForSelected(int mode, bool player2) // bri`ish
             case 2:
                 return gameManager->colorForIdx(gameManager->m_playerGlowColor.value());
             case 3:
-                return gameManager->colorForIdx(
-                    sameDual ? gameManager->m_playerColor2.value()
-                             : (player2 ? gameManager->m_playerColor.value() : gameManager->m_playerColor2.value()));
+                return gameManager->colorForIdx(sameDual
+                                                    ? gameManager->m_playerColor2.value()
+                                                    : (player2 ? gameManager->m_playerColor.value() : gameManager->m_playerColor2.value()));
             default:
-                return gameManager->colorForIdx(
-                    sameDual ? gameManager->m_playerColor.value()
-                             : (player2 ? gameManager->m_playerColor2.value() : gameManager->m_playerColor.value()));
+                return gameManager->colorForIdx(sameDual
+                                                    ? gameManager->m_playerColor.value()
+                                                    : (player2 ? gameManager->m_playerColor2.value() : gameManager->m_playerColor.value()));
         }
     }
 

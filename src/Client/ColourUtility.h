@@ -8,9 +8,8 @@ class ColourUtility {
 public:
     static cocos2d::ccColor3B cc3x(int hexValue) {
         if (hexValue <= 0xf)
-            return geode::prelude::ccColor3B{static_cast<GLubyte>(hexValue * 17),
-                                             static_cast<GLubyte>(hexValue * 17),
-                                             static_cast<GLubyte>(hexValue * 17)};
+            return geode::prelude::ccColor3B{
+                static_cast<GLubyte>(hexValue * 17), static_cast<GLubyte>(hexValue * 17), static_cast<GLubyte>(hexValue * 17)};
         if (hexValue <= 0xff)
             return geode::prelude::ccColor3B{
                 static_cast<GLubyte>(hexValue), static_cast<GLubyte>(hexValue), static_cast<GLubyte>(hexValue)};
@@ -101,8 +100,7 @@ public:
                 break;
         }
 
-        return geode::prelude::ccc3(
-            static_cast<uint8_t>(r * 255), static_cast<uint8_t>(g * 255), static_cast<uint8_t>(b * 255));
+        return geode::prelude::ccc3(static_cast<uint8_t>(r * 255), static_cast<uint8_t>(g * 255), static_cast<uint8_t>(b * 255));
     }
 
     static geode::prelude::ccColor3B getChromaColour(float v = -1) {
@@ -123,8 +121,7 @@ public:
 			return cc3x(pastelV[v]);*/
     }
 
-    static geode::prelude::ccColor3B
-    lerpColour(const geode::prelude::ccColor3B& color1, const geode::prelude::ccColor3B& color2, float t) {
+    static geode::prelude::ccColor3B lerpColour(const geode::prelude::ccColor3B& color1, const geode::prelude::ccColor3B& color2, float t) {
         if (t < 0)
             t = 0;
 

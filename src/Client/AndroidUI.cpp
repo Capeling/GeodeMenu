@@ -73,13 +73,11 @@ bool AndroidUI::setup() {
                                ->setAutoScale(false)
                                ->setGap(3.5f));
 
-    std::sort(Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) {
-        return a->priority < b->priority;
-    });
+    std::sort(
+        Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) { return a->priority < b->priority; });
 
     // 🥶
-    auto windowScroll =
-        ScrollLayer::create(ccp(windows->getContentSize().width + 5 * 2, windows->getContentSize().height - 35 - 5));
+    auto windowScroll = ScrollLayer::create(ccp(windows->getContentSize().width + 5 * 2, windows->getContentSize().height - 35 - 5));
     windowScroll->setTouchEnabled(Client::get()->windows.size() > 9);
     windowScroll->setMouseEnabled(Client::get()->windows.size() > 9);
     windowScroll->setPosition(ccp(-5, windows->getContentHeight() - 5 - windowScroll->getContentHeight()));
@@ -271,8 +269,7 @@ void AndroidUI::updateVersionLabel() {
     */
 
     auto ver = Mod::get()->getVersion();
-    versionInfo->setString(
-        fmt::format("Using Version {}.{}.{}", ver.getMajor(), ver.getMinor(), ver.getPatch()).c_str());
+    versionInfo->setString(fmt::format("Using Version {}.{}.{}", ver.getMajor(), ver.getMinor(), ver.getPatch()).c_str());
 
     checkingSprite->setVisible(!hasCheckedForUpdates);
 
@@ -303,8 +300,7 @@ void AndroidUI::updateVersionLabel() {
         versionInfo->setString(fmt::format("{}\nUpdate Available!", versionInfo->getString()).c_str());
 
         for (size_t i = 0; i < 17; i++) {
-            if (auto n = as<CCNodeRGBA*>(
-                    versionInfo->getChildren()->objectAtIndex(versionInfo->getChildren()->count() - i - 1))) {
+            if (auto n = as<CCNodeRGBA*>(versionInfo->getChildren()->objectAtIndex(versionInfo->getChildren()->count() - i - 1))) {
                 n->setColor(ccc3(87, 87, 255));
             }
         }
@@ -398,8 +394,7 @@ void AndroidUI::textChanged(CCTextInputNode* p0) {
             if (!module)
                 continue;
 
-            if (string::toLower(module->name).find(string::toLower(std::string(inputField->getString()))) !=
-                std::string::npos) {
+            if (string::toLower(module->name).find(string::toLower(std::string(inputField->getString()))) != std::string::npos) {
                 if (!(module->id.starts_with("anim-speed")))
                     modules.push_back(module);
             }
@@ -408,8 +403,7 @@ void AndroidUI::textChanged(CCTextInputNode* p0) {
                 if (!option)
                     continue;
 
-                if (string::toLower(option->name).find(string::toLower(std::string(inputField->getString()))) !=
-                    std::string::npos) {
+                if (string::toLower(option->name).find(string::toLower(std::string(inputField->getString()))) != std::string::npos) {
                     if (!(option->id.starts_with("anim-speed")))
                         modules.push_back(option);
                 }
@@ -478,8 +472,7 @@ CCAction* AndroidUI::getEnterAction(CCNode* panel) {
         return UnspeedhackedAction::create(CCEaseElasticOut::create(CCScaleTo::create(0.5f, 1), 0.6f));
     }
 
-    return UnspeedhackedAction::create(
-        CCEaseElasticOut::create(CCMoveTo::create(1, CCDirector::get()->getWinSize() / 2), 0.3f));
+    return UnspeedhackedAction::create(CCEaseElasticOut::create(CCMoveTo::create(1, CCDirector::get()->getWinSize() / 2), 0.3f));
 }
 
 void AndroidUI::onPressTab(CCObject* sender) {

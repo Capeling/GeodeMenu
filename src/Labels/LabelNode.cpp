@@ -106,16 +106,13 @@ void LabelNode::update(float dt) {
     script->setVariable("isEditor", rift::Value::boolean(LevelEditorLayer::get()));
     script->setVariable("isLevel", rift::Value::boolean(PlayLayer::get()));
 
-    script->setVariable("noclip_deaths",
-                        rift::Value::integer(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipDeaths()));
-    script->setVariable(
-        "noclip_accuracy",
-        rift::Value::floating(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipAccuracy() * 100));
+    script->setVariable("noclip_deaths", rift::Value::integer(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipDeaths()));
+    script->setVariable("noclip_accuracy",
+                        rift::Value::floating(as<NoclipBaseGameLayer*>(GJBaseGameLayer::get())->getNoclipAccuracy() * 100));
 
     if (auto lvl = GJBaseGameLayer::get()->m_level) {
         script->setVariable("level_name", rift::Value::string(lvl->m_levelName));
-        script->setVariable("level_creator",
-                            rift::Value::string(lvl->m_creatorName.empty() ? "RobTop" : lvl->m_creatorName));
+        script->setVariable("level_creator", rift::Value::string(lvl->m_creatorName.empty() ? "RobTop" : lvl->m_creatorName));
         script->setVariable("level_description", rift::Value::string(lvl->getUnpackedLevelDescription()));
         script->setVariable("level_upload", rift::Value::string(lvl->m_uploadDate));
         script->setVariable("level_update", rift::Value::string(lvl->m_updateDate));
@@ -127,20 +124,16 @@ void LabelNode::update(float dt) {
         script->setVariable("level_version", rift::Value::integer(lvl->m_levelVersion));
         script->setVariable("level_game_version", rift::Value::integer(lvl->m_gameVersion));
 
-        script->setVariable("normal_best",
-                            rift::Value::integer(GJBaseGameLayer::get()->m_level->m_normalPercent.value()));
+        script->setVariable("normal_best", rift::Value::integer(GJBaseGameLayer::get()->m_level->m_normalPercent.value()));
         script->setVariable("practice_best", rift::Value::integer(GJBaseGameLayer::get()->m_level->m_practicePercent));
     }
 
     if (PlayLayer::get()) {
-        script->setVariable("bestRun_from",
-                            rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestFrom));
-        script->setVariable("bestRun_to",
-                            rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestTo));
+        script->setVariable("bestRun_from", rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestFrom));
+        script->setVariable("bestRun_to", rift::Value::floating(as<BestPlayLayer*>(PlayLayer::get())->m_fields->bestTo));
         script->setVariable("percentage", rift::Value::floating(PlayLayer::get()->getCurrentPercent()));
         script->setVariable("last_percentage", rift::Value::floating(LabelLayer::get()->getLastPercentage()));
-        script->setVariable("run_from",
-                            rift::Value::floating(as<RunPlayLayer*>(PlayLayer::get())->m_fields->fromPercent));
+        script->setVariable("run_from", rift::Value::floating(as<RunPlayLayer*>(PlayLayer::get())->m_fields->fromPercent));
     }
 
     auto res2 = script->run();

@@ -23,8 +23,7 @@ void ChooseFontPopup::customSetup() {
     auto scroll = ScrollLayer::create(filter->getContentSize() / 2);
     scroll->m_contentLayer->setContentHeight(cellSize * fontCount);
     scroll->moveToTop();
-    scroll->m_contentLayer->setLayout(
-        AxisLayout::create(Axis::Column)->setAutoScale(false)->setGap(0)->setAxisReverse(true));
+    scroll->m_contentLayer->setLayout(AxisLayout::create(Axis::Column)->setAutoScale(false)->setGap(0)->setAxisReverse(true));
 
     for (size_t i = 0; i < fontCount; i++) {
         std::string name;

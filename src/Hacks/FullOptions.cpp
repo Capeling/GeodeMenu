@@ -27,9 +27,8 @@ class $modify(OptionsLayerExt, OptionsLayer) {
         if (!PlayLayer::get())
             return;
 
-        auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_optionsBtn02_001.png"),
-                                                 this,
-                                                 menu_selector(OptionsLayerExt::onPauseOptions));
+        auto btn = CCMenuItemSpriteExtra::create(
+            CCSprite::createWithSpriteFrameName("GJ_optionsBtn02_001.png"), this, menu_selector(OptionsLayerExt::onPauseOptions));
         btn->setID("normal-settings-btn"_spr);
 
         if (auto m = m_mainLayer->getChildByType<CCMenu>(-2)) {

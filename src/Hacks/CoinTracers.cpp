@@ -50,8 +50,7 @@ class $modify(PlayLayer) {
 
         for (auto coin : m_fields->coins) {
             if (coin->getOpacity() != 0)
-                m_fields->dn->drawSegment(
-                    m_player1->getPosition(), coin->getPosition(), 1, ccc4FFromccc3B(coinColour->colour));
+                m_fields->dn->drawSegment(m_player1->getPosition(), coin->getPosition(), 1, ccc4FFromccc3B(coinColour->colour));
         }
     }
 };

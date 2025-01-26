@@ -55,8 +55,7 @@ bool SillyBaseLayer::setup() {
     return true;
 }
 
-bool SillyBaseLayer::initWithSizeAndName(
-    CCPoint size, std::string _title, bool createWithOK, bool animate, bool noBlur) {
+bool SillyBaseLayer::initWithSizeAndName(CCPoint size, std::string _title, bool createWithOK, bool animate, bool noBlur) {
     this->_title = _title;
     this->createWithOK = createWithOK;
     this->animate = animate;

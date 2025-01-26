@@ -155,16 +155,11 @@ public:
     }
 
     void updateSelections() {
-        selections[0]->setPosition(
-            parts[0][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 0), 0)]->getPosition());
-        selections[1]->setPosition(
-            parts[1][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 1), 0)]->getPosition());
-        selections[2]->setPosition(
-            parts[2][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 2), 0)]->getPosition());
-        selections[3]->setPosition(
-            parts[3][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 3), 0)]->getPosition());
-        selections[4]->setPosition(
-            parts[4][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 4), 0)]->getPosition());
+        selections[0]->setPosition(parts[0][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 0), 0)]->getPosition());
+        selections[1]->setPosition(parts[1][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 1), 0)]->getPosition());
+        selections[2]->setPosition(parts[2][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 2), 0)]->getPosition());
+        selections[3]->setPosition(parts[3][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 3), 0)]->getPosition());
+        selections[4]->setPosition(parts[4][Mod::get()->getSavedValue<int>(fmt::format("selColour{}", 4), 0)]->getPosition());
 
         EffectUI::updateValues();
     }
@@ -338,14 +333,12 @@ public:
 
 #pragma endregion
 
-        auto sameTitle =
-            CCLabelBMFont::create("Same\nDual\nColour", "bigFont.fnt", 110, CCTextAlignment::kCCTextAlignmentCenter);
+        auto sameTitle = CCLabelBMFont::create("Same\nDual\nColour", "bigFont.fnt", 110, CCTextAlignment::kCCTextAlignmentCenter);
         sameTitle->setPosition(menu->getContentSize() + ccp(-25, -20));
         sameTitle->setScale(0.3f);
         menu->addChild(sameTitle);
 
-        auto sameDual =
-            CCMenuItemToggler::createWithStandardSprites(menu, menu_selector(IconEffects::changeDual), 0.6f);
+        auto sameDual = CCMenuItemToggler::createWithStandardSprites(menu, menu_selector(IconEffects::changeDual), 0.6f);
         sameDual->setPosition(menu->getContentSize() + ccp(-25, -50));
         sameDual->toggle(Mod::get()->getSavedValue<bool>("same-dual"));
         menu->addChild(sameDual);

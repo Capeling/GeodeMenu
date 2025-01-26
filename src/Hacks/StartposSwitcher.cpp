@@ -26,9 +26,7 @@ class $modify(StartposPlayLayer, PlayLayer) {
         if (m_fields->objs.empty())
             return;
 
-        std::sort(m_fields->objs.begin(), m_fields->objs.end(), [](auto* a, auto* b) {
-            return a->getPositionX() < b->getPositionX();
-        });
+        std::sort(m_fields->objs.begin(), m_fields->objs.end(), [](auto* a, auto* b) { return a->getPositionX() < b->getPositionX(); });
 
         if (index < -1)
             index = m_fields->objs.size() - 1;
@@ -70,8 +68,7 @@ class $modify(StartposPlayLayer, PlayLayer) {
             m_fields->objs.push_back(as<StartPosObject*>(obj));
 
 #ifndef GEODE_IS_MACOS
-            if (as<StartPosObject*>(obj)->m_startSettings &&
-                !as<StartPosObject*>(obj)->m_startSettings->m_disableStartPos)
+            if (as<StartPosObject*>(obj)->m_startSettings && !as<StartPosObject*>(obj)->m_startSettings->m_disableStartPos)
                 m_fields->selectedIndex++;
 #endif
         }
@@ -116,27 +113,20 @@ class $modify(StartposPlayLayer, PlayLayer) {
         if (!m_fields->menu || !m_fields->label)
             return;
 
-        m_fields->position =
-            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
-                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        m_fields->position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                                 Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         m_fields->scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         m_fields->opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 1);
 
         m_fields->label->setString(fmt::format("{}/{}", m_fields->selectedIndex + 1, m_fields->objs.size()).c_str());
         m_fields->label->limitLabelWidth(100, 0.65f, 0);
 
-        auto action = CCSequence::create(CCFadeTo::create(0.1f, 225),
-                                         CCFadeTo::create(0.6f, 225),
-                                         CCFadeTo::create(0.3f, 255 * m_fields->opacity),
-                                         nullptr);
-        auto action2 = CCSequence::create(CCFadeTo::create(0.1f, 225),
-                                          CCFadeTo::create(0.6f, 225),
-                                          CCFadeTo::create(0.3f, 255 * m_fields->opacity),
-                                          nullptr);
-        auto action3 = CCSequence::create(CCFadeTo::create(0.1f, 225),
-                                          CCFadeTo::create(0.6f, 225),
-                                          CCFadeTo::create(0.3f, 255 * m_fields->opacity),
-                                          nullptr);
+        auto action = CCSequence::create(
+            CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr);
+        auto action2 = CCSequence::create(
+            CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr);
+        auto action3 = CCSequence::create(
+            CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr);
 
         m_fields->label->runAction(action);
         m_fields->left->runAction(action2);
@@ -192,6 +182,5 @@ class StartposUIDelegate : public ModuleChangeDelegate {
 };
 
 $execute {
-    Loader::get()->queueInMainThread(
-        [] { Client::GetModule("startpos-switcher")->delegate = new StartposUIDelegate(); });
+    Loader::get()->queueInMainThread([] { Client::GetModule("startpos-switcher")->delegate = new StartposUIDelegate(); });
 }

@@ -27,8 +27,7 @@ bool TrajectoryPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCrea
 
     auto tbgl = base_cast<TrajectoryBGL*>(this);
 
-    tbgl->m_fields->trajectoryPlayer =
-        as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
+    tbgl->m_fields->trajectoryPlayer = as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
     tbgl->m_fields->trajectoryDraw = CCDrawNode::create();
 
     tbgl->m_fields->trajectoryPlayer->setVisible(false);
@@ -65,8 +64,7 @@ bool TrajectoryEditorLayer::init(GJGameLevel* p0, bool p1) {
 
     auto tbgl = base_cast<TrajectoryBGL*>(this);
 
-    tbgl->m_fields->trajectoryPlayer =
-        as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
+    tbgl->m_fields->trajectoryPlayer = as<TrajectoryPlayerObject*>(PlayerObject::create(0, 0, this, m_objectLayer, false));
     tbgl->m_fields->trajectoryDraw = CCDrawNode::create();
 
     tbgl->m_fields->trajectoryPlayer->setVisible(false);
@@ -447,8 +445,7 @@ void TrajectoryBGL::simulateTrajectory(bool press, PlayerObject* player) {
                                m_fields->trajectoryPlayer->getPosition(),
                                m_fields->point,
                                0.5f,
-                               m_fields->trajectoryPlayer->m_isDead ? ccc4f(1, 0, 0, 1)
-                                                                    : ccc4f(0, press ? 1 : 0.45f, 0, 1));
+                               m_fields->trajectoryPlayer->m_isDead ? ccc4f(1, 0, 0, 1) : ccc4f(0, press ? 1 : 0.45f, 0, 1));
         m_fields->point = m_fields->trajectoryPlayer->getPosition();
 
         if (m_fields->trajectoryPlayer->m_isDead) {

@@ -11,8 +11,7 @@ class $modify(GJBaseGameLayer) {
                 auto obj = p1->at(i);
 
                 if (p0->getObjectRect().intersectsRect(obj->getObjectRect())) {
-                    if (obj->m_objectType == GameObjectType::SecretCoin ||
-                        obj->m_objectType == GameObjectType::UserCoin) {
+                    if (obj->m_objectType == GameObjectType::SecretCoin || obj->m_objectType == GameObjectType::UserCoin) {
                         if (obj->getOpacity() != 0)
                             destroyObject(obj);
                     }

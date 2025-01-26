@@ -10,9 +10,8 @@ void TransCustomizerModule::makeAndroid(CCNode* menu, CCPoint pos) {
     left->setVisible(Mod::get()->getSavedValue<int>("transition", 0) != 0);
     menu->addChildAtPosition(left, Anchor::Center, ccp(-110, 8 + 20));
 
-    right = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png"),
-                                          menu,
-                                          menu_selector(TransCustomizerModule::onRight));
+    right = CCMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png"), menu, menu_selector(TransCustomizerModule::onRight));
     as<CCSprite*>(right->getNormalImage())->setFlipX(true);
     right->setVisible(Mod::get()->getSavedValue<int>("transition", 0) != (transNames.size() - 1));
     menu->addChildAtPosition(right, Anchor::Center, ccp(110, 8 + 20));
@@ -26,9 +25,8 @@ void TransCustomizerModule::makeAndroid(CCNode* menu, CCPoint pos) {
     input->setCommonFilter(CommonFilter::Float);
 
     input->setCallback([this](std::string const& str) {
-        Mod::get()->setSavedValue<float>(
-            "transition-time",
-            numFromString<float>(str).unwrapOr(Mod::get()->getSavedValue<float>("transition-time", 0.5f)));
+        Mod::get()->setSavedValue<float>("transition-time",
+                                         numFromString<float>(str).unwrapOr(Mod::get()->getSavedValue<float>("transition-time", 0.5f)));
     });
 
     menu->addChildAtPosition(input, Anchor::Right, ccp(-70, 8 - 35));

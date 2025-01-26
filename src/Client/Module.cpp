@@ -10,29 +10,24 @@ void Module::drawImGui() {
     float sbarWidth = ImGui::GetScrollMaxY() > 0.0f ? ImGui::GetStyle().ScrollbarSize : 0;
 
     if (enabled) {
-        ImGui::PushStyleColor(ImGuiCol_Button,
-                              ccc4ToVec(Client::get()->getThemeColour("ModuleEnabled", ccc4(40, 40, 40, 255))));
+        ImGui::PushStyleColor(ImGuiCol_Button, ccc4ToVec(Client::get()->getThemeColour("ModuleEnabled", ccc4(40, 40, 40, 255))));
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered,
                               ccc4ToVec(Client::get()->getThemeColour("ModuleEnabledHovered", ccc4(50, 50, 50, 255))));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive,
                               ccc4ToVec(Client::get()->getThemeColour("ModuleEnabledActive", ccc4(50, 50, 50, 255))));
-        ImGui::PushStyleColor(
-            ImGuiCol_Text, ccc4ToVec(Client::get()->getThemeColour("ModuleEnabledText", Client::get()->accentColour)));
+        ImGui::PushStyleColor(ImGuiCol_Text, ccc4ToVec(Client::get()->getThemeColour("ModuleEnabledText", Client::get()->accentColour)));
     } else {
-        ImGui::PushStyleColor(ImGuiCol_Button,
-                              ccc4ToVec(Client::get()->getThemeColour("ModuleDisabled", ccc4(40, 40, 40, 255))));
+        ImGui::PushStyleColor(ImGuiCol_Button, ccc4ToVec(Client::get()->getThemeColour("ModuleDisabled", ccc4(40, 40, 40, 255))));
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered,
                               ccc4ToVec(Client::get()->getThemeColour("ModuleDisabledHovered", ccc4(50, 50, 50, 255))));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive,
                               ccc4ToVec(Client::get()->getThemeColour("ModuleDisabledActive", ccc4(50, 50, 50, 255))));
-        ImGui::PushStyleColor(ImGuiCol_Text,
-                              ccc4ToVec(Client::get()->getThemeColour("ModuleDisabledText", ccc4(255, 255, 255, 255))));
+        ImGui::PushStyleColor(ImGuiCol_Text, ccc4ToVec(Client::get()->getThemeColour("ModuleDisabledText", ccc4(255, 255, 255, 255))));
     }
 
-    if (ImGui::Button(
-            this->name.c_str(),
-            ImVec2(Client::get()->widgetSize.x + (options.size() > 0 ? -Client::get()->widgetSize.y - sbarWidth : 0),
-                   Client::get()->widgetSize.y))) {
+    if (ImGui::Button(this->name.c_str(),
+                      ImVec2(Client::get()->widgetSize.x + (options.size() > 0 ? -Client::get()->widgetSize.y - sbarWidth : 0),
+                             Client::get()->widgetSize.y))) {
         onToggleAndroid(nullptr);
     }
 
@@ -45,8 +40,8 @@ void Module::drawImGui() {
         auto optionBtn = Client::get()->optionsModule == this
                              ? Client::get()->accentColour
                              : Client::get()->getThemeColour("ModuleOptionsDeselected", ccc4(70, 70, 70, 255));
-        ImVec2 bottomLeftPos = ImVec2(ImGui::GetWindowPos().x + ImGui::GetCursorPos().x + offset,
-                                      ImGui::GetWindowPos().y + ImGui::GetCursorPos().y + offset);
+        ImVec2 bottomLeftPos =
+            ImVec2(ImGui::GetWindowPos().x + ImGui::GetCursorPos().x + offset, ImGui::GetWindowPos().y + ImGui::GetCursorPos().y + offset);
 
         if (ImGui::Button("", ImVec2(Client::get()->widgetSize.y, Client::get()->widgetSize.y))) {
             if (Client::get()->optionsModule == this)
@@ -60,16 +55,14 @@ void Module::drawImGui() {
         ImGui::GetWindowDrawList()->AddTriangleFilled(
             ImVec2(bottomLeftPos.x, bottomLeftPos.y + Client::get()->widgetSize.y - offset * 2),
             ImVec2(bottomLeftPos.x + Client::get()->widgetSize.y - offset * 2, bottomLeftPos.y),
-            ImVec2(bottomLeftPos.x + Client::get()->widgetSize.y - offset * 2,
-                   bottomLeftPos.y + Client::get()->widgetSize.y - offset * 2),
+            ImVec2(bottomLeftPos.x + Client::get()->widgetSize.y - offset * 2, bottomLeftPos.y + Client::get()->widgetSize.y - offset * 2),
             ImColor(ccc4ToVec(optionBtn)));
     } else {
         float offset = Client::get()->ini->getKeyValueFloat("Offsets::ModuleBarOffset", "3");
-        auto optionBtn = enabled ? Client::get()->accentColour
-                                 : Client::get()->getThemeColour("ModuleBarDeselected", ccc4(70, 70, 70, 255));
-        ImVec2 topRightPos =
-            ImVec2(ImGui::GetWindowPos().x + ImGui::GetCursorPos().x + Client::get()->widgetSize.x - offset - sbarWidth,
-                   ImGui::GetWindowPos().y + ImGui::GetCursorPos().y - Client::get()->widgetSize.y + offset);
+        auto optionBtn =
+            enabled ? Client::get()->accentColour : Client::get()->getThemeColour("ModuleBarDeselected", ccc4(70, 70, 70, 255));
+        ImVec2 topRightPos = ImVec2(ImGui::GetWindowPos().x + ImGui::GetCursorPos().x + Client::get()->widgetSize.x - offset - sbarWidth,
+                                    ImGui::GetWindowPos().y + ImGui::GetCursorPos().y - Client::get()->widgetSize.y + offset);
 
         ImGui::GetWindowDrawList()->AddRectFilled(
             topRightPos,
@@ -189,8 +182,7 @@ void Module::makeAndroid(CCNode* menu, CCPoint pos) {
 
         menu->addChild(info);
 
-        label->setOnLabelUpdated(
-            [=] { info->setPosition(pos + ccp(label->getScaledContentSize().width + 30, 0) + ccp(-5, 5)); });
+        label->setOnLabelUpdated([=] { info->setPosition(pos + ccp(label->getScaledContentSize().width + 30, 0) + ccp(-5, 5)); });
     }
 
     if (options.size() != 0 && !isInComp) {
@@ -201,8 +193,7 @@ void Module::makeAndroid(CCNode* menu, CCPoint pos) {
 
         menu->addChild(options);
 
-        label->setOnLabelUpdated(
-            [=] { options->setPosition(pos + ccp(label->getScaledContentSize().width + 30, 0) + ccp(-2, 0)); });
+        label->setOnLabelUpdated([=] { options->setPosition(pos + ccp(label->getScaledContentSize().width + 30, 0) + ccp(-2, 0)); });
     }
 
     if (isInComp) {
@@ -297,9 +288,8 @@ void Module::enablePatches() {
 
 CCSize Module::sizeForOptionsPage() {
     // idk man
-    return optionSizeForce == CCSizeZero
-               ? CCSizeMake(350, std::ceil((std::max<int>(options.size(), 3) - 1) / 2) * 35 + 110)
-               : optionSizeForce;
+    return optionSizeForce == CCSizeZero ? CCSizeMake(350, std::ceil((std::max<int>(options.size(), 3) - 1) / 2) * 35 + 110)
+                                         : optionSizeForce;
 }
 
 void Module::save() {

@@ -21,8 +21,7 @@ void Window::drawImGui() {
         }
 
         setPosition(ccp(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y));
-        actualWindowPos =
-            ImVec2(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y);
+        actualWindowPos = ImVec2(dragOffset.x + ImGui::GetMouseDragDelta().x, dragOffset.y + ImGui::GetMouseDragDelta().y);
     }
 
     for (auto module : modules) {
@@ -36,8 +35,7 @@ void Window::drawImGui() {
 }
 
 ImVec2 Window::getDesiredWindowSize() {
-    auto vec = ImVec2(Client::get()->widgetSize.x,
-                      Client::get()->widgetSize.y * ((std::min<int>(modules.size(), 69) * closedTimer) + 1));
+    auto vec = ImVec2(Client::get()->widgetSize.x, Client::get()->widgetSize.y * ((std::min<int>(modules.size(), 69) * closedTimer) + 1));
 
     vec.y = clamp<float>(vec.y, 0, ImGui::GetIO().DisplaySize.y - (15 + 15));
     return vec;

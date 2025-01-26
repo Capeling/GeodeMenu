@@ -11,9 +11,9 @@ using namespace geode::prelude;
 
 //{"Fade", "Cross Fade", "Fade Bottom Left", "Fade Top Right", "Fade Up", "Fade Down", "Flip Angular", "Flip X", "Flip Y", "Zoom Flip Angular" "Zoom Flip X", "Zoom Flip Y", "Jump Zoom", "Move In Top", "Move In Bottom", "Move In Left", "Move In Right", "Rotate Zoom", "Shrink Grow", "Slide In Top", "Slide In Bottom", "Slide In Left", "Slide In Right", "Split Rows", "Split Columns", "Tiles"}
 
-#    define TRANS(__trans__)                                                                                           \
-        ind++;                                                                                                         \
-        if (i == ind)                                                                                                  \
+#    define TRANS(__trans__)                                                                                                               \
+        ind++;                                                                                                                             \
+        if (i == ind)                                                                                                                      \
         return __trans__::create(f, s)
 
 CCScene* getSceneForSel(int i, float f, CCScene* s, const ccColor3B& color) {

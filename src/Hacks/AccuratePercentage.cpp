@@ -55,11 +55,10 @@ class $modify(PlayLayer) {
             m_fields->title->setString((utils::numToString<float>(getPerc(), places) + std::string("%")).c_str());
 
             if (bestMod->enabled)
-                m_fields->title->setString(
-                    fmt::format("{} / {}%",
-                                m_fields->title->getString(),
-                                m_isPracticeMode ? m_level->m_practicePercent : m_level->m_normalPercent.value())
-                        .c_str());
+                m_fields->title->setString(fmt::format("{} / {}%",
+                                                       m_fields->title->getString(),
+                                                       m_isPracticeMode ? m_level->m_practicePercent : m_level->m_normalPercent.value())
+                                               .c_str());
         }
     }
 };

@@ -28,8 +28,7 @@ void InputModule::drawImGui() {
 
     auto t = text.c_str();
 
-    if (ImGui::InputText(
-            name.c_str(), (char*) text.c_str(), 127, ImGuiInputTextFlags_CallbackAlways, imguiTextInputChanged)) {
+    if (ImGui::InputText(name.c_str(), (char*) text.c_str(), 127, ImGuiInputTextFlags_CallbackAlways, imguiTextInputChanged)) {
     }
     //text = t;
 }

@@ -28,8 +28,7 @@ public:
         float inc = 20;
 
         bg->setContentHeight(bg->getContentHeight() + inc);
-        l->getChildByType<CCLabelBMFont>(0)->setPositionY(l->getChildByType<CCLabelBMFont>(0)->getPositionY() +
-                                                          inc / 2);
+        l->getChildByType<CCLabelBMFont>(0)->setPositionY(l->getChildByType<CCLabelBMFont>(0)->getPositionY() + inc / 2);
         l->getChildByType<TextArea>(0)->setPositionY(l->getChildByType<TextArea>(0)->getPositionY() + inc / 2);
         menu->setPositionY(menu->getPositionY() - inc / 2);
 
@@ -60,18 +59,7 @@ public:
                                        float height,
                                        float textScale) {
         ConfirmFLAlertLayer* pRet = new ConfirmFLAlertLayer();
-        if (pRet && pRet->init(delegate,
-                               title,
-                               confLabel,
-                               confEnabled,
-                               confChanged,
-                               desc,
-                               btn1,
-                               btn2,
-                               width,
-                               scroll,
-                               height,
-                               textScale)) {
+        if (pRet && pRet->init(delegate, title, confLabel, confEnabled, confChanged, desc, btn1, btn2, width, scroll, height, textScale)) {
             pRet->autorelease();
             return pRet;
         } else {

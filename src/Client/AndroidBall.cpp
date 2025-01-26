@@ -128,8 +128,8 @@ void AndroidBall::update(float dt) {
     UpdateVisible(false);
 }
 
-#define TYPE_CHECK(__type__)                                                                                           \
-    if (getParent()->getChildByType<__type__>(0))                                                                      \
+#define TYPE_CHECK(__type__)                                                                                                               \
+    if (getParent()->getChildByType<__type__>(0))                                                                                          \
     return true
 
 bool AndroidBall::editorShouldBeVisible() {
@@ -152,8 +152,7 @@ void AndroidBall::UpdateVisible(bool i) {
     if (Client::GetModuleEnabled("disable-gp") && this->getParent())
         vis = !(this->getParent()->getChildByType<PlayLayer>(0) && !this->getParent()->getChildByType<PauseLayer>(0));
 
-    if (Client::GetModuleEnabled("disable-editor") && this->getParent() &&
-        this->getParent()->getChildByType<LevelEditorLayer>(0))
+    if (Client::GetModuleEnabled("disable-editor") && this->getParent() && this->getParent()->getChildByType<LevelEditorLayer>(0))
         vis = editorShouldBeVisible();
 
 #ifdef GEODE_IS_DESKTOP
@@ -208,12 +207,10 @@ void AndroidBall::UpdateVisible(bool i) {
             btn->setOpacity(op);
             btnOverlay->setOpacity(op);
         } else {
-            auto action = UnspeedhackedAction::create(
-                CCEaseInOut::create(CCFadeTo::create(0.35f * (mod2->enabled ? 0 : 1), op), 2));
+            auto action = UnspeedhackedAction::create(CCEaseInOut::create(CCFadeTo::create(0.35f * (mod2->enabled ? 0 : 1), op), 2));
             action->setTag(69);
 
-            auto action2 = UnspeedhackedAction::create(
-                CCEaseInOut::create(CCFadeTo::create(0.35f * (mod2->enabled ? 0 : 1), op), 2));
+            auto action2 = UnspeedhackedAction::create(CCEaseInOut::create(CCFadeTo::create(0.35f * (mod2->enabled ? 0 : 1), op), 2));
             action2->setTag(69);
 
             btn->runAction(action);
@@ -248,9 +245,9 @@ bool AndroidBall::isColonThreeEnabled() {
 void AndroidBall::setColonThreeEnabled() {
     Mod::get()->setSavedValue<bool>("colon-three-secwet-uwu-:3", !isColonThreeEnabled());
 
-    auto spr = CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr
-                                                                         : "qolmodButtonOverlay.png"_spr)
-                   ->getTexture();
+    auto spr =
+        CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr : "qolmodButtonOverlay.png"_spr)
+            ->getTexture();
     btnOverlay->setTexture(spr);
 
 #ifndef GEODE_IS_IOS

@@ -18,10 +18,8 @@ public:
         options.push_back(new ColourModule("Player:", "colour-player", ccc3(255, 255, 0)));
         options.push_back(new ColourModule("Player (Rotated):", "colour-player-rot", ccc3(180, 170, 1)));
 
-        options.push_back(
-            new Module("Hitbox Trail", "show-hitbox-trail", "Creates a trail behind the player with it's hitbox"));
-        options.push_back(
-            new Module("Thicker Outline", "thick-hitbox", "Makes the outline around the hitboxes thicker"));
+        options.push_back(new Module("Hitbox Trail", "show-hitbox-trail", "Creates a trail behind the player with it's hitbox"));
+        options.push_back(new Module("Thicker Outline", "thick-hitbox", "Makes the outline around the hitboxes thicker"));
 
         options.push_back(new Module("Fill Hitbox", "fill-hitbox", "Fills the hitboxes as well as outlining them"));
         options.push_back(new SliderModule("Fill Opacity:", "fill-hitbox-opacity", 1.0f));

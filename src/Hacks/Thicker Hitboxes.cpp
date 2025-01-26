@@ -19,11 +19,7 @@ ColourModule* playerRot = nullptr;
 #ifdef __APPLE__
 
 class $modify(CCDrawNode) {
-    bool drawPolygon(CCPoint* verts,
-                     unsigned int count,
-                     const ccColor4F& fillColor,
-                     float borderWidth,
-                     const ccColor4F& borderColor) {
+    bool drawPolygon(CCPoint* verts, unsigned int count, const ccColor4F& fillColor, float borderWidth, const ccColor4F& borderColor) {
         if (!thicker)
             thicker = Client::GetModule("show-hitboxes")->options[7];
 
@@ -88,12 +84,8 @@ class $modify(CCDrawNode) {
 
 #else
 
-bool myDrawPoly(CCDrawNode* ins,
-                CCPoint* verts,
-                unsigned int count,
-                const ccColor4F& fillColor,
-                float borderWidth,
-                ccColor4F& borderColor) {
+bool myDrawPoly(
+    CCDrawNode* ins, CCPoint* verts, unsigned int count, const ccColor4F& fillColor, float borderWidth, ccColor4F& borderColor) {
     if (!thicker)
         thicker = Client::GetModule("show-hitboxes")->options[7];
 
@@ -147,8 +139,7 @@ bool myDrawPoly(CCDrawNode* ins,
         if (borderWidth == 0)
             borderWidth = 1;
 
-        return ins->drawPolygon(
-            verts, count, fill->enabled ? c : fillColor, borderWidth * (thicker->enabled ? 2.2f : 1), borderColor);
+        return ins->drawPolygon(verts, count, fill->enabled ? c : fillColor, borderWidth * (thicker->enabled ? 2.2f : 1), borderColor);
     } else
         return ins->drawPolygon(verts, count, fillColor, borderWidth, borderColor);
 }

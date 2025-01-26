@@ -62,8 +62,7 @@ std::vector<uint32_t> decodeUTF8(const std::string& input) {
             cp = ((ch & 0xF) << 12) | ((input[i + 1] & 0x3F) << 6) | (input[i + 2] & 0x3F);
             i += 3;
         } else if ((ch >> 3) == 0x1E) { // 4-byte character
-            cp = ((ch & 0x7) << 18) | ((input[i + 1] & 0x3F) << 12) | ((input[i + 2] & 0x3F) << 6) |
-                 (input[i + 3] & 0x3F);
+            cp = ((ch & 0x7) << 18) | ((input[i + 1] & 0x3F) << 12) | ((input[i + 2] & 0x3F) << 6) | (input[i + 3] & 0x3F);
             i += 4;
         }
         codepoints.push_back(cp);

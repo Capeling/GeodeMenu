@@ -59,8 +59,7 @@ void Speedhack::onPreset(CCObject* sender) {
 
 void Speedhack::cocosCreate(CCMenu* menu) {
     isDeleting = false;
-    presets = Mod::get()->getSavedValue<std::vector<float>>("speedhack-presets",
-                                                            {0.1f, 0.25f, 0.3f, 0.50f, 0.75f, 1, 1.50f, 2});
+    presets = Mod::get()->getSavedValue<std::vector<float>>("speedhack-presets", {0.1f, 0.25f, 0.3f, 0.50f, 0.75f, 1, 1.50f, 2});
 
     float v = 1.0f;
 
@@ -93,20 +92,19 @@ void Speedhack::cocosCreate(CCMenu* menu) {
     slider->setValue(clampf(unscaleValue(v), 0, 1));
     menu->addChild(slider, 2);
 
-    modules[0]->makeAndroid(
-        menu, ccp(menu->getContentSize().width / 2, menu->getContentSize().height - 50) - ccp(180 / 2, 0) + ccp(10, 0));
+    modules[0]->makeAndroid(menu, ccp(menu->getContentSize().width / 2, menu->getContentSize().height - 50) - ccp(180 / 2, 0) + ccp(10, 0));
 
     input = menu->getChildByType<TextInput>(0);
 
     for (size_t i = 1; i < modules.size(); i++) {
-        modules[i]->makeAndroid(menu,
-                                (ccp(menu->getContentSize().width / 2, menu->getContentSize().height - 110 - (30 * i)) -
-                                 ccp(180 / 2, 0) + ccp(20, 0)) +
-                                    ccp(0, 27.5f));
+        modules[i]->makeAndroid(
+            menu,
+            (ccp(menu->getContentSize().width / 2, menu->getContentSize().height - 110 - (30 * i)) - ccp(180 / 2, 0) + ccp(20, 0)) +
+                ccp(0, 27.5f));
     }
 
-    auto trash = CCMenuItemSpriteExtra::create(
-        CCSprite::createWithSpriteFrameName("GJ_trashBtn_001.png"), this, menu_selector(Speedhack::onClear));
+    auto trash =
+        CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_trashBtn_001.png"), this, menu_selector(Speedhack::onClear));
     trash->m_baseScale = 0.725f;
     trash->setScale(0.725f);
     trash->setPosition(ccp((menu->getContentSize().width / 2) + (180 / 2) + 20, menu->getContentSize().height - 50));
@@ -169,8 +167,7 @@ void Speedhack::onNewPreset(CCObject* sender) {
     float v = numFromString<float>(input->getString()).unwrapOr(1.0f);
 
     if (std::find(presets.begin(), presets.end(), v) != presets.end()) {
-        FLAlertLayer::create("Error", fmt::format("There is already a preset with the value <cc>{:.2f}</c>.", v), "OK")
-            ->show();
+        FLAlertLayer::create("Error", fmt::format("There is already a preset with the value <cc>{:.2f}</c>.", v), "OK")->show();
 
         return;
     }

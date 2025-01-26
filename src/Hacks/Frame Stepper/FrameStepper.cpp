@@ -88,14 +88,12 @@ bool SteppedUILayer::init(GJBaseGameLayer* bgl) {
 
     menu->setPosition(ccp(135 / 2, 40 / 2) + ccp(25, 25));
 
-    m_fields->pause = RepeatableMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_pauseBtn_001.png"),
-                                                            this,
-                                                            menu_selector(SteppedUILayer::onTogglePaused));
+    m_fields->pause = RepeatableMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_pauseBtn_001.png"), this, menu_selector(SteppedUILayer::onTogglePaused));
     m_fields->pause->getNormalImage()->setScale(0.8f);
 
-    m_fields->prev = RepeatableMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"),
-                                                           this,
-                                                           menu_selector(SteppedUILayer::onPreviousFrame));
+    m_fields->prev = RepeatableMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onPreviousFrame));
     m_fields->prev->getNormalImage()->setScale(0.8f);
 
     auto next = RepeatableMenuItemSpriteExtra::create(
@@ -169,8 +167,7 @@ void SteppedUILayer::updateUI() {
 
     as<CCSprite*>(m_fields->pause->getNormalImage())
         ->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(
-            as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->paused ? "GJ_playEditorBtn_001.png"
-                                                                     : "GJ_pauseEditorBtn_001.png"));
+            as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->paused ? "GJ_playEditorBtn_001.png" : "GJ_pauseEditorBtn_001.png"));
 
     m_fields->menu->setVisible(Client::GetModuleEnabled("frame-stepper"));
 
