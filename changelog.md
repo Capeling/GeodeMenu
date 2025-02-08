@@ -1,3 +1,9 @@
+# 1.7.9
+
+- Fix performance issues
+- Refactor sprites into a spritesheet
+- Removed No Rotation temporarily
+
 # 1.7.8
 
 - Fixed Speedhack being extremely laggy
