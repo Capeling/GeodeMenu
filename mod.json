@@ -50,7 +50,7 @@
 	],
 	"incompatibilities": {
 		"TheSillyDoggo.Cheats": {
-			"version": "*",
+			"version": ">=1.0.0",
 			"importance": "superseded"
 		},
 		"camila314.text-select": {
