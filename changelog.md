@@ -1,5 +1,7 @@
 # 1.7.9
 
+#### This update is critical and has been worked on and released by the Geode team with permission from TheSillyDoggo.
+
 - Fix performance issues
 - Refactor sprites into a spritesheet
 - Removed No Rotation temporarily
