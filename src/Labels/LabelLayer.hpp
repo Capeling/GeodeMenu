@@ -1,68 +1,68 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
+#include "../Client/Client.h"
 #include "BestRun.hpp"
 #include "LabelCommon.hpp"
 #include "LabelNode.hpp"
-#include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
-class LabelLayer : public CCLayer
-{
-    private:
-        float fps;
-        float _updateInterval = 0.5f;
-        float _timeLeft = _updateInterval;
-        float _accum;
-        int _frames;
+class LabelLayer : public CCLayer {
+private:
+    float fps;
+    float _updateInterval = 0.5f;
+    float _timeLeft = _updateInterval;
+    float _accum;
+    int _frames;
 
-        int attempts;
-        std::map<LabelAnchor, CCNode*> nodes;
-        std::vector<LabelNode*> labels;
-        static inline LabelLayer* instance;
+    int attempts;
+    std::map<LabelAnchor, CCNode*> nodes;
+    std::vector<LabelNode*> labels;
+    static inline LabelLayer* instance;
 
-        std::vector<float> cps1;
-        std::vector<float> cps2;
+    std::vector<float> cps1;
+    std::vector<float> cps2;
 
-        int clicks1;
-        int clicks2;
-        float lastPercentage;
-    
-    public:
-        UILayer* uiLayer;
-        std::string neofetchOutput;
+    int clicks1;
+    int clicks2;
+    float lastPercentage;
 
-        bool init(UILayer* uiLayer);
+public:
+    UILayer* uiLayer;
+    std::string neofetchOutput;
 
-        void triggerEvent(LabelEventType type);
+    bool init(UILayer* uiLayer);
 
-        void setLastPercentage(float v);
-        float getLastPercentage();
+    void triggerEvent(LabelEventType type);
 
-        void incrementAttempts();
-        int getAttempts();
+    void setLastPercentage(float v);
+    float getLastPercentage();
 
-        void increateCPS(bool player2);
-        void resetCPS();
-        int getCPS(bool player2);
-        int getTotalCPS();
+    void incrementAttempts();
+    int getAttempts();
 
-        int getClicks(bool player2);
-        int getTotalClicks();
+    void increateCPS(bool player2);
+    void resetCPS();
+    int getCPS(bool player2);
+    int getTotalCPS();
 
-        float getFPS();
+    int getClicks(bool player2);
+    int getTotalClicks();
 
-        CCNode* createNodeForAnchor(LabelAnchor anchor);
-        CCNode* nodeForAnchor(LabelAnchor anchor);
+    float getFPS();
 
-        virtual void update(float dt);
+    CCNode* createNodeForAnchor(LabelAnchor anchor);
+    CCNode* nodeForAnchor(LabelAnchor anchor);
 
-        void updateLabels();
-        void updateAnchors();
+    virtual void update(float dt);
 
-        ~LabelLayer();
+    void updateLabels();
+    void updateAnchors();
 
-        static LabelLayer* create(UILayer* uiLayer);
-        static LabelLayer* get();
+    ~LabelLayer();
+
+    static LabelLayer* create(UILayer* uiLayer);
+    static LabelLayer* get();
 };

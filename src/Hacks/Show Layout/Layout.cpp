@@ -1,7 +1,6 @@
 #include "Layout.hpp"
 
-std::vector<int> objectIDS =
-{
+std::vector<int> objectIDS = {
     // Gradient Trigger
     2903,
 
@@ -101,8 +100,7 @@ std::vector<int> objectIDS =
     2924,
 };
 
-std::vector<int> cameraObjectIDS =
-{
+std::vector<int> cameraObjectIDS = {
     // Zoom
     1913,
 
@@ -122,8 +120,7 @@ std::vector<int> cameraObjectIDS =
     2062,
 };
 
-void LayoutPlayLayer::addObject(GameObject* object)
-{
+void LayoutPlayLayer::addObject(GameObject* object) {
     bool dontAdd = false;
     bool addToSpecial = false;
 
@@ -133,8 +130,7 @@ void LayoutPlayLayer::addObject(GameObject* object)
     if (std::find(objectIDS.begin(), objectIDS.end(), object->m_objectID) != objectIDS.end())
         dontAdd = true;
 
-    if (!Client::GetModuleEnabled("layout-retain-camera"))
-    {
+    if (!Client::GetModuleEnabled("layout-retain-camera")) {
         if (std::find(cameraObjectIDS.begin(), cameraObjectIDS.end(), object->m_objectID) != cameraObjectIDS.end())
             dontAdd = true;
     }
@@ -148,8 +144,7 @@ void LayoutPlayLayer::addObject(GameObject* object)
     if (object->m_isNoTouch)
         dontAdd = true;
 
-    if (object->m_groups && m_levelSettings->m_spawnGroup != 0 && object->m_groupCount > 0)
-    {
+    if (object->m_groups && m_levelSettings->m_spawnGroup != 0 && object->m_groupCount > 0) {
         if (std::find(object->m_groups->begin(), object->m_groups->end(), m_levelSettings->m_spawnGroup) != object->m_groups->end())
             dontAdd = false;
     }
@@ -163,20 +158,17 @@ void LayoutPlayLayer::addObject(GameObject* object)
     if (!dontAdd)
         PlayLayer::addObject(object);
 
-    if (addToSpecial)
-    {
+    if (addToSpecial) {
         m_fields->node->addChild(object);
     }
 }
 
-bool LayoutPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateObjects)
-{
-    for (auto hook : showLayoutHooks)
-    {
+bool LayoutPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
+    for (auto hook : showLayoutHooks) {
         if (Client::GetModuleEnabled("show-layout"))
-            (void)hook->enable();
+            (void) hook->enable();
         else
-            (void)hook->disable();
+            (void) hook->disable();
     }
 
     m_fields->node = NonRemovableNode::create();
@@ -184,32 +176,31 @@ bool LayoutPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateOb
     if (!PlayLayer::init(level, useReplay, dontCreateObjects))
         return false;
 
-    if (Client::GetModuleEnabled("show-layout"))
-    {
+    if (Client::GetModuleEnabled("show-layout")) {
         if (m_groundLayer)
             m_groundLayer->setPositionY(91);
 
-        if (m_groundLayer2)
-        {
+        if (m_groundLayer2) {
             m_groundLayer2->setPositionY(CCDirector::get()->getWinSize().height);
             m_groundLayer2->setVisible(false);
         }
     }
 
     m_objectLayer->addChild(m_fields->node);
-    
+
     return true;
 }
 
-void LayoutPlayLayer::onQuit()
-{
+void LayoutPlayLayer::onQuit() {
     m_fields->node->allowDeleting = true;
 
     PlayLayer::onQuit();
 }
 
-void LayoutBaseGameLayer::updateColor(cocos2d::ccColor3B& color, float fadeTime, int colorID, bool blending, float opacity, cocos2d::ccHSVValue& copyHSV, int colorIDToCopy, bool copyOpacity, EffectGameObject* callerObject, int unk1, int unk2)
-{
+void LayoutBaseGameLayer::updateColor(
+    cocos2d::ccColor3B& color, float fadeTime, int colorID, bool blending, float opacity, cocos2d::ccHSVValue& copyHSV, int colorIDToCopy,
+    bool copyOpacity, EffectGameObject* callerObject, int unk1, int unk2
+) {
     if (colorID <= 999)
         color = ccWHITE;
 
@@ -231,27 +222,22 @@ void LayoutBaseGameLayer::updateColor(cocos2d::ccColor3B& color, float fadeTime,
     if (colorID == 1002)
         color = ccWHITE;
 
-    if (colorID == 1013 || colorID == 1014)
-    {
+    if (colorID == 1013 || colorID == 1014) {
         opacity = 0;
     }
 
     GJBaseGameLayer::updateColor(color, fadeTime, colorID, blending, opacity, copyHSV, colorIDToCopy, copyOpacity, callerObject, unk1, unk2);
 }
 
-
-void LayoutBaseGameLayer::createBackground(int p0)
-{
+void LayoutBaseGameLayer::createBackground(int p0) {
     if (typeinfo_cast<PlayLayer*>(this))
         p0 = 0;
 
     GJBaseGameLayer::createBackground(p0);
 }
 
-void LayoutBaseGameLayer::createGroundLayer(int p0, int p1)
-{
-    if (typeinfo_cast<PlayLayer*>(this))
-    {
+void LayoutBaseGameLayer::createGroundLayer(int p0, int p1) {
+    if (typeinfo_cast<PlayLayer*>(this)) {
         p0 = 0;
         p1 = 1;
     }
@@ -259,8 +245,7 @@ void LayoutBaseGameLayer::createGroundLayer(int p0, int p1)
     GJBaseGameLayer::createGroundLayer(p0, p1);
 }
 
-void LayoutBaseGameLayer::createMiddleground(int p0)
-{
+void LayoutBaseGameLayer::createMiddleground(int p0) {
     if (typeinfo_cast<PlayLayer*>(this))
         p0 = 0;
 

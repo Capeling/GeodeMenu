@@ -1,11 +1,10 @@
 #ifdef QOLMOD_CUSTOM_KEYS_SETTING
 
-#include "KeyInfoPopup.hpp"
+# include "KeyInfoPopup.hpp"
 
-KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node)
-{
+KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node) {
     KeyInfoPopup* pRet = new KeyInfoPopup();
-    
+
     pRet->key = key;
     pRet->node = node;
 
@@ -18,10 +17,9 @@ KeyInfoPopup* KeyInfoPopup::createWithKeyAndBind(int key, SetBindNode* node)
     }
 }
 
-void KeyInfoPopup::customSetup()
-{
-    #ifndef GEODE_IS_IOS
-    
+void KeyInfoPopup::customSetup() {
+# ifndef GEODE_IS_IOS
+
     auto lbl = CCLabelBMFont::create(CCKeyboardDispatcher::get()->keyToString(as<enumKeyCodes>(key)), "bigFont.fnt");
 
     auto lblBG = CCScale9Sprite::create("geode.loader/black-square.png");
@@ -44,20 +42,18 @@ void KeyInfoPopup::customSetup()
 
     ok->setPositionX(ok->getPositionX() - removeBtn->getContentWidth() / 2);
 
-    #endif
+# endif
 }
 
-void KeyInfoPopup::onRemove(CCObject* sender)
-{
+void KeyInfoPopup::onRemove(CCObject* sender) {
     geode::createQuickPopup(
         "Delete bind",
         "Are you sure you want to <cr>delete</c> this bind?",
-        "Cancel", "Delete",
+        "Cancel",
+        "Delete",
         [this, sender](FLAlertLayer*, bool btn2) {
-            if (btn2)
-            {
-                if (node->buttons.size() <= 1)
-                {
+            if (btn2) {
+                if (node->buttons.size() <= 1) {
                     this->onClose(nullptr);
 
                     return FLAlertLayer::create("Error", "You <cr>must</c> have at least <cl>one</c> bind.", "OK")->show();
@@ -66,7 +62,7 @@ void KeyInfoPopup::onRemove(CCObject* sender)
                 node->buttons.erase(std::find(node->buttons.begin(), node->buttons.end(), key));
                 node->btns.find(key)->second->removeFromParent();
                 node->btns.erase(key);
-                
+
                 node->updateLayout();
                 node->changed();
 

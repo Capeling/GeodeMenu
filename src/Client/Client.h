@@ -1,33 +1,30 @@
 #pragma once
 
-#include <imgui-cocos.hpp>
 #include "../Defines/Platform.h"
-
-#include "Types/InputModule.hpp"
+#include "../Labels/LabelModule.hpp"
+#include "../UI/BlurLayer.hpp"
+#include "../Utils/SimpleINI.hpp"
 #include "Types/ColourPickModule.hpp"
 #include "Types/DropdownModule.hpp"
-#include "Types/SliderModule.hpp"
-#include "Types/TransitionCustomizerUI.hpp"
-#include "Types/SmartStartposUI.hpp"
-#include "Types/SetValueModule.hpp"
 #include "Types/FontModule.hpp"
-#include "../Labels/LabelModule.hpp"
-
-#include "idkwhattocallthis.hpp"
-#include "../UI/BlurLayer.hpp"
+#include "Types/InputModule.hpp"
+#include "Types/SetValueModule.hpp"
+#include "Types/SliderModule.hpp"
+#include "Types/SmartStartposUI.hpp"
+#include "Types/TransitionCustomizerUI.hpp"
 #include "Window.h"
-#include "../Utils/SimpleINI.hpp"
+#include "idkwhattocallthis.hpp"
 
-enum class WindowTransitionType
-{
+#include <imgui-cocos.hpp>
+
+enum class WindowTransitionType {
     None,
     UserSelected, // Only used for calling the function
     Fade,
     Vertical,
 };
 
-class Client
-{
+class Client {
 public:
     static inline Client* instance = nullptr;
     static inline Mod* mod = nullptr;

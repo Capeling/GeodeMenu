@@ -1,24 +1,25 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include "../Module.h"
 #include "../Dropdown.h"
+#include "../Module.h"
+
+#include <Geode/Geode.hpp>
 
 using namespace geode::prelude;
 
-class FontModule : public Module
-{
-    private:
-        std::string font;
-    public:
-        FontModule(std::string id);
+class FontModule : public Module {
+private:
+    std::string font;
 
-        virtual void save();
-        virtual void load();
+public:
+    FontModule(std::string id);
 
-        void makeAndroid(CCNode* menu, CCPoint pos);
+    virtual void save();
+    virtual void load();
 
-        std::string getSelectedFont();
+    void makeAndroid(CCNode* menu, CCPoint pos);
 
-        void onChooseFont(CCObject* sender);
+    std::string getSelectedFont();
+
+    void onChooseFont(CCObject* sender);
 };

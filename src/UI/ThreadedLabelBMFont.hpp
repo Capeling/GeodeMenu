@@ -4,25 +4,24 @@
 
 using namespace geode::prelude;
 
-class ThreadedLabelBMFont : public CCNode
-{
-    private:
-        CCLabelBMFont* label;
-        std::string text;
-        std::string font;
-        std::function<void(ThreadedLabelBMFont*)> callback;
+class ThreadedLabelBMFont : public CCNode {
+private:
+    CCLabelBMFont* label;
+    std::string text;
+    std::string font;
+    std::function<void(ThreadedLabelBMFont*)> callback;
 
-        static inline std::vector<ThreadedLabelBMFont*> labels = {};
+    static inline std::vector<ThreadedLabelBMFont*> labels = {};
 
-        void addLabel();
-        void queueStep();
-    
-    public:
-        CCLabelBMFont* getLabel();
-        std::string getFont();
+    void addLabel();
+    void queueStep();
 
-        bool init(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback);
+public:
+    CCLabelBMFont* getLabel();
+    std::string getFont();
 
-        // Callback is always run on main thread
-        static ThreadedLabelBMFont* create(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback = nullptr);
+    bool init(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback);
+
+    // Callback is always run on main thread
+    static ThreadedLabelBMFont* create(std::string text, std::string font, std::function<void(ThreadedLabelBMFont*)> callback = nullptr);
 };

@@ -1,7 +1,6 @@
 #include "SetValueModule.hpp"
 
-void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos)
-{
+void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos) {
     return;
 
     auto label = CCLabelBMFont::create(name.c_str(), "bigFont.fnt");
@@ -22,12 +21,18 @@ void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos)
     setBtn->setUserData(this);
     setBtn->setPosition(pos + ccp(-20, 0) + ccp(308, 0));
 
-    if (id == std::string("set-scale"))
-    {
+    if (id == std::string("set-scale")) {
         CCSprite* ok = as<CCSprite*>(as<CCNode*>(CCLabelBMFont::create(".", "bigFont.fnt")));
         ok->setAnchorPoint(ccp(0.43f, 0.2f));
-        
-        auto btn = CCMenuItemToggler::create(ButtonSprite::create(reinterpret_cast<CCSprite*>(CCLabelBMFont::create("XY", "bigFont.fnt")), 30, 69, 30, 1, false, "GJ_button_05.png", true), ButtonSprite::create(ok, 30, 69, 30, 1, false, "GJ_button_05.png", true), menu, menu_selector(SetValueModule::onScaleToggle));
+
+        auto btn = CCMenuItemToggler::create(
+            ButtonSprite::create(
+                reinterpret_cast<CCSprite*>(CCLabelBMFont::create("XY", "bigFont.fnt")), 30, 69, 30, 1, false, "GJ_button_05.png", true
+            ),
+            ButtonSprite::create(ok, 30, 69, 30, 1, false, "GJ_button_05.png", true),
+            menu,
+            menu_selector(SetValueModule::onScaleToggle)
+        );
         btn->setPosition(pos + ccp(145, 0));
         btn->setScale(0.55f);
         btn->setUserData(this);
@@ -57,11 +62,12 @@ void SetValueModule::makeAndroid(CCNode* menu, CCPoint pos)
     menu->addChild(setBtn);
 }
 
-void SetValueModule::onSet(CCObject* sender)
-{
+void SetValueModule::onSet(CCObject* sender) {
     /*auto mod = as<SetValueModule*>(as<CCNode*>(sender)->getUserData());
 
-    if (LevelEditorLayer::get() && LevelEditorLayer::get()->m_editorUI && (LevelEditorLayer::get()->m_editorUI->m_selectedObject || LevelEditorLayer::get()->m_editorUI->m_selectedObjects->count() > 0))
+    if (LevelEditorLayer::get() && LevelEditorLayer::get()->m_editorUI &&
+    (LevelEditorLayer::get()->m_editorUI->m_selectedObject
+    || LevelEditorLayer::get()->m_editorUI->m_selectedObjects->count() > 0))
     {
         float v = 1.0f;
 
@@ -148,8 +154,7 @@ void SetValueModule::onSet(CCObject* sender)
     }*/
 }
 
-void SetValueModule::onScaleToggle(CCObject* sender)
-{
+void SetValueModule::onScaleToggle(CCObject* sender) {
     auto mod = as<SetValueModule*>(as<CCNode*>(sender)->getUserData());
 
     mod->inp->setVisible(!mod->inp->isVisible());
@@ -157,12 +162,11 @@ void SetValueModule::onScaleToggle(CCObject* sender)
     mod->inpY->setVisible(!mod->inpY->isVisible());
 }
 
-SetValueModule::SetValueModule(std::string name, std::string id)
-{
+SetValueModule::SetValueModule(std::string name, std::string id) {
     this->name = name;
     this->id = id;
 }
 
-void SetValueModule::save() { }
+void SetValueModule::save() {}
 
-void SetValueModule::load() { }
+void SetValueModule::load() {}

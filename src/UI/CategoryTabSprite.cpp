@@ -2,12 +2,10 @@
 
 #define SPRITE_INSET 5
 
-CategoryTabSprite* CategoryTabSprite::create(CategoryTabType type, std::string name, std::string icon)
-{
+CategoryTabSprite* CategoryTabSprite::create(CategoryTabType type, std::string name, std::string icon) {
     auto pRet = new CategoryTabSprite();
 
-    if (pRet && pRet->init(type, name, icon))
-    {
+    if (pRet && pRet->init(type, name, icon)) {
         pRet->autorelease();
         return pRet;
     }
@@ -16,8 +14,7 @@ CategoryTabSprite* CategoryTabSprite::create(CategoryTabType type, std::string n
     return nullptr;
 }
 
-bool CategoryTabSprite::init(CategoryTabType type, std::string name, std::string icon)
-{
+bool CategoryTabSprite::init(CategoryTabType type, std::string name, std::string icon) {
     if (!CCNode::init())
         return false;
 
@@ -29,18 +26,15 @@ bool CategoryTabSprite::init(CategoryTabType type, std::string name, std::string
     background->setOpacity(100);
     background->setScale(0.5f);
 
-    if (!icon.empty())
-    {
-        if (sprite = CCSprite::createWithSpriteFrameName(icon.c_str()); sprite)
-        {
+    if (!icon.empty()) {
+        if (sprite = CCSprite::createWithSpriteFrameName(icon.c_str()); sprite) {
             sprite->setAnchorPoint(ccp(0, 0.5f));
             this->addChild(sprite, 4);
         }
     }
 
     label = TransLabelBMFont::create(name.c_str(), "bigFont.fnt");
-    label->setOnLabelUpdated([this]
-    {
+    label->setOnLabelUpdated([this] {
         this->setContentSize(this->getContentSize());
     });
 
@@ -50,18 +44,15 @@ bool CategoryTabSprite::init(CategoryTabType type, std::string name, std::string
     return true;
 }
 
-void CategoryTabSprite::updateSelection(CategorySelectionType type)
-{
+void CategoryTabSprite::updateSelection(CategorySelectionType type) {
     outline->setVisible(type == CategorySelectionType::Selected);
 
-    switch (type)
-    {
+    switch (type) {
         case Deselected:
             label->setColor(ccc3(150, 150, 150));
             label->setOpacity(150);
 
-            if (sprite)
-            {
+            if (sprite) {
                 sprite->setColor(ccc3(150, 150, 150));
                 sprite->setOpacity(150);
             }
@@ -71,8 +62,7 @@ void CategoryTabSprite::updateSelection(CategorySelectionType type)
             label->setColor(ccc3(200, 200, 200));
             label->setOpacity(255);
 
-            if (sprite)
-            {
+            if (sprite) {
                 sprite->setColor(ccc3(200, 200, 200));
                 sprite->setOpacity(255);
             }
@@ -82,8 +72,7 @@ void CategoryTabSprite::updateSelection(CategorySelectionType type)
             label->setColor(ccc3(255, 255, 255));
             label->setOpacity(255);
 
-            if (sprite)
-            {
+            if (sprite) {
                 sprite->setColor(ccc3(255, 255, 255));
                 sprite->setOpacity(255);
             }
@@ -91,8 +80,7 @@ void CategoryTabSprite::updateSelection(CategorySelectionType type)
     };
 }
 
-void CategoryTabSprite::setContentSize(const CCSize& contentSize)
-{
+void CategoryTabSprite::setContentSize(const CCSize& contentSize) {
     CCNode::setContentSize(contentSize);
 
     label->limitLabelWidth((this->getContentWidth() - 7.5f) / 0.5f, 0.75f, 0.1f);
@@ -101,8 +89,7 @@ void CategoryTabSprite::setContentSize(const CCSize& contentSize)
     outline->setContentSize(contentSize * 2);
     background->setContentSize(contentSize * 2);
 
-    if (sprite)
-    {
+    if (sprite) {
         sprite->setPositionX(-getContentWidth() / 2 + SPRITE_INSET);
         sprite->setScale((getContentHeight() - (SPRITE_INSET * 2)) / sprite->getContentHeight());
     }

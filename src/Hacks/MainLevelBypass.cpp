@@ -1,15 +1,14 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/LevelPage.hpp>
-#include <Geode/modify/LevelAreaInnerLayer.hpp>
-#include <Geode/modify/GameStatsManager.hpp>
 #include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/GameStatsManager.hpp>
+#include <Geode/modify/LevelAreaInnerLayer.hpp>
+#include <Geode/modify/LevelPage.hpp>
 
 using namespace geode::prelude;
 
-class $modify (LevelPage)
-{
-    void onPlay(cocos2d::CCObject* sender)
-    {
+class $modify(LevelPage) {
+    void onPlay(cocos2d::CCObject* sender) {
         auto v = m_level->m_requiredCoins;
 
         if (Client::GetModuleEnabled("main-level-bypass"))
@@ -21,10 +20,8 @@ class $modify (LevelPage)
     }
 };
 
-class $modify (LevelAreaInnerLayer)
-{
-    bool init(bool p0)
-    {
+class $modify(LevelAreaInnerLayer) {
+    bool init(bool p0) {
         if (!LevelAreaInnerLayer::init(p0))
             return false;
 
@@ -34,12 +31,10 @@ class $modify (LevelAreaInnerLayer)
         auto x = this->getChildByType<CCNode>(1);
         auto menu = x->getChildByType<CCMenu>(0);
 
-        if (menu)
-        {
+        if (menu) {
             CCArrayExt<CCMenuItemSpriteExtra*> objs = menu->getChildren();
 
-            for (auto child : objs)
-            {
+            for (auto child : objs) {
                 child->setEnabled(true);
             }
         }

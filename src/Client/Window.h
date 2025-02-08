@@ -1,61 +1,60 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/CCMouseDispatcher.hpp>
 #include "../Utils/Utils.hpp"
-#include <imgui-cocos.hpp>
 #include "Module.h"
 
-class Window : public UIComponent
-{
-    public:
-        std::string name;
-        std::string id;
-        bool excludeAndroid = false;
-        std::vector<Module*> modules;
-        Ref<ScrollLayer> scroll;
+#include <Geode/Geode.hpp>
+#include <Geode/modify/CCMouseDispatcher.hpp>
+#include <imgui-cocos.hpp>
 
-        bool dragging = false;
-        CCPoint offset = CCPoint(0, 0);
+class Window : public UIComponent {
+public:
+    std::string name;
+    std::string id;
+    bool excludeAndroid = false;
+    std::vector<Module*> modules;
+    Ref<ScrollLayer> scroll;
 
-        bool isClosed = false;
-        float closedTimer = 1;
-        ImVec2 windowPos;
-        ImVec2 actualWindowPos;
-        ImVec2 dragOffset;
+    bool dragging = false;
+    CCPoint offset = CCPoint(0, 0);
 
-        int priority = 0;
-        int visualPriority = 0;
+    bool isClosed = false;
+    float closedTimer = 1;
+    ImVec2 windowPos;
+    ImVec2 actualWindowPos;
+    ImVec2 dragOffset;
 
-        std::function<void(CCMenu*, ScrollLayer*)> createPostHook;
+    int priority = 0;
+    int visualPriority = 0;
 
-        Window();
+    std::function<void(CCMenu*, ScrollLayer*)> createPostHook;
 
-        float quadraticEaseInOut(float t);
+    Window();
 
-        ImVec2 getDesiredWindowSize();
+    float quadraticEaseInOut(float t);
 
-        virtual const CCPoint& getPosition();
-        virtual void setPosition(const CCPoint &position);
+    ImVec2 getDesiredWindowSize();
 
-        virtual void drawImGui();
+    virtual const CCPoint& getPosition();
+    virtual void setPosition(const CCPoint& position);
 
-        //stolen from stack overflow
-        int getIndex(std::vector<float> v, float K);
-        float clampf(float v, float min, float max);
+    virtual void drawImGui();
 
-        bool a = false;
-        int i = 0;
+    // stolen from stack overflow
+    int getIndex(std::vector<float> v, float K);
+    float clampf(float v, float min, float max);
 
-        CCPoint offsetForTime(float time);
+    bool a = false;
+    int i = 0;
 
-        virtual void cocosCreate(CCMenu* menu);
+    CCPoint offsetForTime(float time);
+
+    virtual void cocosCreate(CCMenu* menu);
 };
 
 #ifndef GEODE_IS_IOS
 
-class $modify (WindowMouseDispatcher, CCMouseDispatcher)
-{
+class $modify(WindowMouseDispatcher, CCMouseDispatcher) {
     bool dispatchScrollMSG(float x, float y);
 };
 

@@ -10,7 +10,7 @@ bool StatusNode::init()
         return false;
 
     instance = this;
-    
+
     this->setID("status-node"_spr);
     this->setZOrder(69);
     this->scheduleUpdate();
@@ -126,7 +126,8 @@ void StatusNode::reorderSides()
         int side = as<DropdownModule*>(window->modules[i + 4]->options[0])->index;
 
         label->setAnchorPoint(ccp((side == 0 || side == 2) ? 0 : 1, (side == 2 || side == 3) ? 0 : 1));
-        label->setAlignment((side == 0 || side == 2) ? CCTextAlignment::kCCTextAlignmentLeft : CCTextAlignment::kCCTextAlignmentRight);
+        label->setAlignment((side == 0 || side == 2) ? CCTextAlignment::kCCTextAlignmentLeft :
+CCTextAlignment::kCCTextAlignmentRight);
 
         (side == 0 ? topLeft : (side == 1 ? topRight : (side == 2 ? bottomLeft : bottomRight)))->addChild(label);
 
@@ -164,7 +165,8 @@ void StatusNode::reorderPosition()
 
     for (size_t i = 0; i < bottomRight->getChildrenCount(); i++)
     {
-        as<CCNode*>(bottomRight->getChildren()->objectAtIndex(i))->setPosition(ccp(CCDirector::get()->getWinSize().width - 3, 3 + (32.5f * scale * 0.5f) * v));
+        as<CCNode*>(bottomRight->getChildren()->objectAtIndex(i))->setPosition(ccp(CCDirector::get()->getWinSize().width
+- 3, 3 + (32.5f * scale * 0.5f) * v));
 
         if (as<CCNode*>(bottomRight->getChildren()->objectAtIndex(i))->isVisible())
             v++;
@@ -174,7 +176,8 @@ void StatusNode::reorderPosition()
 
     for (size_t i = 0; i < topLeft->getChildrenCount(); i++)
     {
-        as<CCNode*>(topLeft->getChildren()->objectAtIndex(i))->setPosition(ccp(3, CCDirector::get()->getWinSize().height - (3 + (32.5f * scale * 0.5f) * v)));
+        as<CCNode*>(topLeft->getChildren()->objectAtIndex(i))->setPosition(ccp(3, CCDirector::get()->getWinSize().height
+- (3 + (32.5f * scale * 0.5f) * v)));
 
         if (as<CCNode*>(topLeft->getChildren()->objectAtIndex(i))->isVisible())
             v++;
@@ -184,7 +187,8 @@ void StatusNode::reorderPosition()
 
     for (size_t i = 0; i < topRight->getChildrenCount(); i++)
     {
-        as<CCNode*>(topRight->getChildren()->objectAtIndex(i))->setPosition(ccp(CCDirector::get()->getWinSize().width - 3, CCDirector::get()->getWinSize().height - (3 + (32.5f * scale * 0.5f) * v)));
+        as<CCNode*>(topRight->getChildren()->objectAtIndex(i))->setPosition(ccp(CCDirector::get()->getWinSize().width
+- 3, CCDirector::get()->getWinSize().height - (3 + (32.5f * scale * 0.5f) * v)));
 
         if (as<CCNode*>(topRight->getChildren()->objectAtIndex(i))->isVisible())
             v++;
@@ -223,7 +227,7 @@ void StatusNode::update(float dt)
 {
     if (!cheat)
         cheat = Client::GetModule("cheat-indicator");
-    
+
     if (!fps)
         fps = Client::GetModule("status-fps");
 
@@ -259,7 +263,7 @@ void StatusNode::update(float dt)
 
     if (!percentage)
         percentage = Client::GetModule("status-percentage");
-        
+
     if (!attPL)
         attPL = static_cast<AttemptBaseGameLayer*>(GJBaseGameLayer::get());
 
@@ -268,7 +272,7 @@ void StatusNode::update(float dt)
 
     if (!noclipLayer)
         noclipLayer = static_cast<NoclipBaseGameLayer*>(GJBaseGameLayer::get());
-    
+
     float v = 100 * noclipLayer->getNoclipAccuracy();
 
     sLabels[0]->setVisible(cheat->enabled);
@@ -289,7 +293,8 @@ void StatusNode::update(float dt)
     if (PlayLayer::get())
     {
         sLabels[2]->setString((numToString(v, 2) + std::string("%")).c_str());
-        sLabels[3]->setString((numToString(as<NoclipPlayLayer*>(PlayLayer::get())->m_fields->d, 0) + (as<NoclipPlayLayer*>(PlayLayer::get())->m_fields->d == 1 ? std::string(" Death") : std::string(" Deaths"))).c_str());
+        sLabels[3]->setString((numToString(as<NoclipPlayLayer*>(PlayLayer::get())->m_fields->d, 0) +
+(as<NoclipPlayLayer*>(PlayLayer::get())->m_fields->d == 1 ? std::string(" Death") : std::string(" Deaths"))).c_str());
     }
     else
     {
@@ -300,7 +305,7 @@ void StatusNode::update(float dt)
     sLabels[4]->setString((std::string("Attempt ") + std::to_string(attPL->m_fields->attemptCount)).c_str());
 
 
-    
+
     sLabels[5]->setString("");
     //sLabels[6]->setString(b.c_str());
     //sLabels[7]->setString(inp.str().c_str());
@@ -349,7 +354,8 @@ void StatusNode::update(float dt)
         cps.erase(std::remove_if(cps.begin(), cps.end(), [](float i){ return i < 0; }), cps.end());
     }
 
-    sLabels[8]->setString((cpsM->options[1]->enabled ? fmt::format("{} / {} CPS", cps.size(), totalClicks) : fmt::format("{} CPS", cps.size(), totalClicks)).c_str());
+    sLabels[8]->setString((cpsM->options[1]->enabled ? fmt::format("{} / {} CPS", cps.size(), totalClicks)
+: fmt::format("{} CPS", cps.size(), totalClicks)).c_str());
 
     if (bestRunPlayLayer)
         sLabels[9]->setString(bestRunPlayLayer->getRunString().c_str());
@@ -366,7 +372,7 @@ void StatusNode::update(float dt)
 
 void StatusNode::updateCPS(float dt)
 {
-    
+
 }
 
 class $modify (PlayerObject)
@@ -425,7 +431,7 @@ class $modify (PlayLayer)
         stn->attPL = base_cast<AttemptBaseGameLayer*>(this);
         stn->bestRunPlayLayer = base_cast<BestPlayLayer*>(this);
         this->addChild(stn);
-        
+
         return true;
     }
 };

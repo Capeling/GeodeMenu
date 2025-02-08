@@ -1,39 +1,35 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/GJBaseGameLayer.hpp>
 #include "../../Client/Client.h"
 #include "../SafeMode/SafeMode.hpp"
 
+#include <Geode/Geode.hpp>
+#include <Geode/modify/GJBaseGameLayer.hpp>
+#include <Geode/modify/PlayLayer.hpp>
+
 using namespace geode::prelude;
 
-class NonRemovableNode : public CCNode
-{
-    public:
-        bool allowDeleting = false;
+class NonRemovableNode : public CCNode {
+public:
+    bool allowDeleting = false;
 
-        virtual void removeChild(CCNode* child, bool cleanup)
-        {
-            if (allowDeleting)
-                CCNode::removeChild(child, cleanup);
+    virtual void removeChild(CCNode* child, bool cleanup) {
+        if (allowDeleting)
+            CCNode::removeChild(child, cleanup);
+    }
+
+    virtual void visit() {
+        for (auto child : CCArrayExt<CCNode*>(getChildren())) {
+            child->setVisible(true);
         }
 
-        virtual void visit()
-        {
-            for (auto child : CCArrayExt<CCNode*>(getChildren()))
-            {
-                child->setVisible(true);
-            }
+        CCNode::visit();
+    }
 
-            CCNode::visit();
-        }
-
-        CREATE_FUNC(NonRemovableNode)
+    CREATE_FUNC(NonRemovableNode)
 };
 
-std::vector<std::string> camera = 
-{
+std::vector<std::string> camera = {
     "edit_eCamModeBtn_001.png",
     "edit_eGPOffsetBtn_001.png",
     "edit_eEdgeBtn_001.png",
@@ -46,10 +42,8 @@ std::vector<std::string> camera =
 
 static inline std::vector<Hook*> showLayoutHooks = {};
 
-class $modify (LayoutPlayLayer, PlayLayer)
-{
-    struct Fields
-    {
+class $modify(LayoutPlayLayer, PlayLayer) {
+    struct Fields {
         NonRemovableNode* node;
     };
 
@@ -61,10 +55,8 @@ class $modify (LayoutPlayLayer, PlayLayer)
     QOLMOD_MOD_HOOK("show-layout", "PlayLayer::addObject")
 };
 
-class $modify (LayoutBaseGameLayer, GJBaseGameLayer)
-{
-    static void onModify(auto& self)
-    {
+class $modify(LayoutBaseGameLayer, GJBaseGameLayer) {
+    static void onModify(auto& self) {
         showLayoutHooks.push_back(self.getHook("GJBaseGameLayer::updateColor").unwrapOr(nullptr));
         showLayoutHooks.push_back(self.getHook("GJBaseGameLayer::createBackground").unwrapOr(nullptr));
         showLayoutHooks.push_back(self.getHook("GJBaseGameLayer::createGroundLayer").unwrapOr(nullptr));
@@ -78,5 +70,8 @@ class $modify (LayoutBaseGameLayer, GJBaseGameLayer)
     void createGroundLayer(int p0, int p1);
     void createMiddleground(int p0);
 
-    virtual void updateColor(cocos2d::ccColor3B& color, float fadeTime, int colorID, bool blending, float opacity, cocos2d::ccHSVValue& copyHSV, int colorIDToCopy, bool copyOpacity, EffectGameObject* callerObject, int unk1, int unk2);
+    virtual void updateColor(
+        cocos2d::ccColor3B& color, float fadeTime, int colorID, bool blending, float opacity, cocos2d::ccHSVValue& copyHSV,
+        int colorIDToCopy, bool copyOpacity, EffectGameObject* callerObject, int unk1, int unk2
+    );
 };

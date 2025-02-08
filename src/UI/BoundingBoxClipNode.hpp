@@ -4,13 +4,12 @@
 
 using namespace geode::prelude;
 
-class BoundingBoxClipNode : public CCNode
-{
-    public:
-        CCNode* node;
+class BoundingBoxClipNode : public CCNode {
+public:
+    CCNode* node;
 
-        virtual bool init();
-        virtual void visit();
+    virtual bool init();
+    virtual void visit();
 
-        CREATE_FUNC(BoundingBoxClipNode)
+    CREATE_FUNC(BoundingBoxClipNode)
 };

@@ -1,4 +1,5 @@
 #include "Universal.hpp"
+
 #include "Level.hpp"
 
 using namespace geode::prelude;
@@ -13,7 +14,7 @@ void Universal::cocosCreate(CCMenu* menu) {
     CCMenuItemSpriteExtra* btn = nullptr;
 
     auto btnUnc = ButtonSprite::create("Uncomplete\nLevel", 70, false, "bigFont.fnt", "GJ_button_05.png", 35, 0.75f);
-    
+
     as<CCNode*>(btnUnc->getChildren()->objectAtIndex(0))->setScale(0.375f);
     as<CCLabelBMFont*>(btnUnc->getChildren()->objectAtIndex(0))->setAlignment(CCTextAlignment::kCCTextAlignmentCenter);
     as<CCLabelBMFont*>(btnUnc->getChildren()->objectAtIndex(0))->updateLabel();

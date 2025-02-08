@@ -2,8 +2,7 @@
 
 #define MAX_STORED_STATES 240
 
-void SteppedBaseGameLayer::storeState()
-{
+void SteppedBaseGameLayer::storeState() {
     if (!typeinfo_cast<PlayLayer*>(this))
         return;
 
@@ -11,7 +10,7 @@ void SteppedBaseGameLayer::storeState()
         return;
 
     auto fields = m_fields.self();
-    
+
     if (fields->states.size() + 1 > MAX_STORED_STATES)
         fields->states.erase(fields->states.begin());
 
@@ -22,8 +21,7 @@ void SteppedBaseGameLayer::storeState()
     as<SteppedUILayer*>(m_uiLayer)->updateUI();
 }
 
-void SteppedBaseGameLayer::restoreState()
-{
+void SteppedBaseGameLayer::restoreState() {
     if (!typeinfo_cast<PlayLayer*>(this))
         return;
 
@@ -32,14 +30,13 @@ void SteppedBaseGameLayer::restoreState()
     if (fields->states.size() == 0)
         return;
 
-    if (auto cp = fields->states.at(fields->states.size() - 1))
-    {
+    if (auto cp = fields->states.at(fields->states.size() - 1)) {
         auto pl = as<PlayLayer*>(base_cast<GJBaseGameLayer*>(this));
-        
+
         pl->storeCheckpoint(cp);
 
         pl->resetLevel();
-        
+
         pl->removeCheckpoint(false);
     }
 
@@ -48,37 +45,35 @@ void SteppedBaseGameLayer::restoreState()
     as<SteppedUILayer*>(m_uiLayer)->updateUI();
 }
 
-void SteppedBaseGameLayer::checkRepellPlayer()
-{
+void SteppedBaseGameLayer::checkRepellPlayer() {
     GJBaseGameLayer::checkRepellPlayer();
 
     storeState();
 }
 
-void SteppedBaseGameLayer::update(float dt)
-{
+void SteppedBaseGameLayer::update(float dt) {
     if (getPausedUpdate())
         return;
 
     GJBaseGameLayer::update(dt);
 }
 
-void SteppedBaseGameLayer::stepFrame()
-{
+void SteppedBaseGameLayer::stepFrame() {
     m_fields->steppingUpdate = true;
 
-    GJBaseGameLayer::update(1.0f / (Client::GetModuleEnabled("tps-bypass") ? as<InputModule*>(Client::GetModule("tps-bypass")->options[0])->getFloatValue() : 240.0f));
+    GJBaseGameLayer::update(
+        1.0f /
+        (Client::GetModuleEnabled("tps-bypass") ? as<InputModule*>(Client::GetModule("tps-bypass")->options[0])->getFloatValue() : 240.0f)
+    );
 
     m_fields->steppingUpdate = false;
 }
 
-bool SteppedBaseGameLayer::getPausedUpdate()
-{
+bool SteppedBaseGameLayer::getPausedUpdate() {
     return m_fields->steppingUpdate ? false : m_fields->paused;
 }
 
-bool SteppedUILayer::init(GJBaseGameLayer* bgl)
-{
+bool SteppedUILayer::init(GJBaseGameLayer* bgl) {
     if (!UILayer::init(bgl))
         return false;
 
@@ -94,13 +89,19 @@ bool SteppedUILayer::init(GJBaseGameLayer* bgl)
 
     menu->setPosition(ccp(135 / 2, 40 / 2) + ccp(25, 25));
 
-    m_fields->pause = RepeatableMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_pauseBtn_001.png"), this, menu_selector(SteppedUILayer::onTogglePaused));
+    m_fields->pause = RepeatableMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_pauseBtn_001.png"), this, menu_selector(SteppedUILayer::onTogglePaused)
+    );
     m_fields->pause->getNormalImage()->setScale(0.8f);
 
-    m_fields->prev = RepeatableMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onPreviousFrame));
+    m_fields->prev = RepeatableMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onPreviousFrame)
+    );
     m_fields->prev->getNormalImage()->setScale(0.8f);
 
-    auto next = RepeatableMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onStepFrame));
+    auto next = RepeatableMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_arrow_02_001.png"), this, menu_selector(SteppedUILayer::onStepFrame)
+    );
     next->getNormalImage()->setScale(0.8f);
     as<CCSprite*>(next->getNormalImage())->setFlipX(true);
 
@@ -119,68 +120,65 @@ bool SteppedUILayer::init(GJBaseGameLayer* bgl)
     return true;
 }
 
-void SteppedUILayer::onTogglePaused(CCObject*)
-{
-    if (m_gameLayer)
-    {
+void SteppedUILayer::onTogglePaused(CCObject*) {
+    if (m_gameLayer) {
         auto fields = as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields.self();
 
         fields->paused = !fields->paused;
 
-        if (fields->paused)
-        {
-            #ifdef GEODE_IS_WINDOWS
+        if (fields->paused) {
+#ifdef GEODE_IS_WINDOWS
             for (auto& [id, channel] : FMODAudioEngine::get()->m_musicChannels) {
                 auto ch = FMODAudioEngine::get()->channelForChannelID(channel.m_channelID);
                 if (ch)
                     ch->setPaused(true);
             }
-            #else
+#else
             FMODAudioEngine::get()->pauseAllMusic(true);
-            #endif
-        }
-        else
+#endif
+        } else
             FMODAudioEngine::get()->resumeAllMusic();
     }
 
     updateUI();
 }
 
-void SteppedUILayer::onPreviousFrame(CCObject* sender)
-{
+void SteppedUILayer::onPreviousFrame(CCObject* sender) {
     if (m_gameLayer)
         as<SteppedBaseGameLayer*>(m_gameLayer)->restoreState();
-    
+
     updateUI();
 }
 
-void SteppedUILayer::onStepFrame(CCObject*)
-{
+void SteppedUILayer::onStepFrame(CCObject*) {
     if (m_gameLayer)
         as<SteppedBaseGameLayer*>(m_gameLayer)->stepFrame();
 
     updateUI();
 }
 
-void SteppedUILayer::updateUI()
-{
+void SteppedUILayer::updateUI() {
     if (!m_gameLayer)
         return;
 
     m_fields->prev->setEnabled(as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->states.size() != 0);
     m_fields->prev->setColor(m_fields->prev->isEnabled() ? ccWHITE : ccc3(150, 150, 150));
 
-    if (!typeinfo_cast<PlayLayer*>(m_gameLayer))
-    {
+    if (!typeinfo_cast<PlayLayer*>(m_gameLayer)) {
         m_fields->prev->setEnabled(false);
         m_fields->prev->setColor(ccc3(150, 150, 150));
     }
 
-    as<CCSprite*>(m_fields->pause->getNormalImage())->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->paused ? "GJ_playEditorBtn_001.png" : "GJ_pauseEditorBtn_001.png"));
+    as<CCSprite*>(m_fields->pause->getNormalImage())
+        ->setDisplayFrame(CCSpriteFrameCache::get()->spriteFrameByName(
+            as<SteppedBaseGameLayer*>(m_gameLayer)->m_fields->paused ? "GJ_playEditorBtn_001.png" : "GJ_pauseEditorBtn_001.png"
+        ));
 
     m_fields->menu->setVisible(Client::GetModuleEnabled("frame-stepper"));
 
-    auto position = ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25), Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
+    auto position =
+        ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
+            Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
     auto scale = Mod::get()->getSavedValue<float>("frame-stepper-scale", 1);
 
     m_fields->menu->setPosition(position);
@@ -189,28 +187,21 @@ void SteppedUILayer::updateUI()
 
 #ifndef GEODE_IS_IOS
 
-bool SteppedKeyboardDispatcher::dispatchKeyboardMSG(enumKeyCodes key, bool isKeyDown, bool isKeyRepeat)
-{
+bool SteppedKeyboardDispatcher::dispatchKeyboardMSG(enumKeyCodes key, bool isKeyDown, bool isKeyRepeat) {
     CCKeyboardDispatcher::dispatchKeyboardMSG(key, isKeyDown, isKeyRepeat);
 
-    if (isKeyDown || isKeyRepeat)
-    {
-        if (auto bgl = GJBaseGameLayer::get())
-        {
-            if (auto ui = bgl->m_uiLayer)
-            {
-                if (key == enumKeyCodes::KEY_N)
-                {
+    if (isKeyDown || isKeyRepeat) {
+        if (auto bgl = GJBaseGameLayer::get()) {
+            if (auto ui = bgl->m_uiLayer) {
+                if (key == enumKeyCodes::KEY_N) {
                     as<SteppedUILayer*>(ui)->onPreviousFrame(nullptr);
                 }
 
-                if (key == enumKeyCodes::KEY_M)
-                {
+                if (key == enumKeyCodes::KEY_M) {
                     as<SteppedUILayer*>(ui)->onStepFrame(nullptr);
                 }
 
-                if (key == enumKeyCodes::KEY_B)
-                {
+                if (key == enumKeyCodes::KEY_B) {
                     as<SteppedUILayer*>(ui)->onTogglePaused(nullptr);
                 }
             }
@@ -222,23 +213,17 @@ bool SteppedKeyboardDispatcher::dispatchKeyboardMSG(enumKeyCodes key, bool isKey
 
 #endif
 
-class FrameStepperUIDelegate : public ModuleChangeDelegate
-{
-    virtual void initOptionsLayer(CCLayer* options)
-    {
+class FrameStepperUIDelegate : public ModuleChangeDelegate {
+    virtual void initOptionsLayer(CCLayer* options) {
         options->addChild(EditPositionLayer::create(EditPositionType::FrameStepper));
     }
 };
 
-$execute
-{
-    Loader::get()->queueInMainThread([]
-    {
+$execute {
+    Loader::get()->queueInMainThread([] {
         Client::GetModule("frame-stepper")->delegate = new FrameStepperUIDelegate();
-        Client::GetModule("frame-stepper")->onToggle = [](bool enabled)
-        {
-            if (GJBaseGameLayer::get())
-            {
+        Client::GetModule("frame-stepper")->onToggle = [](bool enabled) {
+            if (GJBaseGameLayer::get()) {
                 as<SteppedUILayer*>(GJBaseGameLayer::get()->m_uiLayer)->m_fields->menu->setVisible(enabled);
                 as<SteppedUILayer*>(GJBaseGameLayer::get()->m_uiLayer)->updateUI();
             }

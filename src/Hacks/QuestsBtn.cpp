@@ -1,11 +1,10 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/PauseLayer.hpp>
 #include "../Client/Client.h"
 
-class $modify (PauseLayer)
-{
-    virtual void customSetup()
-    {
+#include <Geode/Geode.hpp>
+#include <Geode/modify/PauseLayer.hpp>
+
+class $modify(PauseLayer) {
+    virtual void customSetup() {
         PauseLayer::customSetup();
 
         if (!Client::GetModuleEnabled("pause-quests"))

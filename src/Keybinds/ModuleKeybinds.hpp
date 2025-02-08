@@ -3,11 +3,10 @@
 
 using namespace geode::prelude;
 
-namespace QOLModKeybinds
-{
+namespace QOLModKeybinds {
     bool hasSetupKeybinds;
 
     bool isKeybindsLoaded();
 
     void setupKeybinds();
-};
+}; // namespace QOLModKeybinds

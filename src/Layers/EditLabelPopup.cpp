@@ -1,36 +1,39 @@
 #include "EditLabelPopup.hpp"
+
 #include "../Client/AndroidUI.h"
-#include "ChooseFontPopup.hpp"
 #include "../UI/LabelEventCell.hpp"
 #include "BetterMDPopup.hpp"
+#include "ChooseFontPopup.hpp"
 
-// static ButtonSprite* create(char const* caption, int width, int p2, float scale, bool absolute, char const* font, char const* bg, float height);
-#define ANCHOR_BTN(__anchor, __text) \
-off = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_04.png", 30); \
-off->setContentWidth(30); \
-off->m_BGSprite->setPositionX(15); \
-off->m_BGSprite->setContentWidth(30); \
-off->m_label->setPositionX(15); \
-off->m_label->setScale(0.4f); \
-on = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_01.png", 30); \
-on->setContentWidth(30); \
-on->m_BGSprite->setPositionX(15); \
-on->m_BGSprite->setContentWidth(30); \
-on->m_label->setPositionX(15); \
-on->m_label->setScale(0.4f); \
-toggler = CCMenuItemToggler::create(off, on, this, menu_selector(EditLabelPopup::onChangeAnchor)); \
-toggler->setEnabled(module->getSide() != LabelAnchor::__anchor); \
-toggler->toggle(module->getSide() == LabelAnchor::__anchor); \
-toggler->setTag(as<int>(LabelAnchor::__anchor)); \
-toggles.emplace(LabelAnchor::__anchor, toggler); \
-anchorMenu->addChild(toggler);
+// static ButtonSprite* create(char const* caption, int width, int p2, float scale, bool absolute,
+// char const* font, char const* bg, float height);
+#define ANCHOR_BTN(__anchor, __text)                                                                   \
+    off = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_04.png", 30);    \
+    off->setContentWidth(30);                                                                          \
+    off->m_BGSprite->setPositionX(15);                                                                 \
+    off->m_BGSprite->setContentWidth(30);                                                              \
+    off->m_label->setPositionX(15);                                                                    \
+    off->m_label->setScale(0.4f);                                                                      \
+    on = ButtonSprite::create(__text, 30, 69, 1.0f, false, "bigFont.fnt", "GJ_button_01.png", 30);     \
+    on->setContentWidth(30);                                                                           \
+    on->m_BGSprite->setPositionX(15);                                                                  \
+    on->m_BGSprite->setContentWidth(30);                                                               \
+    on->m_label->setPositionX(15);                                                                     \
+    on->m_label->setScale(0.4f);                                                                       \
+    toggler = CCMenuItemToggler::create(off, on, this, menu_selector(EditLabelPopup::onChangeAnchor)); \
+    toggler->setEnabled(module->getSide() != LabelAnchor::__anchor);                                   \
+    toggler->toggle(module->getSide() == LabelAnchor::__anchor);                                       \
+    toggler->setTag(as<int>(LabelAnchor::__anchor));                                                   \
+    toggles.emplace(LabelAnchor::__anchor, toggler);                                                   \
+    anchorMenu->addChild(toggler);
 
-void EditLabelPopup::customSetup()
-{
-    auto leftBtn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
+void EditLabelPopup::customSetup() {
+    auto leftBtn =
+        CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
     leftBtn->setTag(-1);
 
-    auto rightBtn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
+    auto rightBtn =
+        CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_arrow_01_001.png"), this, menu_selector(EditLabelPopup::onPage));
     rightBtn->getNormalImage()->setScaleX(-1);
     rightBtn->setTag(1);
 
@@ -68,8 +71,7 @@ void EditLabelPopup::customSetup()
     xInp->setScale(0.7f);
     xInp->setCommonFilter(CommonFilter::Float);
     xInp->setAnchorPoint(ccp(0, 0));
-    xInp->setCallback([this, xInp](const std::string& str)
-    {
+    xInp->setCallback([this, xInp](const std::string& str) {
         module->offset.x = numFromString<float>(str).unwrapOr(module->offset.x);
     });
 
@@ -78,8 +80,7 @@ void EditLabelPopup::customSetup()
     yInp->setScale(0.7f);
     yInp->setCommonFilter(CommonFilter::Float);
     yInp->setAnchorPoint(ccp(1, 0));
-    yInp->setCallback([this, yInp](const std::string& str)
-    {
+    yInp->setCallback([this, yInp](const std::string& str) {
         module->offset.y = numFromString<float>(str).unwrapOr(module->offset.y);
     });
 
@@ -95,15 +96,15 @@ void EditLabelPopup::customSetup()
     ButtonSprite* on;
     CCMenuItemToggler* toggler;
 
-    ANCHOR_BTN(TopLeft,      "TL");
-    ANCHOR_BTN(TopCenter,    "T");
-    ANCHOR_BTN(TopRight,     "TR");
-    ANCHOR_BTN(CenterLeft,   "L");
-    ANCHOR_BTN(Center,       "C");
-    ANCHOR_BTN(CenterRight,  "R");
-    ANCHOR_BTN(BottomLeft,   "BL");
+    ANCHOR_BTN(TopLeft, "TL");
+    ANCHOR_BTN(TopCenter, "T");
+    ANCHOR_BTN(TopRight, "TR");
+    ANCHOR_BTN(CenterLeft, "L");
+    ANCHOR_BTN(Center, "C");
+    ANCHOR_BTN(CenterRight, "R");
+    ANCHOR_BTN(BottomLeft, "BL");
     ANCHOR_BTN(BottomCenter, "B");
-    ANCHOR_BTN(BottomRight,  "BR");
+    ANCHOR_BTN(BottomRight, "BR");
 
     anchorMenu->updateLayout();
     anchorBG->addChildAtPosition(anchorMenu, Anchor::Center, ccp(0, 13));
@@ -126,8 +127,7 @@ void EditLabelPopup::customSetup()
     nameInp->setCommonFilter(CommonFilter::Any);
     nameInp->setString(module->name);
     nameInp->setScale(0.7f);
-    nameInp->setCallback([this, nameInp](const std::string& str)
-    {
+    nameInp->setCallback([this, nameInp](const std::string& str) {
         module->name = str;
     });
 
@@ -146,8 +146,7 @@ void EditLabelPopup::customSetup()
     scaleInp->setCommonFilter(CommonFilter::Float);
     scaleInp->setString(fmt::format("{:.02f}", module->getScale()));
     scaleInp->setScale(0.7f);
-    scaleInp->setCallback([this, scaleInp](const std::string& str)
-    {
+    scaleInp->setCallback([this, scaleInp](const std::string& str) {
         module->setScale(numFromString<float>(str).unwrapOr(module->getScale()));
     });
 
@@ -166,8 +165,7 @@ void EditLabelPopup::customSetup()
     opacityInp->setCommonFilter(CommonFilter::Float);
     opacityInp->setString(fmt::format("{:.02f}", module->getOpacity()));
     opacityInp->setScale(0.7f);
-    opacityInp->setCallback([this, opacityInp](const std::string& str)
-    {
+    opacityInp->setCallback([this, opacityInp](const std::string& str) {
         module->setOpacity(numFromString<float>(str).unwrapOr(module->getOpacity()));
     });
 
@@ -175,8 +173,12 @@ void EditLabelPopup::customSetup()
 
     auto fontMenu = CCMenu::create();
     fontMenu->setContentSize(CCPointZero);
-    
-    auto fontBtn = CCMenuItemSpriteExtra::create(ButtonSprite::create("Change Font", 100, 0, 1.0f, false, "bigFont.fnt", "GJ_button_05.png", 23), this, menu_selector(EditLabelPopup::onFont));
+
+    auto fontBtn = CCMenuItemSpriteExtra::create(
+        ButtonSprite::create("Change Font", 100, 0, 1.0f, false, "bigFont.fnt", "GJ_button_05.png", 23),
+        this,
+        menu_selector(EditLabelPopup::onFont)
+    );
     fontMenu->addChild(fontBtn);
     fontMenu->setScale(0.875f);
 
@@ -196,8 +198,7 @@ void EditLabelPopup::customSetup()
     colourLine->setScaleX(0.5f);
     colourBG->addChildAtPosition(colourLine, Anchor::Top, ccp(0, -19));
 
-    auto colourToggle = CCMenuItemExt::createTogglerWithStandardSprites(0.6f, [this](CCMenuItemToggler* toggler)
-    {
+    auto colourToggle = CCMenuItemExt::createTogglerWithStandardSprites(0.6f, [this](CCMenuItemToggler* toggler) {
         module->isCheatIndicator = !module->isCheatIndicator;
 
         log::info("toggled");
@@ -210,8 +211,7 @@ void EditLabelPopup::customSetup()
     colourLabel->setPositionX(13);
     colourLabel->setScale(0.45f);
 
-    auto noclipToggle = CCMenuItemExt::createTogglerWithStandardSprites(0.6f, [this](CCMenuItemToggler* toggler)
-    {
+    auto noclipToggle = CCMenuItemExt::createTogglerWithStandardSprites(0.6f, [this](CCMenuItemToggler* toggler) {
         module->noclipOnly = !module->noclipOnly;
 
         log::info("toggled");
@@ -233,8 +233,13 @@ void EditLabelPopup::customSetup()
     colourToggleMenu->addChild(noclipToggle);
     colourToggleMenu->addChild(noclipLabel);
 
-    // ButtonSprite * create(const char *caption, int width, bool absolute, const char *font, const char *texture, float height, float scale)
-    auto exportBtn = CCMenuItemSpriteExtra::create(ButtonSprite::create("Export To File", 100, false, "bigFont.fnt", "GJ_button_05.png", 30, 1.0f), this, menu_selector(EditLabelPopup::onExportToFile));
+    // ButtonSprite * create(const char *caption, int width, bool absolute, const char *font, const
+    // char *texture, float height, float scale)
+    auto exportBtn = CCMenuItemSpriteExtra::create(
+        ButtonSprite::create("Export To File", 100, false, "bigFont.fnt", "GJ_button_05.png", 30, 1.0f),
+        this,
+        menu_selector(EditLabelPopup::onExportToFile)
+    );
     exportBtn->setPosition(ccp((colourBG->getContentWidth() - 15 * 2) / 2, -120));
     exportBtn->getNormalImage()->setScale(0.85f);
     colourToggleMenu->addChild(exportBtn);
@@ -244,16 +249,31 @@ void EditLabelPopup::customSetup()
     auto infoMenu = CCMenu::create();
     infoMenu->setPosition(CCPointZero);
 
-    auto anchorInfo = InfoAlertButton::create("Anchor Info", "Anchor is the <cc>corner</c> of the screen that <cl>labels</c> are anchored to", 0.4f);
+    auto anchorInfo =
+        InfoAlertButton::create("Anchor Info", "Anchor is the <cc>corner</c> of the screen that <cl>labels</c> are anchored to", 0.4f);
     anchorInfo->setPosition(ccp(333, 208));
 
-    auto offsetInfo = InfoAlertButton::create("Offset Info", "Offset in <cl>cocos units</c> from the anchor point, will not affect other labels in layout", 0.4f);
+    auto offsetInfo = InfoAlertButton::create(
+        "Offset Info",
+        "Offset in <cl>cocos units</c> from the anchor point, will not affect other labels in "
+        "layout",
+        0.4f
+    );
     offsetInfo->setPosition(ccp(330, 78));
 
-    auto nameInfo = InfoAlertButton::create("Display Name", "A name for your label, only shown in the <cc>ui</c> to differentiate your labels", 0.4f);
+    auto nameInfo =
+        InfoAlertButton::create("Display Name", "A name for your label, only shown in the <cc>ui</c> to differentiate your labels", 0.4f);
     nameInfo->setPosition(ccp(122, 208));
 
-    auto colourInfo = InfoAlertButton::create("Colour Info", "<cc>Cheat Indicator</c> - Makes the label be the colour of the cheat indicator\nsuch as <cr>red</c> for cheating and <cg>green</c> for safe\n\nLabel Events are currently broken with cheat indicator enabled, sorry\n<cc>Noclip Only</c> - Only shows the label if the noclip mod is enabled", 0.4f);
+    auto colourInfo = InfoAlertButton::create(
+        "Colour Info",
+        "<cc>Cheat Indicator</c> - Makes the label be the colour of the cheat indicator\nsuch as "
+        "<cr>red</c> for "
+        "cheating and <cg>green</c> for safe\n\nLabel Events are currently broken with cheat "
+        "indicator enabled, "
+        "sorry\n<cc>Noclip Only</c> - Only shows the label if the noclip mod is enabled",
+        0.4f
+    );
     colourInfo->setPosition(ccp(216, 208));
 
     infoMenu->addChild(anchorInfo);
@@ -272,7 +292,9 @@ void EditLabelPopup::customSetup()
     infoMenu = CCMenu::create();
     infoMenu->setPosition(CCPointZero);
 
-    auto formatInfo = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(EditLabelPopup::onFormatInfo));
+    auto formatInfo = CCMenuItemSpriteExtra::create(
+        CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(EditLabelPopup::onFormatInfo)
+    );
     formatInfo->getNormalImage()->setScale(0.8f);
     formatInfo->setPosition(size + ccp(-16, -16));
 
@@ -283,8 +305,7 @@ void EditLabelPopup::customSetup()
     auto formatInp = TextInput::create(formatSize.x, "Format");
     formatInp->setString(module->format);
     formatInp->setCommonFilter(CommonFilter::Any);
-    formatInp->setCallback([this](const std::string& str)
-    {
+    formatInp->setCallback([this](const std::string& str) {
         module->format = str;
     });
 
@@ -321,8 +342,8 @@ void EditLabelPopup::customSetup()
     page3->addChildAtPosition(leftBG, Anchor::Left, ccp(7.5f, 8));
     page3->addChildAtPosition(rightBG, Anchor::Right, ccp(-7.5f, 8));
 
-    std::vector<std::string> strs = { "Add New" };
-    
+    std::vector<std::string> strs = {"Add New"};
+
     strs.push_back("Player Took Damage");
     strs.push_back("Click Started");
     strs.push_back("Click Ended");
@@ -366,15 +387,13 @@ void EditLabelPopup::customSetup()
     ok->m_pfnSelector = menu_selector(EditLabelPopup::onClose);
 }
 
-void EditLabelPopup::updateList()
-{
+void EditLabelPopup::updateList() {
     scroll->m_contentLayer->removeAllChildren();
 
     float y = 0;
     int i = 0;
 
-    for (auto event : module->events)
-    {
+    for (auto event : module->events) {
         auto cell = LabelEventCell::createWithEvent(&module->events.at(i));
         cell->setPositionY(y);
         cell->module = module;
@@ -387,29 +406,25 @@ void EditLabelPopup::updateList()
 
     scroll->m_contentLayer->setContentHeight(std::max<float>(scroll->getContentHeight(), y - 2));
 
-    for (size_t i = 0; i < scroll->m_contentLayer->getChildrenCount(); i++)
-    {
-        if (auto cell = as<LabelEventCell*>(scroll->m_contentLayer->getChildren()->objectAtIndex(i)))
-        {
+    for (size_t i = 0; i < scroll->m_contentLayer->getChildrenCount(); i++) {
+        if (auto cell = as<LabelEventCell*>(scroll->m_contentLayer->getChildren()->objectAtIndex(i))) {
             cell->setPositionY(scroll->m_contentLayer->getContentHeight() - cell->getPositionY());
         }
     }
-    
+
     scroll->setTouchEnabled(scroll->m_contentLayer->getContentHeight() != scroll->getContentHeight());
 
     err->setVisible(scroll->m_contentLayer->getChildrenCount() == 0);
 }
 
-void EditLabelPopup::onFormatInfo(CCObject* sender)
-{
+void EditLabelPopup::onFormatInfo(CCObject* sender) {
     auto res = utils::file::readString(Mod::get()->getResourcesDir() / "label-help.md");
     auto text = res.unwrapOr(fmt::format("Error reading file: {}", res.err()));
 
     BetterMDPopup::create(nullptr, "Label Format Help", text, "OK", nullptr, 420, true, 69, 1.0f)->show();
 }
 
-void EditLabelPopup::onAddEvent(CCObject* sender)
-{
+void EditLabelPopup::onAddEvent(CCObject* sender) {
     if (dropdown->getSelectedIndex() == 0)
         return;
 
@@ -422,10 +437,8 @@ void EditLabelPopup::onAddEvent(CCObject* sender)
     dropdown->setSelected(0);
 }
 
-void EditLabelPopup::updatePage()
-{
-    for (size_t i = 0; i < pages.size(); i++)
-    {
+void EditLabelPopup::updatePage() {
+    for (size_t i = 0; i < pages.size(); i++) {
         pages[i]->setVisible(i == currentPage);
 
         if (i == currentPage)
@@ -433,31 +446,26 @@ void EditLabelPopup::updatePage()
     }
 }
 
-void EditLabelPopup::onFont(CCObject* sender)
-{
-    ChooseFontPopup::addToScene([this](std::string font)
-    {
+void EditLabelPopup::onFont(CCObject* sender) {
+    ChooseFontPopup::addToScene([this](std::string font) {
         log::info("selected font: {}", font);
 
         module->setFont(font);
     })->setSelected(module->getFont());
 }
 
-void EditLabelPopup::onChangeAnchor(CCObject* sender)
-{
+void EditLabelPopup::onChangeAnchor(CCObject* sender) {
     module->setSide(as<LabelAnchor>(sender->getTag()));
 
-    for (auto toggle : toggles)
-    {
+    for (auto toggle : toggles) {
         toggle.second->setEnabled(toggle.first != as<LabelAnchor>(sender->getTag()));
         toggle.second->toggle(toggle.first == as<LabelAnchor>(sender->getTag()));
     }
 }
 
-void EditLabelPopup::onPage(CCObject* sender)
-{
+void EditLabelPopup::onPage(CCObject* sender) {
     currentPage += sender->getTag();
-    
+
     if (currentPage < 0)
         currentPage = pages.size() - 1;
 
@@ -467,23 +475,17 @@ void EditLabelPopup::onPage(CCObject* sender)
     updatePage();
 }
 
-void EditLabelPopup::onExportToFile(CCObject* sender)
-{
+void EditLabelPopup::onExportToFile(CCObject* sender) {
     module->exportToFile();
 }
 
-void EditLabelPopup::onClose(CCObject* sender)
-{
-    if (AndroidUI::get())
-    {
+void EditLabelPopup::onClose(CCObject* sender) {
+    if (AndroidUI::get()) {
         Labels::get()->refreshList();
 
-        for (auto cell : Labels::get()->cells)
-        {
-            if (cell->getUserData() == module)
-            {
-                if (auto bg = cell->getChildByID("background"))
-                {
+        for (auto cell : Labels::get()->cells) {
+            if (cell->getUserData() == module) {
+                if (auto bg = cell->getChildByID("background")) {
                     as<CCScale9Sprite*>(bg)->setColor(ccc3(0, 191, 255));
                     as<CCScale9Sprite*>(bg)->runAction(CCTintTo::create(0.35f, 0, 0, 0));
                 }
@@ -496,8 +498,7 @@ void EditLabelPopup::onClose(CCObject* sender)
     SillyBaseLayer::onClose(sender);
 }
 
-EditLabelPopup* EditLabelPopup::create(LabelModule* module, bool advanced)
-{
+EditLabelPopup* EditLabelPopup::create(LabelModule* module, bool advanced) {
     auto pRet = new EditLabelPopup();
 
     advanced = true;
@@ -505,8 +506,7 @@ EditLabelPopup* EditLabelPopup::create(LabelModule* module, bool advanced)
     pRet->module = module;
     pRet->advanced = advanced;
 
-    if (pRet && pRet->initWithSizeAndName(advanced ? ccp(370, 250) : ccp(290, 200), ""))
-    {
+    if (pRet && pRet->initWithSizeAndName(advanced ? ccp(370, 250) : ccp(290, 200), "")) {
         pRet->autorelease();
         return pRet;
     }
@@ -515,8 +515,7 @@ EditLabelPopup* EditLabelPopup::create(LabelModule* module, bool advanced)
     return nullptr;
 }
 
-EditLabelPopup* EditLabelPopup::addToScene(LabelModule* module, bool advanced)
-{
+EditLabelPopup* EditLabelPopup::addToScene(LabelModule* module, bool advanced) {
     auto pRet = EditLabelPopup::create(module, advanced);
 
     CCScene::get()->addChild(pRet, 99999);

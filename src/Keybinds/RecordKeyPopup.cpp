@@ -1,10 +1,11 @@
 #include "RecordKeyPopup.hpp"
-#include <Geode/ui/GeodeUI.hpp>
-#include "../UI/BlurLayer.hpp"
-#include "../Client/Client.h"
 
-bool RecordKeyPopup::init(SEL_MenuHandler obj)
-{
+#include "../Client/Client.h"
+#include "../UI/BlurLayer.hpp"
+
+#include <Geode/ui/GeodeUI.hpp>
+
+bool RecordKeyPopup::init(SEL_MenuHandler obj) {
     if (!CCLayerColor::init())
         return false;
 
@@ -13,8 +14,7 @@ bool RecordKeyPopup::init(SEL_MenuHandler obj)
     this->setKeypadEnabled(true);
     this->handler = obj;
 
-    if (Client::GetModuleEnabled("menu-bg-blur"))
-    {
+    if (Client::GetModuleEnabled("menu-bg-blur")) {
         auto blur = BlurLayer::create();
         blur->runAction(CCEaseIn::create(CCFadeTo::create(0.5f, 255), 2));
         this->addChild(blur);
@@ -39,8 +39,7 @@ bool RecordKeyPopup::init(SEL_MenuHandler obj)
     text2->setPosition(CCDirector::get()->getWinSize() / 2 + ccp(0, -10));
     this->addChild(text2);
 
-    if (auto popup = CCScene::get()->getChildByType<CCLayer>(0))
-    {
+    if (auto popup = CCScene::get()->getChildByType<CCLayer>(0)) {
         if (auto input = popup->getChildByType<CCTextInputNode>(0))
             input->onClickTrackNode(false);
     }
@@ -48,8 +47,7 @@ bool RecordKeyPopup::init(SEL_MenuHandler obj)
     return true;
 }
 
-void RecordKeyPopup::keyDown(enumKeyCodes key)
-{
+void RecordKeyPopup::keyDown(enumKeyCodes key) {
     CCTouchDispatcher::get()->unregisterForcePrio(this);
     CCTouchDispatcher::get()->removeDelegate(this);
 
@@ -72,17 +70,14 @@ void RecordKeyPopup::keyDown(enumKeyCodes key)
     this->removeFromParent();
 }
 
-void RecordKeyPopup::keyBackClicked()
-{
+void RecordKeyPopup::keyBackClicked() {
     this->keyDown(enumKeyCodes::KEY_Escape);
 }
 
-RecordKeyPopup* RecordKeyPopup::create(SEL_MenuHandler obj)
-{
+RecordKeyPopup* RecordKeyPopup::create(SEL_MenuHandler obj) {
     auto pRet = new RecordKeyPopup();
 
-    if (pRet && pRet->init(obj))
-    {
+    if (pRet && pRet->init(obj)) {
         pRet->autorelease();
         return pRet;
     }

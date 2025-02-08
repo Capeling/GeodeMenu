@@ -1,14 +1,13 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/EndLevelLayer.hpp>
 #include "../Client/Client.h"
 #include "SafeMode/SafeMode.hpp"
 
+#include <Geode/Geode.hpp>
+#include <Geode/modify/EndLevelLayer.hpp>
+
 using namespace geode::prelude;
 
-class $modify (EndLevelLayer)
-{
-    virtual void customSetup()
-    {
+class $modify(EndLevelLayer) {
+    virtual void customSetup() {
         EndLevelLayer::customSetup();
 
         auto ind = CCSprite::createWithSpriteFrameName("uiDot_001.png");

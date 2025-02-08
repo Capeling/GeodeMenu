@@ -1,10 +1,11 @@
 #include "TransAlertLayer.hpp"
-#include "TransLabelBMFont.hpp"
+
 #include "../Utils/TranslationManager.hpp"
+#include "TransLabelBMFont.hpp"
+
 #include <regex>
 
-bool TransAlertLayer::init(char const* title, const gd::string& desc, char const* btn)
-{
+bool TransAlertLayer::init(const char* title, const gd::string& desc, const char* btn) {
     std::string desc2 = TranslationManager::get()->getTranslatedString(desc);
 
     auto label = CCLabelBMFont::create("l", "chatFont.fnt");
@@ -13,8 +14,7 @@ bool TransAlertLayer::init(char const* title, const gd::string& desc, char const
 
     useTtf = !std::regex_match(desc2, std::regex(ENGLISH_REGEX));
 
-    if (useTtf)
-    {
+    if (useTtf) {
         desc2 = utils::string::replace(desc2, "</c>", "");
         desc2 = utils::string::replace(desc2, "<cr>", "");
         desc2 = utils::string::replace(desc2, "<cg>", "");
@@ -35,15 +35,13 @@ bool TransAlertLayer::init(char const* title, const gd::string& desc, char const
         node->setAnchorPoint(ccp(0.5f, 0.5f));
         node->setContentWidth(260);
 
-        for (auto line : utils::string::split(desc2, "\n"))
-        {
+        for (auto line : utils::string::split(desc2, "\n")) {
             auto node2 = CCNode::create();
             node2->setPosition(CCDirector::get()->getWinSize() / 2);
             node2->setAnchorPoint(ccp(0.5f, 0.5f));
             node2->setContentWidth(260);
 
-            for (auto word : utils::string::split(line, " "))
-            {
+            for (auto word : utils::string::split(line, " ")) {
                 auto lbl = TransLabelBMFont::create(word, "chatFont.fnt");
                 lbl->setForceTTF(true);
 
@@ -58,14 +56,11 @@ bool TransAlertLayer::init(char const* title, const gd::string& desc, char const
 
         std::string ss;
 
-        for (auto child : CCArrayExt<CCNode*>(node->getChildren()))
-        {
+        for (auto child : CCArrayExt<CCNode*>(node->getChildren())) {
             float lastY = -42069;
 
-            for (auto child2 : CCArrayExt<CCNode*>(child->getChildren()))
-            {
-                if (child2->getPositionY() != lastY)
-                {
+            for (auto child2 : CCArrayExt<CCNode*>(child->getChildren())) {
+                if (child2->getPositionY() != lastY) {
                     lastY = child2->getPositionY();
                     ss += "\n";
                 }
@@ -80,16 +75,15 @@ bool TransAlertLayer::init(char const* title, const gd::string& desc, char const
         m_mainLayer->getChildByType<TextArea>(0)->setVisible(false);
 
         m_mainLayer->addChild(node, 69);
-    }
-    else
-    {
+    } else {
         FLAlertLayer::init(nullptr, title, desc2, btn, nullptr, 300.0f, false, 320, 1.0f);
     }
 
     auto titleL = TransLabelBMFont::create(std::string(title), "goldFont.fnt");
     titleL->setAnchorPoint(ccp(0.5f, 1));
     titleL->setPosition(m_mainLayer->getChildByType<CCLabelBMFont>(0)->getPosition());
-    titleL->limitLabelWidth(260, m_mainLayer->getChildByType<CCLabelBMFont>(0)->getScale(), 0);;
+    titleL->limitLabelWidth(260, m_mainLayer->getChildByType<CCLabelBMFont>(0)->getScale(), 0);
+    ;
 
     m_mainLayer->getChildByType<CCLabelBMFont>(0)->setVisible(false);
 
@@ -98,12 +92,10 @@ bool TransAlertLayer::init(char const* title, const gd::string& desc, char const
     return true;
 }
 
-TransAlertLayer* TransAlertLayer::create(char const* title, const gd::string& desc, char const* btn)
-{
+TransAlertLayer* TransAlertLayer::create(const char* title, const gd::string& desc, const char* btn) {
     auto pRet = new TransAlertLayer();
 
-    if (pRet && pRet->init(title, desc, btn))
-    {
+    if (pRet && pRet->init(title, desc, btn)) {
         pRet->autorelease();
         return pRet;
     }

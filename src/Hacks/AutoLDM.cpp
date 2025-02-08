@@ -1,14 +1,13 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/LevelInfoLayer.hpp>
-#include <Geode/modify/EditLevelLayer.hpp>
 #include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/EditLevelLayer.hpp>
+#include <Geode/modify/LevelInfoLayer.hpp>
 
 using namespace geode::prelude;
 
-class $modify (LevelInfoLayer)
-{
-    bool init(GJGameLevel* level, bool challenge)
-    {
+class $modify(LevelInfoLayer) {
+    bool init(GJGameLevel* level, bool challenge) {
         if (!LevelInfoLayer::init(level, challenge))
             return false;
 
@@ -20,10 +19,8 @@ class $modify (LevelInfoLayer)
     QOLMOD_MOD_HOOK("auto-ldm", "LevelInfoLayer::init")
 };
 
-class $modify (EditLevelLayer)
-{
-    bool init(GJGameLevel* level)
-    {
+class $modify(EditLevelLayer) {
+    bool init(GJGameLevel* level) {
         if (!EditLevelLayer::init(level))
             return false;
 

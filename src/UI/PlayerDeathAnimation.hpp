@@ -4,19 +4,18 @@
 
 using namespace geode::prelude;
 
-class PlayerDeathAnimation : public CCNode
-{
-    private:
-        std::vector<CCSprite*> sprites;
-        int index = 0;
-        bool isDefault;
+class PlayerDeathAnimation : public CCNode {
+private:
+    std::vector<CCSprite*> sprites;
+    int index = 0;
+    bool isDefault;
 
-        void tick(float);
+    void tick(float);
 
-    public:
-        bool init(int id);
-        void run();
+public:
+    bool init(int id);
+    void run();
 
-        static PlayerDeathAnimation* create(int id);
-        static PlayerDeathAnimation* createAndRun(int id);
+    static PlayerDeathAnimation* create(int id);
+    static PlayerDeathAnimation* createAndRun(int id);
 };

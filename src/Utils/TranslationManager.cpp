@@ -1,7 +1,6 @@
 #include "TranslationManager.hpp"
 
-TranslationManager* TranslationManager::get()
-{
+TranslationManager* TranslationManager::get() {
     static TranslationManager* instance = nullptr;
 
     if (!instance)
@@ -10,8 +9,7 @@ TranslationManager* TranslationManager::get()
     return instance;
 }
 
-void TranslationManager::unloadTranslation()
-{
+void TranslationManager::unloadTranslation() {
     translatedTexts = {};
     currentLanguage = "";
     languageLoaded = false;
@@ -19,8 +17,7 @@ void TranslationManager::unloadTranslation()
     rightToLeftFix = false;
 }
 
-void TranslationManager::loadTranslationFromJson(matjson::Value object)
-{
+void TranslationManager::loadTranslationFromJson(matjson::Value object) {
     unloadTranslation();
 
     if (!object.contains("strings"))
@@ -28,10 +25,8 @@ void TranslationManager::loadTranslationFromJson(matjson::Value object)
 
     auto strings = object["strings"];
 
-    for (auto value : strings)
-    {
-        if (value.isString() && value.getKey().has_value())
-        {
+    for (auto value : strings) {
+        if (value.isString() && value.getKey().has_value()) {
             translatedTexts.emplace(value.getKey().value(), value.asString().unwrapOr("Unknown unwrap error :c"));
         }
     }
@@ -43,35 +38,29 @@ void TranslationManager::loadTranslationFromJson(matjson::Value object)
     rightToLeftFix = object["right-to-left-fix"].asBool().unwrapOr(false);
 }
 
-std::string TranslationManager::getLoadedLanguage()
-{
+std::string TranslationManager::getLoadedLanguage() {
     return currentLanguage;
 }
 
-bool TranslationManager::isRightToLeft()
-{
+bool TranslationManager::isRightToLeft() {
     return this->rightToLeft;
 }
 
-bool TranslationManager::isRightToLeftFix()
-{
+bool TranslationManager::isRightToLeftFix() {
     return this->rightToLeftFix;
 }
 
-bool TranslationManager::isLanguageLoaded()
-{
+bool TranslationManager::isLanguageLoaded() {
     return languageLoaded;
 }
 
-std::string TranslationManager::getTranslatedString(std::string engText)
-{
+std::string TranslationManager::getTranslatedString(std::string engText) {
     if (translatedTexts.contains(engText))
         return translatedTexts[engText];
 
     return engText;
 }
 
-bool TranslationManager::hasTranslationForString(std::string engText)
-{
+bool TranslationManager::hasTranslationForString(std::string engText) {
     return translatedTexts.contains(engText);
 }

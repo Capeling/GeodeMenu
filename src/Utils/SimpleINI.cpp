@@ -1,11 +1,9 @@
 #include "SimpleINI.hpp"
 
-SimpleINI* SimpleINI::createWithString(std::string ini)
-{
+SimpleINI* SimpleINI::createWithString(std::string ini) {
     auto pRet = new SimpleINI();
 
-    if (pRet->init(ini))
-    {
+    if (pRet->init(ini)) {
         return pRet;
     }
 
@@ -13,28 +11,24 @@ SimpleINI* SimpleINI::createWithString(std::string ini)
     return nullptr;
 }
 
-SimpleINI* SimpleINI::createWithFile(std::string file)
-{
+SimpleINI* SimpleINI::createWithFile(std::string file) {
     return SimpleINI::createWithString(utils::file::readString(file).unwrapOr("NULL"));
 }
 
-bool SimpleINI::init(std::string data)
-{
+bool SimpleINI::init(std::string data) {
     std::string header = "default";
 
     auto lines = utils::string::split(data, "\n");
 
     std::unordered_map<std::string, std::string> kk;
 
-    for (auto line : lines)
-    {
+    for (auto line : lines) {
         line = utils::string::trim(line);
 
         if (line.starts_with(";") || line.starts_with("#"))
             continue;
 
-        if (line.starts_with("[") && line.ends_with("]"))
-        {
+        if (line.starts_with("[") && line.ends_with("]")) {
             header = utils::string::trim(line.substr(1, line.size() - 2));
 
             continue;
@@ -49,8 +43,7 @@ bool SimpleINI::init(std::string data)
 
         int i = 0;
 
-        for (auto part : parts)
-        {
+        for (auto part : parts) {
             i++;
             if (i == 1)
                 continue;
@@ -69,36 +62,30 @@ bool SimpleINI::init(std::string data)
     return true;
 }
 
-void SimpleINI::addVariable(std::string varName, std::string varVal)
-{
-    for (auto hKey : headerKeys)
-    {
+void SimpleINI::addVariable(std::string varName, std::string varVal) {
+    for (auto hKey : headerKeys) {
         headerKeys.at(hKey.first) = utils::string::replace(hKey.second, fmt::format("${}", varName), varVal);
     }
 }
 
-bool SimpleINI::hasKey(std::string key)
-{
+bool SimpleINI::hasKey(std::string key) {
     return headerKeys.contains(key);
 }
 
-std::string SimpleINI::getKeyValue(std::string key, std::string def)
-{
+std::string SimpleINI::getKeyValue(std::string key, std::string def) {
     if (!headerKeys.contains(key))
         return def;
 
     return headerKeys[key];
 }
 
-float SimpleINI::getKeyValueFloat(std::string key, std::string def)
-{
+float SimpleINI::getKeyValueFloat(std::string key, std::string def) {
     auto f = numFromString<float>(hasKey(key) ? headerKeys[key] : def).unwrapOr(1.0f);
 
     return f;
 }
 
-int SimpleINI::getKeyValueInt(std::string key, std::string def)
-{
+int SimpleINI::getKeyValueInt(std::string key, std::string def) {
     auto i = numFromString<int>(hasKey(key) ? headerKeys[key] : def).unwrapOr(1);
 
     return i;

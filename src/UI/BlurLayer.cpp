@@ -1,8 +1,8 @@
 #include "BlurLayer.hpp"
+
 #include <Geode/modify/MenuLayer.hpp>
 
-bool BlurLayer::init()
-{
+bool BlurLayer::init() {
     if (!CCLayerColor::init())
         return false;
 
@@ -22,7 +22,7 @@ bool BlurLayer::init()
             v_texCoord = a_texCoord;
         }
     )";
-    
+
     // https://www.shadertoy.com/view/ltScRG
     std::string frag = R"(
         #ifdef GL_ES
@@ -60,13 +60,12 @@ bool BlurLayer::init()
         }
     )";
 
-
     program = new CCGLProgram();
     program->initWithVertexShaderByteArray(vert.c_str(), frag.c_str());
     program->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
     program->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
     program->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
-    
+
     program->retain();
     program->link();
     program->updateUniforms();
@@ -81,7 +80,7 @@ bool BlurLayer::init()
     program->setUniformLocationWith2f(resolutionLoc, screenWidth, screenHeight);
     program->setUniformLocationWith2f(texScaleLoc, 1.0f / screenWidth, 1.0f / screenHeight);
 
-    //sizeLocation = program->getUniformLocationForName("blurSize");
+    // sizeLocation = program->getUniformLocationForName("blurSize");
 
     rtex->getSprite()->setShaderProgram(program);
 
@@ -92,15 +91,13 @@ bool BlurLayer::init()
     return true;
 }
 
-BlurLayer::~BlurLayer()
-{
+BlurLayer::~BlurLayer() {
     return;
 
     std::erase(instances, this);
 }
 
-void BlurLayer::visit()
-{
+void BlurLayer::visit() {
     return;
 
     CCLayerColor::visit();
@@ -109,8 +106,7 @@ void BlurLayer::visit()
 bool __blurlayer__drawing__ = false;
 BlurLayer* __blurlayer__being__drawn__ = nullptr;
 
-void BlurLayer::draw()
-{
+void BlurLayer::draw() {
     return;
 
     if (this != instances[instances.size() - 1])
@@ -122,10 +118,8 @@ void BlurLayer::draw()
     if (__blurlayer__drawing__ && __blurlayer__being__drawn__ != this)
         return;
 
-    if (drawOnce ? !hasDrawn : true)
-    {
-        if (__blurlayer__drawing__ && __blurlayer__being__drawn__ == this)
-        {
+    if (drawOnce ? !hasDrawn : true) {
+        if (__blurlayer__drawing__ && __blurlayer__being__drawn__ == this) {
             rtex->end();
 
             __blurlayer__drawing__ = false;
@@ -158,36 +152,28 @@ void BlurLayer::draw()
     glDisable(0xc11);
 }
 
-
-
-void BlurLayer::setBlurSize(float size)
-{
+void BlurLayer::setBlurSize(float size) {
     blurSize = size;
 
-    //program->setUniformLocationWith1f(sizeLocation, size);
+    // program->setUniformLocationWith1f(sizeLocation, size);
 }
 
-float BlurLayer::getBlurSize()
-{
+float BlurLayer::getBlurSize() {
     return blurSize;
 }
 
-void BlurLayer::setBlurPasses(int passes)
-{
+void BlurLayer::setBlurPasses(int passes) {
     blurPasses = passes;
 }
 
-int BlurLayer::getBlurPasses()
-{
+int BlurLayer::getBlurPasses() {
     return blurPasses;
 }
 
-void BlurLayer::setDrawOnce(bool draw)
-{
+void BlurLayer::setDrawOnce(bool draw) {
     drawOnce = draw;
 }
 
-bool BlurLayer::getDrawOnce()
-{
+bool BlurLayer::getDrawOnce() {
     return drawOnce;
 }

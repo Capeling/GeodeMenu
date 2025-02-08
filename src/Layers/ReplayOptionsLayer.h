@@ -34,11 +34,10 @@ class ReplayOptionsLayer : public FLAlertLayer
         {
             auto pos = ccp(100 * x, -55 - (19 * y) - (19 / 2));
 
-            auto toggler = CCMenuItemToggler::createWithStandardSprites(this, menu_selector(ReplayOptionsLayer::onToggle), 0.45f);
-            toggler->toggle(enabled);
-            auto lbl = CCLabelBMFont::create(name.c_str(), "bigFont.fnt");
-            lbl->limitLabelWidth(90 - 30, 0.65f, 0);
-            lbl->setAnchorPoint(ccp(0, 0.5f));
+            auto toggler = CCMenuItemToggler::createWithStandardSprites(this,
+menu_selector(ReplayOptionsLayer::onToggle), 0.45f); toggler->toggle(enabled); auto lbl =
+CCLabelBMFont::create(name.c_str(), "bigFont.fnt"); lbl->limitLabelWidth(90 - 30, 0.65f, 0); lbl->setAnchorPoint(ccp(0,
+0.5f));
 
             l->addChildAtPosition(toggler, Anchor::Top, pos + ccp(-30 - 5, 0));
             l->addChildAtPosition(lbl, Anchor::Top, pos + ccp(-30 + 5, 0));
@@ -49,7 +48,7 @@ class ReplayOptionsLayer : public FLAlertLayer
         bool init()
         {
             toggles.clear();
-            
+
             if (!FLAlertLayer::init(0))
                 return false;
 
@@ -82,9 +81,8 @@ class ReplayOptionsLayer : public FLAlertLayer
             {
                 auto size = panel->getContentSize();
 
-                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
-                gradient->setContentSize(size);
-                gradient->setZOrder(-1);
+                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255,
+255, 255)); gradient->setContentSize(size); gradient->setZOrder(-1);
                 gradient->setID("gradient"_spr);
 
                 if (Mod::get()->getSettingValue<bool>("use-custom-colours"))
@@ -104,18 +102,18 @@ class ReplayOptionsLayer : public FLAlertLayer
                 if (Mod::get()->getSettingValue<bool>("reverse-order"))
                 gradient->setScaleY(-1);
 
-                auto darken = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-fill.png")).c_str());
-                darken->setID("darken"_spr);
-                darken->setContentSize(size - ccp(15, 15));
-                darken->setZOrder(0);
-                darken->setPosition(size / 2);
+                auto darken =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-fill.png")).c_str()); darken->setID("darken"_spr); darken->setContentSize(size -
+ccp(15, 15)); darken->setZOrder(0); darken->setPosition(size / 2);
 
-                auto outline = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-outline.png")).c_str());
-                outline->setPosition(size / 2);
+                auto outline =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-outline.png")).c_str()); outline->setPosition(size / 2);
                 outline->setContentSize(size);
                 outline->setZOrder(1);
                 outline->setID("outline"_spr);
-                
+
                 gradient->addChild(darken);
                 gradient->addChild(outline);
 
@@ -159,14 +157,14 @@ class ReplayOptionsLayer : public FLAlertLayer
             //addToggle("ASDF", 0, 5, false);
             //addToggle("ASDF", 1, 0, false);
 
-            auto ok = CCMenuItemSpriteExtra::create(ButtonSprite::create("OK"), this, menu_selector(ReplayOptionsLayer::onClose));
-            l->addChildAtPosition(ok, Anchor::Bottom, ccp(0, 25));
+            auto ok = CCMenuItemSpriteExtra::create(ButtonSprite::create("OK"), this,
+menu_selector(ReplayOptionsLayer::onClose)); l->addChildAtPosition(ok, Anchor::Bottom, ccp(0, 25));
 
             this->addChild(l);
 
             //l->setScale(0.1f);
             //l->runAction(CCEaseElasticOut::create(CCScaleTo::create(0.65f, 1)));
-    
+
             return true;
         }
 

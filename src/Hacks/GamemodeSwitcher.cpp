@@ -35,9 +35,8 @@ class $modify (SwitchPauseLayer, PauseLayer)
             menu = bottomMenu;
         }
 
-        auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_iconBtn_on_001.png"), this, menu_selector(SwitchPauseLayer::onSwitch));
-        menu->addChild(btn);
-        menu->updateLayout();
+        auto btn = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_iconBtn_on_001.png"),
+this, menu_selector(SwitchPauseLayer::onSwitch)); menu->addChild(btn); menu->updateLayout();
     }
 
     virtual void customSetup()
@@ -58,7 +57,7 @@ $execute
             {
                 if (enabled)
                     p->addNode();
-                    
+
             }
         };
     });

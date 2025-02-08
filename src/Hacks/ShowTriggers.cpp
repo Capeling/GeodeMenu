@@ -1,40 +1,35 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/GameObject.hpp>
-#include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/CCNode.hpp>
 #include "../Client/Client.h"
 
-class $modify (PlayLayer)
-{
+#include <Geode/Geode.hpp>
+#include <Geode/modify/CCNode.hpp>
+#include <Geode/modify/GameObject.hpp>
+#include <Geode/modify/PlayLayer.hpp>
+
+class $modify(PlayLayer) {
     struct Fields {
         Module* mod = nullptr;
         Ref<CCNode> customNode = nullptr;
     };
 
-    void addObject(GameObject* p0)
-    {
+    void addObject(GameObject* p0) {
         PlayLayer::addObject(p0);
 
-        if (!m_fields->customNode)
-        {
+        if (!m_fields->customNode) {
             m_fields->customNode = CCNode::create();
             m_fields->customNode->setID("IMPORTANT"_spr);
 
             this->m_objectLayer->addChild(m_fields->customNode);
         }
 
-        if (Client::GetModuleEnabled("show-triggers"))
-        {
-            if (p0->m_objectType == GameObjectType::Modifier || p0->m_objectType == GameObjectType::Special)
-            {
+        if (Client::GetModuleEnabled("show-triggers")) {
+            if (p0->m_objectType == GameObjectType::Modifier || p0->m_objectType == GameObjectType::Special) {
                 m_fields->customNode->addChild(p0);
                 p0->setVisible(true);
             }
         }
     }
 
-    void onQuit()
-    {
+    void onQuit() {
         if (m_fields->customNode)
             m_fields->customNode->setID("");
 
@@ -42,8 +37,7 @@ class $modify (PlayLayer)
     }
 };
 
-class $modify (CCNode)
-{
+class $modify(CCNode) {
     static void onModify(auto& self) {
         std::vector<geode::Hook*> hooks;
 
@@ -52,12 +46,10 @@ class $modify (CCNode)
 
         hooks.push_back(it->second.get());
 
-        Loader::get()->queueInMainThread([hooks] 
-        {
+        Loader::get()->queueInMainThread([hooks] {
             auto modu = Client::GetModule("show-triggers");
 
-            for (auto hook : hooks)
-            {
+            for (auto hook : hooks) {
                 modu->addHook(hook);
             }
         });

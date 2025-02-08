@@ -1,13 +1,12 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/CCMotionStreak.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (CCMotionStreak)
-{
-    virtual void update(float delta)
-    {
+class $modify(CCMotionStreak) {
+    virtual void update(float delta) {
         if (getUserObject("ignore-longer-trail"_spr))
             delta *= 3;
 

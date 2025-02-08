@@ -1,10 +1,11 @@
 #include "RecordKeyStruct.hpp"
-#include <Geode/ui/GeodeUI.hpp>
-#include "../UI/BlurLayer.hpp"
-#include "../Client/Client.h"
 
-bool RecordKeyStruct::init(std::function<void(KeyStruct)> obj)
-{
+#include "../Client/Client.h"
+#include "../UI/BlurLayer.hpp"
+
+#include <Geode/ui/GeodeUI.hpp>
+
+bool RecordKeyStruct::init(std::function<void(KeyStruct)> obj) {
     if (!CCLayerColor::init())
         return false;
 
@@ -14,8 +15,7 @@ bool RecordKeyStruct::init(std::function<void(KeyStruct)> obj)
     this->scheduleUpdate();
     this->callback = obj;
 
-    if (Client::GetModuleEnabled("menu-bg-blur"))
-    {
+    if (Client::GetModuleEnabled("menu-bg-blur")) {
         auto blur = BlurLayer::create();
         blur->runAction(CCEaseIn::create(CCFadeTo::create(0.5f, 255), 2));
         this->addChild(blur);
@@ -55,8 +55,7 @@ bool RecordKeyStruct::init(std::function<void(KeyStruct)> obj)
     cmd = CCLabelBMFont::create("Command", "bigFont.fnt");
     cmd->setScale(0.5f);
 
-    if (auto popup = CCScene::get()->getChildByType<CCLayer>(0))
-    {
+    if (auto popup = CCScene::get()->getChildByType<CCLayer>(0)) {
         if (auto input = popup->getChildByType<CCTextInputNode>(0))
             input->onClickTrackNode(false);
     }
@@ -71,8 +70,7 @@ bool RecordKeyStruct::init(std::function<void(KeyStruct)> obj)
     return true;
 }
 
-void RecordKeyStruct::keyDown(enumKeyCodes key)
-{
+void RecordKeyStruct::keyDown(enumKeyCodes key) {
     if (key == enumKeyCodes::KEY_Unknown)
         return;
 
@@ -93,7 +91,7 @@ void RecordKeyStruct::keyDown(enumKeyCodes key)
 
     if (key == enumKeyCodes::KEY_Home)
         return;
-    
+
     CCTouchDispatcher::get()->unregisterForcePrio(this);
     CCTouchDispatcher::get()->removeDelegate(this);
 
@@ -116,25 +114,21 @@ void RecordKeyStruct::keyDown(enumKeyCodes key)
     this->removeFromParent();
 }
 
-void RecordKeyStruct::keyBackClicked()
-{
+void RecordKeyStruct::keyBackClicked() {
     this->keyDown(enumKeyCodes::KEY_Escape);
 }
 
-void RecordKeyStruct::update(float dt)
-{
+void RecordKeyStruct::update(float dt) {
     shift->setColor(CCKeyboardDispatcher::get()->getShiftKeyPressed() ? ccc3(255, 255, 255) : ccc3(150, 150, 150));
     ctrl->setColor(CCKeyboardDispatcher::get()->getControlKeyPressed() ? ccc3(255, 255, 255) : ccc3(150, 150, 150));
     alt->setColor(CCKeyboardDispatcher::get()->getAltKeyPressed() ? ccc3(255, 255, 255) : ccc3(150, 150, 150));
     cmd->setColor(CCKeyboardDispatcher::get()->getCommandKeyPressed() ? ccc3(255, 255, 255) : ccc3(150, 150, 150));
 }
 
-RecordKeyStruct* RecordKeyStruct::create(std::function<void(KeyStruct)> obj)
-{
+RecordKeyStruct* RecordKeyStruct::create(std::function<void(KeyStruct)> obj) {
     auto pRet = new RecordKeyStruct();
 
-    if (pRet && pRet->init(obj))
-    {
+    if (pRet && pRet->init(obj)) {
         pRet->autorelease();
         return pRet;
     }

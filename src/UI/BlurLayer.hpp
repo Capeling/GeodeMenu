@@ -5,38 +5,37 @@
 
 using namespace geode::prelude;
 
-class BlurLayer : public CCLayerColor
-{
-    private:
-        float blurSize = 8;
-        int blurPasses = 1;
+class BlurLayer : public CCLayerColor {
+private:
+    float blurSize = 8;
+    int blurPasses = 1;
 
-        bool drawOnce = false;
-        bool hasDrawn = false;
+    bool drawOnce = false;
+    bool hasDrawn = false;
 
-        GLint sizeLocation;
-        GLint passesLocation;
+    GLint sizeLocation;
+    GLint passesLocation;
 
-        Ref<CCRenderTexture> rtex;
-        CCGLProgram* program;
-        Ref<CCNode> node;
+    Ref<CCRenderTexture> rtex;
+    CCGLProgram* program;
+    Ref<CCNode> node;
 
-        static inline std::vector<BlurLayer*> instances;
-    
-    public:
-        virtual bool init();
-        virtual void visit();
-        virtual void draw();
+    static inline std::vector<BlurLayer*> instances;
 
-        void setBlurSize(float size);
-        float getBlurSize();
+public:
+    virtual bool init();
+    virtual void visit();
+    virtual void draw();
 
-        void setBlurPasses(int passes);
-        int getBlurPasses();
+    void setBlurSize(float size);
+    float getBlurSize();
 
-        void setDrawOnce(bool draw);
-        bool getDrawOnce();
+    void setBlurPasses(int passes);
+    int getBlurPasses();
 
-        CREATE_FUNC(BlurLayer);
-        ~BlurLayer();
+    void setDrawOnce(bool draw);
+    bool getDrawOnce();
+
+    CREATE_FUNC(BlurLayer);
+    ~BlurLayer();
 };

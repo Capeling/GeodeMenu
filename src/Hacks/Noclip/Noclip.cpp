@@ -1,9 +1,9 @@
 #include "Noclip.hpp"
-#include "../SafeMode/SafeMode.hpp"
-#include "../../Labels/LabelLayer.hpp"
 
-bool NoclipPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateObjects)
-{
+#include "../../Labels/LabelLayer.hpp"
+#include "../SafeMode/SafeMode.hpp"
+
+bool NoclipPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
     if (!PlayLayer::init(level, useReplay, dontCreateObjects))
         return false;
 
@@ -19,10 +19,8 @@ bool NoclipPlayLayer::init(GJGameLevel* level, bool useReplay, bool dontCreateOb
     return true;
 }
 
-void NoclipPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
-{
-    if (p0 && p0->getID() == "trajectory-player"_spr)
-    {
+void NoclipPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1) {
+    if (p0 && p0->getID() == "trajectory-player"_spr) {
         p0->m_isDead = true;
 
         return PlayLayer::destroyPlayer(p0, p1);
@@ -39,10 +37,8 @@ void NoclipPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
 
     if (!Client::GetModuleEnabled("noclip") || (base_cast<NoclipBaseGameLayer*>(this)->m_fields->ac == p1))
         PlayLayer::destroyPlayer(p0, p1);
-    else
-    {
-        if (Client::GetModuleEnabled("noclip-min-accuracy-toggle"))
-        {
+    else {
+        if (Client::GetModuleEnabled("noclip-min-accuracy-toggle")) {
             static InputModule* noclipLimit = nullptr;
             if (!noclipLimit)
                 noclipLimit = as<InputModule*>(Client::GetModule("noclip")->options[5]);
@@ -56,25 +52,22 @@ void NoclipPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
         if (LabelLayer::get())
             LabelLayer::get()->triggerEvent(LabelEventType::PlayerTookDamage);
 
-        if (!base_cast<NoclipBaseGameLayer*>(this)->m_fields->hasDied)
-        {
+        if (!base_cast<NoclipBaseGameLayer*>(this)->m_fields->hasDied) {
             base_cast<NoclipBaseGameLayer*>(this)->m_fields->hasDied = true;
         }
-        
+
         m_fields->isDead = true;
 
-        if (m_fields->last != p1)
-        {
+        if (m_fields->last != p1) {
             m_fields->last = p1;
-            
+
             m_fields->d++;
         }
 
         if (base_cast<NoclipBaseGameLayer*>(this)->m_fields->ac != p1)
             m_fields->t++;
 
-        if (m_fields->tintOnDeath->enabled)
-        {
+        if (m_fields->tintOnDeath->enabled) {
             m_fields->tint->stopAllActions();
             m_fields->tint->setOpacity(m_fields->tintOpacity->value * 255);
             m_fields->tint->runAction(CCFadeTo::create(0.35f, 0));
@@ -84,8 +77,7 @@ void NoclipPlayLayer::destroyPlayer(PlayerObject* p0, GameObject* p1)
     }
 }
 
-void NoclipPlayLayer::resetLevel()
-{
+void NoclipPlayLayer::resetLevel() {
     PlayLayer::resetLevel();
 
     m_fields->d = 0;
@@ -94,26 +86,22 @@ void NoclipPlayLayer::resetLevel()
     m_fields->isDead = false;
 }
 
-void NoclipBaseGameLayer::checkRepellPlayer()
-{
+void NoclipBaseGameLayer::checkRepellPlayer() {
     GJBaseGameLayer::checkRepellPlayer();
 
     m_fields->isTickUpdate = true;
 }
 
-void NoclipBaseGameLayer::updateCamera(float dt)
-{
+void NoclipBaseGameLayer::updateCamera(float dt) {
     GJBaseGameLayer::updateCamera(dt);
 
     if (!shouldIncreaseTime())
         return;
 
-    if (m_fields->isTickUpdate == true)
-    {
+    if (m_fields->isTickUpdate == true) {
         m_fields->isTickUpdate = false;
 
-        if (m_fields->hasDied)
-        {
+        if (m_fields->hasDied) {
             m_fields->timeDead += dt / 60.0f;
             m_fields->hasDied = false;
         }
@@ -122,45 +110,39 @@ void NoclipBaseGameLayer::updateCamera(float dt)
     }
 }
 
-void NoclipBaseGameLayer::resetLevelVariables()
-{
+void NoclipBaseGameLayer::resetLevelVariables() {
     GJBaseGameLayer::resetLevelVariables();
 
     m_fields->timeDead = 0;
     m_fields->timeInLevel = 0;
 }
 
-float NoclipBaseGameLayer::getNoclipAccuracy()
-{
+float NoclipBaseGameLayer::getNoclipAccuracy() {
     if (m_fields->timeInLevel == 0)
         return 1;
 
     return 1 - (m_fields->timeDead / m_fields->timeInLevel);
 }
 
-int NoclipBaseGameLayer::getNoclipDeaths()
-{
+int NoclipBaseGameLayer::getNoclipDeaths() {
     if (auto pl = typeinfo_cast<PlayLayer*>(this))
         return as<NoclipPlayLayer*>(pl)->m_fields->d;
     else
         return 0;
 }
 
-bool NoclipBaseGameLayer::shouldIncreaseTime()
-{
+bool NoclipBaseGameLayer::shouldIncreaseTime() {
     return !m_levelEndAnimationStarted;
 }
 
-void NoclipEditorLayer::playerTookDamage(PlayerObject* p0)
-{
+void NoclipEditorLayer::playerTookDamage(PlayerObject* p0) {
     if (!Client::GetModuleEnabled("noclip-player2") && p0 == m_player2)
         return LevelEditorLayer::playerTookDamage(p0);
 
     if (!Client::GetModuleEnabled("noclip-player1") && p0 == m_player1)
         return LevelEditorLayer::playerTookDamage(p0);
 
-    if (Client::GetModuleEnabled("noclip"))
-    {
+    if (Client::GetModuleEnabled("noclip")) {
         auto nbgl = base_cast<NoclipBaseGameLayer*>(this);
 
         if (!nbgl->m_fields->ac)
@@ -169,8 +151,7 @@ void NoclipEditorLayer::playerTookDamage(PlayerObject* p0)
         if (p0 == nbgl->m_fields->ac)
             return LevelEditorLayer::playerTookDamage(p0);
 
-        if (!nbgl->m_fields->hasDied)
-        {
+        if (!nbgl->m_fields->hasDied) {
             nbgl->m_fields->hasDied = true;
             nbgl->m_fields->timeDead += CCDirector::get()->getDeltaTime();
         }
@@ -185,20 +166,17 @@ void NoclipEditorLayer::playerTookDamage(PlayerObject* p0)
     LevelEditorLayer::playerTookDamage(p0);
 }
 
-void NoclipEditorLayer::postUpdate(float p0)
-{
-    if (Client::GetModuleEnabled("noclip"))
-    {
+void NoclipEditorLayer::postUpdate(float p0) {
+    if (Client::GetModuleEnabled("noclip")) {
         auto nbgl = base_cast<NoclipBaseGameLayer*>(this);
 
-        if (!nbgl->m_fields->hasDied)
-        {
+        if (!nbgl->m_fields->hasDied) {
             nbgl->m_fields->hasDied = true;
             nbgl->m_fields->timeDead += CCDirector::get()->getDeltaTime();
         }
 
         SafeMode::get()->setHackedAttempt("Player Died with Noclip Enabled");
-        
+
         if (m_player1)
             m_player1->m_maybeIsColliding = false;
 

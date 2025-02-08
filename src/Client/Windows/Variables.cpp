@@ -5,12 +5,12 @@ using namespace geode::prelude;
 void Variables::onChangeMode(CCObject* sender) {
     log::info("button");
 
-    //PlayLayer::get()->m_player1->toggleDartMode(true, true);
-    //PlayLayer::get()->m_player1->m_position += ccp(30, 150);
+    // PlayLayer::get()->m_player1->toggleDartMode(true, true);
+    // PlayLayer::get()->m_player1->m_position += ccp(30, 150);
 
-    //PlayLayer::get()->m_player1->playerDestroyed(false);
+    // PlayLayer::get()->m_player1->playerDestroyed(false);
 
-    //PlayLayer::get()->destroyPlayer(PlayLayer::get()->m_player1, GameObject::createWithKey(0));
+    // PlayLayer::get()->destroyPlayer(PlayLayer::get()->m_player1, GameObject::createWithKey(0));
     /*
     //why robert
 
@@ -23,27 +23,27 @@ void Variables::onChangeMode(CCObject* sender) {
     bool m_isSwing;
     */
 
-    //if (!PlayLayer::get() || !PlayLayer::get()->m_player1)
-        //return;
+    // if (!PlayLayer::get() || !PlayLayer::get()->m_player1)
+    // return;
 
-    //auto plr = PlayLayer::get()->m_player1;
+    // auto plr = PlayLayer::get()->m_player1;
 
-    //int selMode = 5;
+    // int selMode = 5;
 
-    //plr->m_isPlatformer = true;
+    // plr->m_isPlatformer = true;
 
-    //plr->switchedToMode(GameObjectType::BallPortal);
+    // plr->switchedToMode(GameObjectType::BallPortal);
 
-    //plr->toggleRollMode(true, true);
-    //plr->m_isBall = selMode == 2;
-    //plr->m_isBird = selMode == 3;
-    //plr->m_isDart = selMode == 4;
-    //plr->m_isRobot = selMode == 5;
-    //plr->m_isSpider = selMode == 6;
-    //plr->m_isSwing = selMode == 7;
+    // plr->toggleRollMode(true, true);
+    // plr->m_isBall = selMode == 2;
+    // plr->m_isBird = selMode == 3;
+    // plr->m_isDart = selMode == 4;
+    // plr->m_isRobot = selMode == 5;
+    // plr->m_isSpider = selMode == 6;
+    // plr->m_isSwing = selMode == 7;
 
-    //plr->updatePlayerFrame();
-    //plr->updatePlayerShipFrame();
+    // plr->updatePlayerFrame();
+    // plr->updatePlayerShipFrame();
 }
 
 void cocosCreate(CCMenu* menu) {

@@ -5,22 +5,20 @@
 
 using namespace geode::prelude;
 
-class SimpleINI
-{
-    private:
-        std::unordered_map<std::string, std::string> headerKeys;
+class SimpleINI {
+private:
+    std::unordered_map<std::string, std::string> headerKeys;
 
-    public:
-        static SimpleINI* createWithString(std::string ini);
-        static SimpleINI* createWithFile(std::string file);
+public:
+    static SimpleINI* createWithString(std::string ini);
+    static SimpleINI* createWithFile(std::string file);
 
-        bool init(std::string data);
+    bool init(std::string data);
 
-        void addVariable(std::string varName, std::string varVal);
+    void addVariable(std::string varName, std::string varVal);
 
-        bool hasKey(std::string key);
-        std::string getKeyValue(std::string key, std::string def);
-        float getKeyValueFloat(std::string key, std::string def);
-        int getKeyValueInt(std::string key, std::string def);
-        
+    bool hasKey(std::string key);
+    std::string getKeyValue(std::string key, std::string def);
+    float getKeyValueFloat(std::string key, std::string def);
+    int getKeyValueInt(std::string key, std::string def);
 };

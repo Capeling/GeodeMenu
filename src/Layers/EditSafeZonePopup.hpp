@@ -1,30 +1,30 @@
 #pragma once
 
-#include <Geode/Geode.hpp>
 #include "../Client/Module.h"
 #include "../Hacks/SafeMode/SafeMode.hpp"
 #include "../Labels/LabelCommon.hpp"
 #include "SillyBaseLayer.h"
 
+#include <Geode/Geode.hpp>
+
 using namespace geode::prelude;
 
-class EditSafeZonePopup : public SillyBaseLayer
-{
-    public:
-        CCNode* bottomLeft;
-        CCNode* bottomRight;
-        CCNode* topLeft;
-        CCNode* topRight;
-        Slider* topSlider;
-        Slider* bottomSlider;
-        Slider* leftSlider;
-        Slider* rightSlider;
+class EditSafeZonePopup : public SillyBaseLayer {
+public:
+    CCNode* bottomLeft;
+    CCNode* bottomRight;
+    CCNode* topLeft;
+    CCNode* topRight;
+    Slider* topSlider;
+    Slider* bottomSlider;
+    Slider* leftSlider;
+    Slider* rightSlider;
 
-        virtual void customSetup();
-        virtual void update(float dt);
+    virtual void customSetup();
+    virtual void update(float dt);
 
-        void onSliderChanged(CCObject* sender);
+    void onSliderChanged(CCObject* sender);
 
-        static EditSafeZonePopup* create();
-        static EditSafeZonePopup* addToScene();
+    static EditSafeZonePopup* create();
+    static EditSafeZonePopup* addToScene();
 };

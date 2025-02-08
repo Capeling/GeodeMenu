@@ -1,7 +1,6 @@
 #include "EditPositionLayer.hpp"
 
-void EditPositionLayer::customSetup()
-{
+void EditPositionLayer::customSetup() {
     m_mainLayer->setVisible(false);
     this->setZOrder(69);
     this->setTouchEnabled(true);
@@ -29,8 +28,7 @@ void EditPositionLayer::customSetup()
     nodeOuter->ignoreAnchorPointForPosition(false);
     nodeOuter->setContentSize(ccp(175, 55));
 
-    if (type == EditPositionType::StartposSwitcher)
-    {
+    if (type == EditPositionType::StartposSwitcher) {
         scaleSlider = Slider::create(this, menu_selector(EditPositionLayer::sliderValueChanged));
         scaleSlider->getThumb()->setTag(1);
         scaleSlider->setValue(unscaleValue(scale));
@@ -63,8 +61,7 @@ void EditPositionLayer::customSetup()
         this->addChild(opacityLabel, 5);
     }
 
-    if (type == EditPositionType::FrameStepper)
-    {
+    if (type == EditPositionType::FrameStepper) {
         scaleSlider = Slider::create(this, menu_selector(EditPositionLayer::sliderValueChanged));
         scaleSlider->getThumb()->setTag(1);
         scaleSlider->setValue(unscaleValue(scale));
@@ -81,7 +78,7 @@ void EditPositionLayer::customSetup()
         this->addChild(scaleSlider, 5);
         this->addChild(scaleLabel, 5);
     }
-    
+
     auto topRightMenu = CCMenu::create();
     topRightMenu->setPosition(CCDirector::get()->getWinSize() + ccp(-32, -35));
     topRightMenu->addChild(CCMenuItemToggler::createWithStandardSprites(this, menu_selector(EditPositionLayer::onTogglePreview), 0.75f));
@@ -104,10 +101,8 @@ void EditPositionLayer::customSetup()
     this->addChild(nodeOuter, 2);
 }
 
-void EditPositionLayer::onClose(CCObject*)
-{
-    if (type == EditPositionType::StartposSwitcher)
-    {
+void EditPositionLayer::onClose(CCObject*) {
+    if (type == EditPositionType::StartposSwitcher) {
         Mod::get()->setSavedValue<float>("startpos-position.x", position.x);
         Mod::get()->setSavedValue<float>("startpos-position.y", position.y);
 
@@ -115,8 +110,7 @@ void EditPositionLayer::onClose(CCObject*)
         Mod::get()->setSavedValue<float>("startpos-opacity", opacity);
     }
 
-    if (type == EditPositionType::FrameStepper)
-    {
+    if (type == EditPositionType::FrameStepper) {
         Mod::get()->setSavedValue<float>("frame-stepper-position.x", position.x);
         Mod::get()->setSavedValue<float>("frame-stepper-position.y", position.y);
 
@@ -127,16 +121,16 @@ void EditPositionLayer::onClose(CCObject*)
     as<SillyBaseLayer*>(this->getParent())->onClose(nullptr);
 }
 
-void EditPositionLayer::onReset(CCObject*)
-{
-    if (type == EditPositionType::StartposSwitcher)
-    {
+void EditPositionLayer::onReset(CCObject*) {
+    if (type == EditPositionType::StartposSwitcher) {
         Mod::get()->setSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2);
         Mod::get()->setSavedValue<float>("startpos-position.y", 25);
         Mod::get()->setSavedValue<float>("startpos-scale", 1);
         Mod::get()->setSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
-        position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2), Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        position =
+            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
@@ -144,24 +138,24 @@ void EditPositionLayer::onReset(CCObject*)
         opacitySlider->setValue(75.0f / 255.0f);
     }
 
-    if (type == EditPositionType::FrameStepper)
-    {
+    if (type == EditPositionType::FrameStepper) {
         Mod::get()->setSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25);
         Mod::get()->setSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25);
         Mod::get()->setSavedValue<float>("frame-stepper-scale", 1);
         Mod::get()->setSavedValue<float>("frame-stepper-opacity", 255.0f / 255.0f);
 
-        position = ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25), Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
+        position =
+            ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
+                Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
         scale = Mod::get()->getSavedValue<float>("frame-stepper-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("frame-stepper-opacity", 255.0f / 255.0f);
 
         scaleSlider->setValue(unscaleValue(1));
-        //opacitySlider->setValue(255.0f / 255.0f);
+        // opacitySlider->setValue(255.0f / 255.0f);
     }
 }
 
-void EditPositionLayer::update(float dt)
-{
+void EditPositionLayer::update(float dt) {
     label->setOpacity(opacity * 255);
     left->setOpacity(opacity * 255);
     right->setOpacity(opacity * 255);
@@ -171,11 +165,11 @@ void EditPositionLayer::update(float dt)
     nodeOuter->setPosition(position);
 }
 
-CCMenu* EditPositionLayer::getNodeForType()
-{
-    if (type == EditPositionType::StartposSwitcher)
-    {
-        position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2), Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+CCMenu* EditPositionLayer::getNodeForType() {
+    if (type == EditPositionType::StartposSwitcher) {
+        position =
+            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 75.0f / 255.0f);
 
@@ -199,9 +193,10 @@ CCMenu* EditPositionLayer::getNodeForType()
         return menu;
     }
 
-    if (type == EditPositionType::FrameStepper)
-    {
-        position = ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25), Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
+    if (type == EditPositionType::FrameStepper) {
+        position =
+            ccp(Mod::get()->getSavedValue<float>("frame-stepper-position.x", 135 / 2 + 25),
+                Mod::get()->getSavedValue<float>("frame-stepper-position.y", 40 / 2 + 25));
         scale = Mod::get()->getSavedValue<float>("frame-stepper-scale", 1);
         opacity = Mod::get()->getSavedValue<float>("frame-stepper-opacity", 255.0f / 255.0f);
 
@@ -241,7 +236,16 @@ CCMenu* EditPositionLayer::getNodeForType()
         menu->addChildAtPosition(right, Anchor::Center);
         menu->addChildAtPosition(label, Anchor::Center);
 
-        auto area = TextArea::create("Keybinds are:\n<cl>N</c> : Previous Frame\n<cl>M</c> : Step Frame\n<cl>B</c> : Toggle Paused", "chatFont.fnt", 1.0f, 1000, ccp(0.5f, 0.5f), 20, false);
+        auto area = TextArea::create(
+            "Keybinds are:\n<cl>N</c> : Previous Frame\n<cl>M</c> : Step Frame\n<cl>B</c> : Toggle "
+            "Paused",
+            "chatFont.fnt",
+            1.0f,
+            1000,
+            ccp(0.5f, 0.5f),
+            20,
+            false
+        );
         area->setPosition(ccp(CCDirector::get()->getWinSize().width / 2, CCDirector::get()->getWinSize().height - 120));
         this->addChild(area, 12);
 
@@ -251,12 +255,9 @@ CCMenu* EditPositionLayer::getNodeForType()
     return nullptr;
 }
 
-bool EditPositionLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
-{
-    if (CCLayer::ccTouchBegan(touch, event))
-    {
-        if (nodeOuter->boundingBox().containsPoint(touch->getLocation()))
-        {
+bool EditPositionLayer::ccTouchBegan(CCTouch* touch, CCEvent* event) {
+    if (CCLayer::ccTouchBegan(touch, event)) {
+        if (nodeOuter->boundingBox().containsPoint(touch->getLocation())) {
             isDragging = true;
             offset = nodeOuter->getPosition() - touch->getLocation();
 
@@ -267,24 +268,20 @@ bool EditPositionLayer::ccTouchBegan(CCTouch* touch, CCEvent* event)
     return false;
 }
 
-void EditPositionLayer::ccTouchMoved(CCTouch* touch, CCEvent* event)
-{
+void EditPositionLayer::ccTouchMoved(CCTouch* touch, CCEvent* event) {
     if (isDragging)
         position = touch->getLocation() + offset;
 }
 
-void EditPositionLayer::ccTouchEnded(CCTouch* touch, CCEvent* event)
-{
+void EditPositionLayer::ccTouchEnded(CCTouch* touch, CCEvent* event) {
     isDragging = false;
 }
 
-void EditPositionLayer::ccTouchCancelled(CCTouch* touch, CCEvent* event)
-{
+void EditPositionLayer::ccTouchCancelled(CCTouch* touch, CCEvent* event) {
     isDragging = false;
 }
 
-void EditPositionLayer::sliderValueChanged(CCObject* sender)
-{
+void EditPositionLayer::sliderValueChanged(CCObject* sender) {
     if (sender->getTag() == 1)
         scale = scaleValue(as<SliderThumb*>(sender)->getValue());
 
@@ -292,8 +289,7 @@ void EditPositionLayer::sliderValueChanged(CCObject* sender)
         opacity = as<SliderThumb*>(sender)->getValue();
 }
 
-void EditPositionLayer::onTogglePreview(CCObject*)
-{
+void EditPositionLayer::onTogglePreview(CCObject*) {
     previewBG->setVisible(!previewBG->isVisible());
     bg->setColor(previewBG->isVisible() ? ccc3(0, 0, 0) : ccc3(51, 68, 153));
 }

@@ -111,20 +111,20 @@ class StatusNode : public CCNode
             formattedTime << std::setfill('0') << std::setw(2) << hours.count() << ":"
                         << std::setfill('0') << std::setw(2) << minutes.count() << ":"
                         << std::setfill('0') << std::setw(2) << seconds.count();
-            
+
             return formattedTime.str();
         }
 
         std::string formatTime() {
             // Get current time
             std::time_t currentTime = std::time(nullptr);
-            
+
             // Convert to local time
             std::tm* localTime = std::localtime(&currentTime);
-            
+
             // Create a string stream to format the time
             std::ostringstream oss;
-            
+
             if (Client::GetModuleEnabled("status-clock-24h-time"))
                 oss << std::put_time(localTime, "%H:%M:%S");
             else

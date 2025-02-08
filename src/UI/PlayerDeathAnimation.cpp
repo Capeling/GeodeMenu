@@ -1,12 +1,10 @@
 #include "PlayerDeathAnimation.hpp"
 
-bool PlayerDeathAnimation::init(int id)
-{
+bool PlayerDeathAnimation::init(int id) {
     if (!CCNode::init())
         return false;
 
-    if (id == 1)
-    {
+    if (id == 1) {
         isDefault = true;
 
         return true;
@@ -15,21 +13,17 @@ bool PlayerDeathAnimation::init(int id)
     CCTextureCache::get()->addImage(fmt::format("PlayerExplosion_{:02}.png", id - 1).c_str(), false);
     CCSpriteFrameCache::get()->addSpriteFramesWithFile(fmt::format("PlayerExplosion_{:02}.plist", id - 1).c_str());
 
-    for (size_t i = 1; i < 69; i++)
-    {
+    for (size_t i = 1; i < 69; i++) {
         auto spr = fmt::format("playerExplosion_{:02}_{:03}.png", id - 1, i);
 
-        if (auto frame = CCSpriteFrameCache::get()->spriteFrameByName(spr.c_str()))
-        {
-            if (auto sprite = CCSprite::createWithSpriteFrame(frame))
-            {
+        if (auto frame = CCSpriteFrameCache::get()->spriteFrameByName(spr.c_str())) {
+            if (auto sprite = CCSprite::createWithSpriteFrame(frame)) {
                 if (sprite->getUserObject("geode.texture-loader/fallback"))
                     break;
 
                 bool b = false;
 
-                for (auto frames : CCDictionaryExt<std::string, CCTexture2D*>(CCTextureCache::get()->m_pTextures))
-                {
+                for (auto frames : CCDictionaryExt<std::string, CCTexture2D*>(CCTextureCache::get()->m_pTextures)) {
                     if (frames.second == sprite->getTexture())
                         if (frames.first.find("geode.texture-loader/fallback") != std::string::npos)
                             b = true;
@@ -43,27 +37,22 @@ bool PlayerDeathAnimation::init(int id)
 
                 this->addChild(sprite);
             }
-        }
-        else
+        } else
             break;
     }
 
     return true;
 }
 
-void PlayerDeathAnimation::run()
-{
-    if (isDefault)
-    {
-        if (auto particles = CCParticleSystemQuad::create("explodeEffect.plist", false))
-        {
+void PlayerDeathAnimation::run() {
+    if (isDefault) {
+        if (auto particles = CCParticleSystemQuad::create("explodeEffect.plist", false)) {
             particles->setPosition(ccp(0, 0));
             particles->resetSystem();
             this->addChild(particles, 2);
         }
 
-        if (auto circle = CCCircleWave::create(20, 100, 0.5f, true))
-        {
+        if (auto circle = CCCircleWave::create(20, 100, 0.5f, true)) {
             this->addChild(circle, 1);
         }
 
@@ -73,12 +62,10 @@ void PlayerDeathAnimation::run()
     this->schedule(schedule_selector(PlayerDeathAnimation::tick), 0.043f);
 }
 
-void PlayerDeathAnimation::tick(float)
-{
+void PlayerDeathAnimation::tick(float) {
     index++;
 
-    for (size_t i = 0; i < sprites.size(); i++)
-    {
+    for (size_t i = 0; i < sprites.size(); i++) {
         sprites[i]->setVisible(i == index);
     }
 
@@ -86,12 +73,10 @@ void PlayerDeathAnimation::tick(float)
         this->removeFromParent();
 }
 
-PlayerDeathAnimation* PlayerDeathAnimation::create(int id)
-{
+PlayerDeathAnimation* PlayerDeathAnimation::create(int id) {
     auto pRet = new PlayerDeathAnimation();
 
-    if (pRet && pRet->init(id))
-    {
+    if (pRet && pRet->init(id)) {
         pRet->autorelease();
         return pRet;
     }
@@ -100,8 +85,7 @@ PlayerDeathAnimation* PlayerDeathAnimation::create(int id)
     return nullptr;
 }
 
-PlayerDeathAnimation* PlayerDeathAnimation::createAndRun(int id)
-{
+PlayerDeathAnimation* PlayerDeathAnimation::createAndRun(int id) {
     auto pRet = create(id);
 
     pRet->run();

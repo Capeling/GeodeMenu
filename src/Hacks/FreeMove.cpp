@@ -1,12 +1,13 @@
-//#define FREEMOVE
+// #define FREEMOVE
 
 #ifdef FREEMOVE
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/CCKeyboardDispatcher.hpp>
-#include <Geode/modify/GJBaseGameLayer.hpp>
-#include <Geode/modify/PlayerObject.hpp>
-#include "../Client/Client.h"
+# include "../Client/Client.h"
+
+# include <Geode/Geode.hpp>
+# include <Geode/modify/CCKeyboardDispatcher.hpp>
+# include <Geode/modify/GJBaseGameLayer.hpp>
+# include <Geode/modify/PlayerObject.hpp>
 
 using namespace geode::prelude;
 
@@ -15,14 +16,10 @@ float speed = 1.0f;
 bool a = false;
 bool b = true;
 
-class $modify (CCKeyboardDispatcher)
-{
-    bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool idk)
-    {
-        if (PlayLayer::get())
-        {
-            if (key == enumKeyCodes::KEY_End && down)
-            {
+class $modify(CCKeyboardDispatcher) {
+    bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool idk) {
+        if (PlayLayer::get()) {
+            if (key == enumKeyCodes::KEY_End && down) {
                 a = !a;
 
                 if (a)
@@ -34,12 +31,10 @@ class $modify (CCKeyboardDispatcher)
                     pos = PlayLayer::get()->m_player1->m_position;
             }
 
-            if (key == enumKeyCodes::KEY_F1 && down)
-            {
+            if (key == enumKeyCodes::KEY_F1 && down) {
                 speed -= 0.1f;
 
-                if (speed < 0.7f)
-                {
+                if (speed < 0.7f) {
                     speed = 0.7f;
                 }
 
@@ -51,12 +46,10 @@ class $modify (CCKeyboardDispatcher)
                 geode::Notification::create(ss.str(), NotificationIcon::None, 0.25f)->show();
             }
 
-            if (key == enumKeyCodes::KEY_F2 && down)
-            {
+            if (key == enumKeyCodes::KEY_F2 && down) {
                 speed += 0.1f;
 
-                if (speed > 5)
-                {
+                if (speed > 5) {
                     speed = 5;
                 }
 
@@ -68,8 +61,7 @@ class $modify (CCKeyboardDispatcher)
                 geode::Notification::create(ss.str(), NotificationIcon::None, 0.25f)->show();
             }
 
-            if (key == enumKeyCodes::KEY_F3 && down)
-            {
+            if (key == enumKeyCodes::KEY_F3 && down) {
                 b = !b;
 
                 geode::Notification::create("Toggled update call", NotificationIcon::None, 0.25f)->show();
@@ -80,19 +72,15 @@ class $modify (CCKeyboardDispatcher)
     }
 };
 
-class $modify (PlayerObject)
-{
-    virtual void update(float p0)
-    {
+class $modify(PlayerObject) {
+    virtual void update(float p0) {
         if (!a)
             PlayerObject::update(p0);
     }
 };
 
-class $modify (GJBaseGameLayer)
-{
-    virtual void update(float delta)
-    {
+class $modify(GJBaseGameLayer) {
+    virtual void update(float delta) {
         if (b)
             GJBaseGameLayer::update(delta);
 

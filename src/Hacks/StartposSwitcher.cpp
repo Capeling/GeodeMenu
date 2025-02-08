@@ -1,14 +1,14 @@
+#include "../Client/Client.h"
+#include "../Labels/BestRun.hpp"
+#include "../Layers/EditPositionLayer.hpp"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <Geode/modify/UILayer.hpp>
-#include "../Client/Client.h"
-#include "../Layers/EditPositionLayer.hpp"
-#include "../Labels/BestRun.hpp"
 
 using namespace geode::prelude;
 
-class $modify (StartposPlayLayer, PlayLayer)
-{
+class $modify(StartposPlayLayer, PlayLayer) {
     struct Fields {
         std::vector<StartPosObject*> objs;
         int selectedIndex = -1;
@@ -23,12 +23,13 @@ class $modify (StartposPlayLayer, PlayLayer)
         float opacity;
     };
 
-    void setStartpos(int index)
-    {
+    void setStartpos(int index) {
         if (m_fields->objs.empty())
             return;
 
-        std::sort(m_fields->objs.begin(), m_fields->objs.end(), [](auto* a, auto* b) { return a->getPositionX() < b->getPositionX(); });
+        std::sort(m_fields->objs.begin(), m_fields->objs.end(), [](auto* a, auto* b) {
+            return a->getPositionX() < b->getPositionX();
+        });
 
         if (index < -1)
             index = m_fields->objs.size() - 1;
@@ -57,33 +58,28 @@ class $modify (StartposPlayLayer, PlayLayer)
         updateUI();
     }
 
-    void onLeft(CCObject*)
-    {
+    void onLeft(CCObject*) {
         setStartpos(m_fields->selectedIndex - 1);
     }
 
-    void onRight(CCObject*)
-    {
+    void onRight(CCObject*) {
         setStartpos(m_fields->selectedIndex + 1);
     }
 
-    void addObject(GameObject* obj)
-    {
-        if (obj->m_objectID == 31)
-        {
+    void addObject(GameObject* obj) {
+        if (obj->m_objectID == 31) {
             m_fields->objs.push_back(as<StartPosObject*>(obj));
 
-            #ifndef GEODE_IS_MACOS
+#ifndef GEODE_IS_MACOS
             if (as<StartPosObject*>(obj)->m_startSettings && !as<StartPosObject*>(obj)->m_startSettings->m_disableStartPos)
                 m_fields->selectedIndex++;
-            #endif
+#endif
         }
 
         PlayLayer::addObject(obj);
     }
 
-    void createObjectsFromSetupFinished()
-    {
+    void createObjectsFromSetupFinished() {
         PlayLayer::createObjectsFromSetupFinished();
 
         if (m_fields->menu)
@@ -116,29 +112,35 @@ class $modify (StartposPlayLayer, PlayLayer)
         updateUI();
     }
 
-    void updateUI()
-    {
+    void updateUI() {
         if (!m_fields->menu || !m_fields->label)
             return;
 
-        m_fields->position = ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2), Mod::get()->getSavedValue<float>("startpos-position.y", 25));
+        m_fields->position =
+            ccp(Mod::get()->getSavedValue<float>("startpos-position.x", CCDirector::get()->getWinSize().width / 2),
+                Mod::get()->getSavedValue<float>("startpos-position.y", 25));
         m_fields->scale = Mod::get()->getSavedValue<float>("startpos-scale", 1);
         m_fields->opacity = Mod::get()->getSavedValue<float>("startpos-opacity", 1);
 
         m_fields->label->setString(fmt::format("{}/{}", m_fields->selectedIndex + 1, m_fields->objs.size()).c_str());
         m_fields->label->limitLabelWidth(100, 0.65f, 0);
 
-        auto action = CCSequence::create(CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr);
-        auto action2 = CCSequence::create(CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr);
-        auto action3 = CCSequence::create(CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr);
+        auto action = CCSequence::create(
+            CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr
+        );
+        auto action2 = CCSequence::create(
+            CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr
+        );
+        auto action3 = CCSequence::create(
+            CCFadeTo::create(0.1f, 225), CCFadeTo::create(0.6f, 225), CCFadeTo::create(0.3f, 255 * m_fields->opacity), nullptr
+        );
 
         m_fields->label->runAction(action);
         m_fields->left->runAction(action2);
         m_fields->right->runAction(action3);
     }
 
-    virtual void postUpdate(float dt)
-    {
+    virtual void postUpdate(float dt) {
         PlayLayer::postUpdate(dt);
 
         auto fields = m_fields.self();
@@ -148,17 +150,13 @@ class $modify (StartposPlayLayer, PlayLayer)
     }
 };
 
-class $modify (UILayer)
-{
-    #ifdef GEODE_IS_WINDOWS
-    virtual void keyDown(cocos2d::enumKeyCodes key)
-    {
+class $modify(UILayer) {
+#ifdef GEODE_IS_WINDOWS
+    virtual void keyDown(cocos2d::enumKeyCodes key) {
         UILayer::keyDown(key);
 
-        if (Client::GetModuleEnabled("startpos-switcher"))
-        {
-            if (auto pl = PlayLayer::get())
-            {
+        if (Client::GetModuleEnabled("startpos-switcher")) {
+            if (auto pl = PlayLayer::get()) {
                 if (key == enumKeyCodes::KEY_Q)
                     as<StartposPlayLayer*>(pl)->setStartpos(as<StartposPlayLayer*>(pl)->m_fields->selectedIndex - 1);
 
@@ -167,13 +165,10 @@ class $modify (UILayer)
             }
         }
     }
-    #else
-    void handleKeypress(cocos2d::enumKeyCodes key, bool down)
-    {
-        if (down && Client::GetModuleEnabled("startpos-switcher"))
-        {
-            if (auto pl = PlayLayer::get())
-            {
+#else
+    void handleKeypress(cocos2d::enumKeyCodes key, bool down) {
+        if (down && Client::GetModuleEnabled("startpos-switcher")) {
+            if (auto pl = PlayLayer::get()) {
                 if (key == enumKeyCodes::KEY_Q)
                     as<StartposPlayLayer*>(pl)->setStartpos(as<StartposPlayLayer*>(pl)->m_fields->selectedIndex - 1);
 
@@ -184,19 +179,16 @@ class $modify (UILayer)
 
         UILayer::handleKeypress(key, down);
     }
-    #endif
+#endif
 };
 
-class StartposUIDelegate : public ModuleChangeDelegate
-{
-    virtual void initOptionsLayer(CCLayer* options)
-    {
+class StartposUIDelegate : public ModuleChangeDelegate {
+    virtual void initOptionsLayer(CCLayer* options) {
         options->addChild(EditPositionLayer::create(EditPositionType::StartposSwitcher));
     }
 };
 
-$execute
-{
+$execute {
     Loader::get()->queueInMainThread([] {
         Client::GetModule("startpos-switcher")->delegate = new StartposUIDelegate();
     });

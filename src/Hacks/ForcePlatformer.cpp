@@ -1,13 +1,12 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (PlayLayer)
-{
-    bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects)
-    {
+class $modify(PlayLayer) {
+    bool init(GJGameLevel* level, bool useReplay, bool dontCreateObjects) {
         if (!PlayLayer::init(level, useReplay, dontCreateObjects))
             return false;
 
@@ -16,12 +15,12 @@ class $modify (PlayLayer)
         if (m_player2)
             m_player2->togglePlatformerMode(true);
 
-        #ifdef GEODE_IS_MOBILE
+#ifdef GEODE_IS_MOBILE
 
         if (m_uiLayer)
             m_uiLayer->togglePlatformerMode(true);
 
-        #endif
+#endif
 
         return true;
     }

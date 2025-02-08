@@ -34,7 +34,8 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
             a->stopAllActions();
             a->setOpacity(100);
 
-            CCScene::get()->addChild(TextAlertPopup::create("Refreshed Macros", 0.5f, 0.6f, 150, ""), 9999999);
+            CCScene::get()->addChild(TextAlertPopup::create("Refreshed Macros", 0.5f, 0.6f, 150,
+""), 9999999);
         }
 
         void onFolder(CCObject*)
@@ -53,9 +54,8 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
 
         void onMacroInfo(CCObject*)
         {
-            auto al = FLAlertLayer::create("Load Macro", "This is the load macro help, <cl>incredible</c>", "OK");
-            al->setTouchPriority(-515);
-            al->show();
+            auto al = FLAlertLayer::create("Load Macro", "This is the load macro help,
+<cl>incredible</c>", "OK"); al->setTouchPriority(-515); al->show();
         }
 
         bool init()
@@ -92,9 +92,8 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
             {
                 auto size = panel->getContentSize();
 
-                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
-                gradient->setContentSize(size);
-                gradient->setZOrder(-1);
+                auto gradient = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255,
+255, 255)); gradient->setContentSize(size); gradient->setZOrder(-1);
                 gradient->setID("gradient"_spr);
 
                 if (Mod::get()->getSettingValue<bool>("use-custom-colours"))
@@ -114,18 +113,18 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
                 if (Mod::get()->getSettingValue<bool>("reverse-order"))
                 gradient->setScaleY(-1);
 
-                auto darken = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-fill.png")).c_str());
-                darken->setID("darken"_spr);
-                darken->setContentSize(size - ccp(15, 15));
-                darken->setZOrder(0);
-                darken->setPosition(size / 2);
+                auto darken =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-fill.png")).c_str()); darken->setID("darken"_spr); darken->setContentSize(size -
+ccp(15, 15)); darken->setZOrder(0); darken->setPosition(size / 2);
 
-                auto outline = CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") + std::string("square-outline.png")).c_str());
-                outline->setPosition(size / 2);
+                auto outline =
+CCScale9Sprite::createWithSpriteFrameName((std::string("thesillydoggo.gradientpages/") +
+std::string("square-outline.png")).c_str()); outline->setPosition(size / 2);
                 outline->setContentSize(size);
                 outline->setZOrder(1);
                 outline->setID("outline"_spr);
-                
+
                 gradient->addChild(darken);
                 gradient->addChild(outline);
 
@@ -138,20 +137,22 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
             }
 
             auto title = CCLabelBMFont::create("Load Macro", "bigFont.fnt");
-            title->setPosition(l->getContentSize() / 2 + ccp(0, (l->getContentSize().height / 2) - 15));
-            title->setOpacity(100);
-            title->setScale(0.5f);
-            l->addChild(title);
+            title->setPosition(l->getContentSize() / 2 + ccp(0, (l->getContentSize().height / 2) -
+15)); title->setOpacity(100); title->setScale(0.5f); l->addChild(title);
 
-            auto cancel = CCMenuItemSpriteExtra::create(ButtonSprite::create("Cancel"), this, menu_selector(LoadMacroPopup::onClose));
-            cancel->setPosition(l->getContentSize() / 2 + ccp(0, -l->getContentSize().height / 2 + 23));
-            l->addChild(cancel);
+            auto cancel = CCMenuItemSpriteExtra::create(ButtonSprite::create("Cancel"), this,
+menu_selector(LoadMacroPopup::onClose)); cancel->setPosition(l->getContentSize() / 2 + ccp(0,
+-l->getContentSize().height / 2 + 23)); l->addChild(cancel);
 
-            auto search = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_findBtn_001.png"), this, menu_selector(LoadMacroPopup::onSearch));
+            auto search =
+CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_findBtn_001.png"), this,
+menu_selector(LoadMacroPopup::onSearch));
             //l->addChildAtPosition(search, Anchor::TopRight, ccp(-20, -50));
 
-            auto info = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(LoadMacroPopup::onMacroInfo));
-            l->addChildAtPosition(info, Anchor::TopRight, ccp(-16, -18));
+            auto info =
+CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this,
+menu_selector(LoadMacroPopup::onMacroInfo)); l->addChildAtPosition(info, Anchor::TopRight, ccp(-16,
+-18));
 
             auto bg = CCLayerColor::create(ccc4(0, 0, 0, 50));
             bg->ignoreAnchorPointForPosition(false);
@@ -159,10 +160,11 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
 
             scroll = ScrollLayer::create(ccp(320, 175));
             scroll->setAnchorPoint(ccp(0, 0));
-            l->addChildAtPosition(scroll, Anchor::Center, ccp(0, 10) - scroll->getContentSize() / 2);
+            l->addChildAtPosition(scroll, Anchor::Center, ccp(0, 10) - scroll->getContentSize() /
+2);
 
             bg->setContentSize(scroll->getContentSize() + ccp(5, 5));
-            
+
             auto content = scroll->m_contentLayer;
 
             auto path = Mod::get()->getConfigDir() / "macros";
@@ -188,7 +190,8 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
             {
                 if (!dir.is_directory())
                 {
-                    auto cell = MacroCell::createWithUnloadedMacro(dir.path().filename().stem().string(), macroCount);
+                    auto cell =
+MacroCell::createWithUnloadedMacro(dir.path().filename().stem().string(), macroCount);
 
                     if (cell)
                     {
@@ -204,11 +207,14 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
             content->setContentSize(ccp(320, totSize));
             scroll->moveToTop();
 
-            auto openFolder = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_folderBtn_001.png"), this, menu_selector(LoadMacroPopup::onFolder));
-            l->addChildAtPosition(openFolder, Anchor::BottomLeft, ccp(30, 30));
+            auto openFolder =
+CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("gj_folderBtn_001.png"), this,
+menu_selector(LoadMacroPopup::onFolder)); l->addChildAtPosition(openFolder, Anchor::BottomLeft,
+ccp(30, 30));
 
-            auto refresh = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_updateBtn_001.png"), this, menu_selector(LoadMacroPopup::onRefresh));
-            refresh->m_baseScale = 0.7f;
+            auto refresh =
+CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_updateBtn_001.png"), this,
+menu_selector(LoadMacroPopup::onRefresh)); refresh->m_baseScale = 0.7f;
             refresh->setScale(refresh->m_baseScale);
             l->addChildAtPosition(refresh, Anchor::BottomRight, ccp(-25, 25));
 
@@ -224,10 +230,10 @@ class LoadMacroPopup : public FLAlertLayer, TextInputDelegate
             this->addChild(l);
 
             //l->setScale(0.1f);
-            //l->runAction(CCEaseElasticOut::create(CCScaleTo::create(1, 1))); 
+            //l->runAction(CCEaseElasticOut::create(CCScaleTo::create(1, 1)));
 
             handleTouchPriority(this);
-    
+
             return true;
         }
 

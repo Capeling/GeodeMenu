@@ -1,81 +1,71 @@
 #include "LabelModule.hpp"
-#include "Labels.h"
-#include "LabelLayer.hpp"
-#include "../Hacks/SafeMode/SafeMode.hpp"
 
-LabelModule::LabelModule(std::string format, std::string font)
-{
+#include "../Hacks/SafeMode/SafeMode.hpp"
+#include "LabelLayer.hpp"
+#include "Labels.h"
+
+LabelModule::LabelModule(std::string format, std::string font) {
     this->format = format;
     this->font = font;
 }
 
-void LabelModule::setFont(std::string newFont)
-{
+void LabelModule::setFont(std::string newFont) {
     this->font = newFont;
 
     if (labelNode)
         labelNode->setFntFile(getFont().c_str());
 }
 
-std::string LabelModule::getFont()
-{
-    return CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false)) ? font : "bigFont.fnt";
+std::string LabelModule::getFont() {
+    return CCFileUtils::sharedFileUtils()->isFileExist(CCFileUtils::sharedFileUtils()->fullPathForFilename(font.c_str(), false)) ?
+        font :
+        "bigFont.fnt";
 }
 
-void LabelModule::setScale(float newScale)
-{
+void LabelModule::setScale(float newScale) {
     this->scale = newScale;
 
-    if (labelNode)
-    {
+    if (labelNode) {
         labelNode->setScale(newScale * 0.5f);
         labelNode->getParent()->updateLayout();
     }
 }
 
-float LabelModule::getScale()
-{
+float LabelModule::getScale() {
     return scale;
 }
 
-void LabelModule::setOpacity(float newOpacity)
-{
+void LabelModule::setOpacity(float newOpacity) {
     this->opacity = newOpacity;
 
-    if (labelNode)
-    {
+    if (labelNode) {
         labelNode->setOpacity(opacity * 255.0f);
     }
 }
 
-float LabelModule::getOpacity()
-{
+float LabelModule::getOpacity() {
     return opacity;
 }
 
-ccColor3B LabelModule::getColour()
-{
+ccColor3B LabelModule::getColour() {
     if (isCheatIndicator)
         return SafeMode::get()->colourForState();
 
     return ccWHITE;
 }
 
-void LabelModule::setSide(LabelAnchor newSide)
-{
+void LabelModule::setSide(LabelAnchor newSide) {
     this->side = newSide;
 
     if (LabelLayer::get())
         LabelLayer::get()->updateAnchors();
 }
 
-LabelAnchor LabelModule::getSide()
-{
+LabelAnchor LabelModule::getSide() {
     return side;
 }
 
-matjson::Value LabelModule::saveToObject()
-{
+matjson::Value LabelModule::saveToObject() {
     matjson::Value obj;
 
     obj["display_name"] = this->name;
@@ -92,9 +82,8 @@ matjson::Value LabelModule::saveToObject()
     obj["visible"] = visible;
 
     matjson::Value eventsArr = obj.array();
-    
-    for (auto event : events)
-    {
+
+    for (auto event : events) {
         eventsArr.asArray().unwrap().push_back(event.save());
     }
 
@@ -103,8 +92,7 @@ matjson::Value LabelModule::saveToObject()
     return obj;
 }
 
-LabelModule* LabelModule::createFromObject(matjson::Value obj)
-{
+LabelModule* LabelModule::createFromObject(matjson::Value obj) {
     auto mod = new LabelModule("", "bigFont.fnt");
 
     if (obj.contains("display_name") && obj["display_name"].isString())
@@ -145,10 +133,8 @@ LabelModule* LabelModule::createFromObject(matjson::Value obj)
     if (obj.contains("visible") && obj["visible"].isBool())
         mod->visible = obj["visible"].asBool().unwrap();
 
-    if (obj.contains("events") && obj["events"].isArray())
-    {
-        for (auto obj : obj["events"].asArray().unwrap())
-        {
+    if (obj.contains("events") && obj["events"].isArray()) {
+        for (auto obj : obj["events"].asArray().unwrap()) {
             LabelEvent event;
             event.load(obj);
 
@@ -159,8 +145,7 @@ LabelModule* LabelModule::createFromObject(matjson::Value obj)
     return mod;
 }
 
-void LabelModule::exportToFile()
-{
+void LabelModule::exportToFile() {
     auto object = saveToObject();
 
     auto dump = object.dump();
@@ -169,25 +154,24 @@ void LabelModule::exportToFile()
 
     file::FilePickOptions::Filter filter;
     filter.description = "QOLMod Label";
-    filter.files = { "*.qollbl" };
+    filter.files = {"*.qollbl"};
 
     options.filters.push_back(filter);
 
-    file::pick(file::PickMode::SaveFile, options).listen([this, dump](Result<std::filesystem::path>* path)
-    {
-        if (path->isOk())
-        {
+    file::pick(file::PickMode::SaveFile, options).listen([this, dump](Result<std::filesystem::path>* path) {
+        if (path->isOk()) {
             auto filePath = path->unwrapOr(Mod::get()->getConfigDir());
 
             if (!filePath.has_extension())
                 filePath += ".qollbl";
-            
+
             auto res = file::writeString(filePath, dump);
 
             if (res.isOk())
                 FLAlertLayer::create("Success!", "<cg>Success</c> exporting <cc>file</c>!", "OK")->show();
             else
-                FLAlertLayer::create("Failure!", fmt::format("<cr>Failed</c> exporting <cc>file</c>!\n<cr>{}</c>", res.unwrapErr()), "OK")->show();
+                FLAlertLayer::create("Failure!", fmt::format("<cr>Failed</c> exporting <cc>file</c>!\n<cr>{}</c>", res.unwrapErr()), "OK")
+                    ->show();
         }
     });
 }

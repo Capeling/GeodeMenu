@@ -1,12 +1,12 @@
 #include "AndroidUI.h"
+
 #include "../UI/BlurLayer.hpp"
 #include "../Utils/LaunchArgs.hpp"
 #include "../Utils/UnspeedhackedAction.hpp"
 
 AndroidUI* __androidui__instance__ = nullptr;
 
-bool AndroidUI::setup()
-{
+bool AndroidUI::setup() {
     __androidui__instance__ = this;
     m_mainLayer->setVisible(false);
 
@@ -17,8 +17,7 @@ bool AndroidUI::setup()
     this->setID("QOLModUI");
     this->runAction(CCFadeTo::create(0.5f, 100));
 
-    if (Client::GetModuleEnabled("menu-bg-blur") && !LaunchArgs::get()->hasLaunchArg("--qolmod:no-blur"))
-    {
+    if (Client::GetModuleEnabled("menu-bg-blur") && !LaunchArgs::get()->hasLaunchArg("--qolmod:no-blur")) {
         auto blur = BlurLayer::create();
         blur->setID("blur-layer");
         blur->runAction(CCEaseIn::create(CCFadeTo::create(0.5f, 255), 2));
@@ -34,11 +33,11 @@ bool AndroidUI::setup()
 
     auto backSpr = CCSprite::createWithSpriteFrameName("GJ_arrow_03_001.png");
 
-    #ifdef GEODE_IS_APPLE
+#ifdef GEODE_IS_APPLE
     backSpr->runAction(CCFadeIn::create(0.5f));
-    #else
+#else
     backSpr->runAction(UnspeedhackedAction::create(CCFadeIn::create(0.5f)));
-    #endif
+#endif
 
     auto backBtn = CCMenuItemSpriteExtra::create(backSpr, this, menu_selector(AndroidUI::onClose));
     backBtn->setPosition(ccp(24, -23));
@@ -53,7 +52,7 @@ bool AndroidUI::setup()
     bg->setGradientDarkenVisible(false);
     bg->setContentSize(panel->getContentSize());
     panel->addChildAtPosition(bg, Anchor::Center);
-    
+
     auto windows = CCScale9Sprite::create("square02_small.png");
     windows->setOpacity(100);
     windows->setPosition(ccp(10, 10));
@@ -68,10 +67,14 @@ bool AndroidUI::setup()
     windowsMenu->ignoreAnchorPointForPosition(false);
     windowsMenu->setID("windows-menu");
 
-    windowsMenu->setLayout(ColumnLayout::create()->setAxisReverse(true)->setAxisAlignment(AxisAlignment::End)->setCrossAxisOverflow(true)->setAutoScale(false)->setGap(3.5f));
+    windowsMenu->setLayout(ColumnLayout::create()
+                               ->setAxisReverse(true)
+                               ->setAxisAlignment(AxisAlignment::End)
+                               ->setCrossAxisOverflow(true)
+                               ->setAutoScale(false)
+                               ->setGap(3.5f));
 
-    std::sort(Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b)
-    {
+    std::sort(Client::instance->windows.begin(), Client::instance->windows.end(), [](Window* a, Window* b) {
         return a->priority < b->priority;
     });
 
@@ -89,8 +92,7 @@ bool AndroidUI::setup()
     windowsMenu->setPositionY(0);
 
     int i = 0;
-    for (auto win : Client::get()->windows)
-    {
+    for (auto win : Client::get()->windows) {
         auto tabSize = ccp(100, 20);
 
         auto normal = CategoryTabSprite::create(CategoryTabType::Text, win->name);
@@ -121,8 +123,7 @@ bool AndroidUI::setup()
 
     updateTabs();
 
-    for (size_t i = 0; i < Client::instance->windows.size(); i++)
-    {
+    for (size_t i = 0; i < Client::instance->windows.size(); i++) {
         auto menu = CCMenu::create();
         menu->setAnchorPoint(ccp(1, 0));
         menu->setPosition(ccp(475 - 15 + 5, 10));
@@ -132,7 +133,7 @@ bool AndroidUI::setup()
         menu->setID(Client::instance->windows[i]->id);
 
         Client::instance->windows[i]->cocosCreate(menu);
-        
+
         pages.push_back(menu);
 
         panel->addChild(menu);
@@ -142,7 +143,7 @@ bool AndroidUI::setup()
     panel->addChild(searchResultsPanel);
 
     windowsMenu->updateLayout();
-    
+
     panel->addChild(windows);
 
     float height = 25;
@@ -163,8 +164,7 @@ bool AndroidUI::setup()
     input->getInputNode()->setID("IGNOREBYPASSES"_spr);
     input->setString("");
     input->getInputNode()->m_cursor->setID("cursor");
-    if (auto cursor = input->getInputNode()->m_cursor->getChildren()->objectAtIndex(0))
-    {
+    if (auto cursor = input->getInputNode()->m_cursor->getChildren()->objectAtIndex(0)) {
         as<CCNode*>(cursor)->setID("cursor-char");
     }
     searchLabel = input->getInputNode()->m_placeholderLabel;
@@ -180,7 +180,7 @@ bool AndroidUI::setup()
     versionParent->getLayout()->ignoreInvisibleChildren(true);
 
     versionInfo = CCLabelBMFont::create("L", "chatFont.fnt");
-    //versionInfo->setBlendFunc({ GL_ONE_MINUS_DST_COLOR, GL_ZERO });
+    // versionInfo->setBlendFunc({ GL_ONE_MINUS_DST_COLOR, GL_ZERO });
     versionInfo->setAlignment(CCTextAlignment::kCCTextAlignmentCenter);
     versionInfo->setAnchorPoint(ccp(0.5f, 0));
     versionInfo->setScale(0.55f);
@@ -198,25 +198,24 @@ bool AndroidUI::setup()
     updateSearchBox();
     updateVersionLabel();
 
-    //if (Client::GetModuleEnabled("npesta-width"))
+    // if (Client::GetModuleEnabled("npesta-width"))
     //{
-    //    panel->setPositionX(panel->getPositionX() + 5);
-    //    panel->setContentSize(panel->getContentSize() + ccp(10, 0));
-    //    as<CCNode*>(panel->getChildren()->objectAtIndex(0))->setPositionX(-5);
-    //}
+    //     panel->setPositionX(panel->getPositionX() + 5);
+    //     panel->setContentSize(panel->getContentSize() + ccp(10, 0));
+    //     as<CCNode*>(panel->getChildren()->objectAtIndex(0))->setPositionX(-5);
+    // }
 
     panel->runAction(getEnterAction(panel));
 
     this->addChild(panel);
     this->addChild(backMenu);
 
-    //UIOpenEvent("open-menu"_spr, nullptr).post();
+    // UIOpenEvent("open-menu"_spr, nullptr).post();
 
     return true;
 }
 
-AndroidUI* AndroidUI::get()
-{
+AndroidUI* AndroidUI::get() {
     if (!CCScene::get())
         return nullptr;
 
@@ -226,15 +225,14 @@ AndroidUI* AndroidUI::get()
     /*if (__androidui__instance__)
     {
         __androidui__instance__->removeFromParent();
-        
+
         __androidui__instance__ = nullptr;
     }*/
 
     return nullptr;
 }
 
-void AndroidUI::updateVersionLabel()
-{
+void AndroidUI::updateVersionLabel() {
     /*
     #ifdef GEODE_IS_WINDOWS
     std::string platform = "Windows";
@@ -277,23 +275,17 @@ void AndroidUI::updateVersionLabel()
 
     checkingSprite->setVisible(!hasCheckedForUpdates);
 
-    if (!hasCheckedForUpdates)
-    {
-        updateListener.bind([this](Mod::CheckUpdatesTask::Event* event)
-        {
-            if (auto value = event->getValue())
-            {
-                if (value->isOk())
-                {
+    if (!hasCheckedForUpdates) {
+        updateListener.bind([this](Mod::CheckUpdatesTask::Event* event) {
+            if (auto value = event->getValue()) {
+                if (value->isOk()) {
                     updateRequired = value->unwrap().has_value();
                 }
 
                 hasCheckedForUpdates = true;
                 updateSearchBox();
                 updateVersionLabel();
-            }
-            else if (event->isCancelled())
-            {
+            } else if (event->isCancelled()) {
                 hasCheckedForUpdates = false;
                 updateSearchBox();
                 updateVersionLabel();
@@ -306,14 +298,11 @@ void AndroidUI::updateVersionLabel()
         return;
     }
 
-    if (updateRequired)
-    {
+    if (updateRequired) {
         versionInfo->setString(fmt::format("{}\nUpdate Available!", versionInfo->getString()).c_str());
 
-        for (size_t i = 0; i < 17; i++)
-        {
-            if (auto n = as<CCNodeRGBA*>(versionInfo->getChildren()->objectAtIndex(versionInfo->getChildren()->count() - i - 1)))
-            {
+        for (size_t i = 0; i < 17; i++) {
+            if (auto n = as<CCNodeRGBA*>(versionInfo->getChildren()->objectAtIndex(versionInfo->getChildren()->count() - i - 1))) {
                 n->setColor(ccc3(87, 87, 255));
             }
         }
@@ -331,7 +320,7 @@ void AndroidUI::updateVersionLabel()
         btn->setContentSize(menu->getContentSize());
         btn->setAnchorPoint(ccp(0, 0));
         btn->setSizeMult(1);
-        
+
         menu->addChild(btn);
         panel->addChild(menu);
     }
@@ -339,13 +328,11 @@ void AndroidUI::updateVersionLabel()
     versionParent->updateLayout();
 }
 
-void AndroidUI::onUpdate(CCObject*)
-{
-    (void)openInfoPopup(Mod::get()->getID());
+void AndroidUI::onUpdate(CCObject*) {
+    (void) openInfoPopup(Mod::get()->getID());
 }
 
-CCMenu* AndroidUI::getSearchPanel()
-{
+CCMenu* AndroidUI::getSearchPanel() {
     auto menu = CCMenu::create();
     menu->setAnchorPoint(ccp(1, 0));
     menu->setPosition(ccp(475 - 15 + 5, 10));
@@ -368,7 +355,7 @@ CCMenu* AndroidUI::getSearchPanel()
     float extraGap = 9.69f;
     float height = gap * roundUpToMultipleOf2(0 / 2);
     height = std::max<float>(menu->getContentHeight(), height + extraGap);
-    
+
     scroll = geode::ScrollLayer::create(menu->getContentSize());
     scroll->m_peekLimitTop = 15;
     scroll->m_peekLimitBottom = 15;
@@ -388,15 +375,12 @@ CCMenu* AndroidUI::getSearchPanel()
     return menu;
 }
 
-void AndroidUI::update(float dt)
-{
+void AndroidUI::update(float dt) {
     searchLabel->limitLabelWidth(90, 0.6f, 0.1f);
 }
 
-void AndroidUI::textChanged(CCTextInputNode* p0)
-{
-    for (size_t i = 0; i < pages.size(); i++)
-    {
+void AndroidUI::textChanged(CCTextInputNode* p0) {
+    for (size_t i = 0; i < pages.size(); i++) {
         pages[i]->setVisible(inputField->getString().empty() ? (i == selectedTab) : false);
     }
 
@@ -404,29 +388,24 @@ void AndroidUI::textChanged(CCTextInputNode* p0)
 
     std::vector<Module*> modules = {};
 
-    for (auto window : Client::instance->windows)
-    {
+    for (auto window : Client::instance->windows) {
         if (typeinfo_cast<Labels*>(window))
             continue;
 
-        for (auto module : window->modules)
-        {
+        for (auto module : window->modules) {
             if (!module)
                 continue;
 
-            if (string::toLower(module->name).find(string::toLower(std::string(inputField->getString()))) != std::string::npos)
-            {
+            if (string::toLower(module->name).find(string::toLower(std::string(inputField->getString()))) != std::string::npos) {
                 if (!(module->id.starts_with("anim-speed")))
                     modules.push_back(module);
             }
 
-            for (auto option : module->options)
-            {
+            for (auto option : module->options) {
                 if (!option)
                     continue;
 
-                if (string::toLower(option->name).find(string::toLower(std::string(inputField->getString()))) != std::string::npos)
-                {
+                if (string::toLower(option->name).find(string::toLower(std::string(inputField->getString()))) != std::string::npos) {
                     if (!(option->id.starts_with("anim-speed")))
                         modules.push_back(option);
                 }
@@ -444,8 +423,7 @@ void AndroidUI::textChanged(CCTextInputNode* p0)
     btnMenu->removeAllChildrenWithCleanup(true);
     btnMenu->setContentHeight(height);
 
-    for (size_t m = 0; m < modules.size(); m++)
-    {
+    for (size_t m = 0; m < modules.size(); m++) {
         float x = 20;
 
         if (!(m % 2 == 0))
@@ -462,26 +440,18 @@ void AndroidUI::textChanged(CCTextInputNode* p0)
     scroll->enableScrollWheel();
 }
 
-void AndroidUI::goToPage(int p, bool transition)
-{
+void AndroidUI::goToPage(int p, bool transition) {
     selectedTab = p;
 
-    if (transition)
-    {
-        
-    }
-    else
-    {
-        for (size_t i = 0; i < pages.size(); i++)
-        {
+    if (transition) {
+    } else {
+        for (size_t i = 0; i < pages.size(); i++) {
             pages[i]->setVisible(i == p);
         }
-        
     }
 }
 
-CCAction* AndroidUI::getEnterAction(CCNode* panel)
-{
+CCAction* AndroidUI::getEnterAction(CCNode* panel) {
     float v = SpeedhackTop::getAdjustedValue();
 
     int e = Mod::get()->getSavedValue<int>("anim-mode", 2);
@@ -497,9 +467,7 @@ CCAction* AndroidUI::getEnterAction(CCNode* panel)
     if (e == 4)
         panel->setPositionX(panel->getContentSize().width);
 
-
-    if (e == 5)
-    {
+    if (e == 5) {
         panel->setScale(0);
 
         return UnspeedhackedAction::create(CCEaseElasticOut::create(CCScaleTo::create(0.5f, 1), 0.6f));
@@ -508,12 +476,26 @@ CCAction* AndroidUI::getEnterAction(CCNode* panel)
     return UnspeedhackedAction::create(CCEaseElasticOut::create(CCMoveTo::create(1, CCDirector::get()->getWinSize() / 2), 0.3f));
 }
 
-void AndroidUI::onPressTab(CCObject* sender)
-{
+void AndroidUI::onPressTab(CCObject* sender) {
     auto btn = static_cast<CCMenuItemSprite*>(sender);
 
     if (typeinfo_cast<IconEffects*>(Client::instance->windows[btn->getTag()]) && EffectUI::getIncompatibleModLoaded())
-        return FLAlertLayer::create(nullptr, "Icon Effects", fmt::format("Icon Effects have been disabled due to incompatibilities.\nTo use icon effects, disable the following mod:\n{}", EffectUI::getIncompatibleMods()), "OK", nullptr, 330, false, 300, 0.75f)->show();
+        return FLAlertLayer::create(
+                   nullptr,
+                   "Icon Effects",
+                   fmt::format(
+                       "Icon Effects have been disabled due to incompatibilities.\nTo use "
+                       "icon effects, disable the following mod:\n{}",
+                       EffectUI::getIncompatibleMods()
+                   ),
+                   "OK",
+                   nullptr,
+                   330,
+                   false,
+                   300,
+                   0.75f
+        )
+            ->show();
 
     lastTab = selectedTab;
     selectedTab = btn->getTag();
@@ -524,28 +506,24 @@ void AndroidUI::onPressTab(CCObject* sender)
     searchResultsPanel->setVisible(false);
 
     updateTabs();
-    
+
     goToPage(selectedTab);
 }
 
-void AndroidUI::updateTabs()
-{
+void AndroidUI::updateTabs() {
     int i = 0;
 
-    for (auto sprite : sprites)
-    {
+    for (auto sprite : sprites) {
         sprite->updateSelection(i == selectedTab ? CategorySelectionType::Selected : CategorySelectionType::Deselected);
         as<CCMenuItemSpriteExtra*>(sprite->getParent())->setEnabled(i != selectedTab);
         i++;
     }
 }
 
-AndroidUI* AndroidUI::create()
-{
+AndroidUI* AndroidUI::create() {
     auto pRet = new AndroidUI();
 
-    if (pRet->initAnchored(240.f, 160.f))
-    {
+    if (pRet->initAnchored(240.f, 160.f)) {
         pRet->autorelease();
         return pRet;
     }
@@ -554,8 +532,7 @@ AndroidUI* AndroidUI::create()
     return nullptr;
 }
 
-AndroidUI* AndroidUI::addToScene()
-{
+AndroidUI* AndroidUI::addToScene() {
     if (auto existing = CCScene::get()->getChildByType<AndroidUI>(0))
         return existing;
 
@@ -565,13 +542,11 @@ AndroidUI* AndroidUI::addToScene()
     return pRet;
 }
 
-void AndroidUI::onKeybinds(CCObject*)
-{
+void AndroidUI::onKeybinds(CCObject*) {
     ManageKeybindsLayer::addToScene();
 }
 
-void AndroidUI::keyDown(cocos2d::enumKeyCodes key)
-{
+void AndroidUI::keyDown(cocos2d::enumKeyCodes key) {
     if (key == enumKeyCodes::KEY_One)
         onPressTab(buttons[0]);
 
@@ -596,17 +571,16 @@ void AndroidUI::keyDown(cocos2d::enumKeyCodes key)
     if (key == enumKeyCodes::KEY_Eight)
         onPressTab(buttons[7]);
 
-    //if (key == enumKeyCodes::KEY_Nine)
-    //    onPressTab(buttons[8]);
+    // if (key == enumKeyCodes::KEY_Nine)
+    //     onPressTab(buttons[8]);
 
-    //if (key == enumKeyCodes::KEY_Zero)
-    //    onPressTab(buttons[9]);
+    // if (key == enumKeyCodes::KEY_Zero)
+    //     onPressTab(buttons[9]);
 
     Popup<>::keyDown(key);
 }
 
-void AndroidUI::updateSearchBox()
-{
+void AndroidUI::updateSearchBox() {
     auto en = Client::GetModuleEnabled("ui-search-box");
 
     versionInfo->setVisible(!en);

@@ -1,16 +1,15 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/EndLevelLayer.hpp>
 #include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/EndLevelLayer.hpp>
+#include <Geode/modify/PlayLayer.hpp>
 
 #ifdef QOLMOD_NOJUSTDONT
 
 using namespace geode::prelude;
 
-class $modify (PlayLayer)
-{
-    void createObjectsFromSetupFinished()
-    {
+class $modify(PlayLayer) {
+    void createObjectsFromSetupFinished() {
         PlayLayer::createObjectsFromSetupFinished();
 
         if (!Client::GetModuleEnabled("just-dont"))
@@ -23,10 +22,8 @@ class $modify (PlayLayer)
     }
 };
 
-class $modify (EndLevelLayer)
-{
-    void customSetup()
-    {
+class $modify(EndLevelLayer) {
+    void customSetup() {
         EndLevelLayer::customSetup();
 
         if (!Client::GetModuleEnabled("just-dont"))

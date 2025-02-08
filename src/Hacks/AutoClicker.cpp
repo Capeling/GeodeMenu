@@ -1,6 +1,7 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
@@ -9,10 +10,8 @@ InputModule* holdFor;
 Module* player1;
 Module* player2;
 
-class $modify (AutoBaseGameLayer, GJBaseGameLayer)
-{
-    struct Fields
-    {
+class $modify(AutoBaseGameLayer, GJBaseGameLayer) {
+    struct Fields {
         int frames;
         int framesHeld;
         bool isHeld;
@@ -26,14 +25,12 @@ class $modify (AutoBaseGameLayer, GJBaseGameLayer)
 
         fcont->frames++;
 
-        if (fcont->frames >= delay->getIntValue())
-        {
+        if (fcont->frames >= delay->getIntValue()) {
             fcont->frames = 0;
             fcont->framesHeld = 0;
         }
 
-        if (fcont->frames == 0)
-        {
+        if (fcont->frames == 0) {
             if (player1->enabled)
                 this->handleButton(true, as<int>(PlayerButton::Jump), true);
 
@@ -43,14 +40,13 @@ class $modify (AutoBaseGameLayer, GJBaseGameLayer)
             fcont->isHeld = true;
         }
 
-        if (fcont->framesHeld >= holdFor->getIntValue())
-        {
+        if (fcont->framesHeld >= holdFor->getIntValue()) {
             if (player1->enabled)
                 this->GJBaseGameLayer::handleButton(false, as<int>(PlayerButton::Jump), true);
 
             if (player2->enabled && m_player2 && m_gameState.m_isDualMode)
                 this->GJBaseGameLayer::handleButton(false, as<int>(PlayerButton::Jump), false);
-            
+
             fcont->isHeld = false;
         }
 
@@ -61,8 +57,7 @@ class $modify (AutoBaseGameLayer, GJBaseGameLayer)
     QOLMOD_MOD_ALL_HOOKS("auto-clicker")
 };
 
-$execute
-{
+$execute {
     Loader::get()->queueInMainThread([] {
         auto clicker = Client::GetModule("auto-clicker");
         delay = as<InputModule*>(clicker->options[0]);

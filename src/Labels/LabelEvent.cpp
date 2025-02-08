@@ -1,7 +1,6 @@
 #include "LabelCommon.hpp"
 
-matjson::Value LabelEvent::save()
-{
+matjson::Value LabelEvent::save() {
     matjson::Value obj;
 
     obj["type"] = geode::cast::as<int>(type);
@@ -17,8 +16,7 @@ matjson::Value LabelEvent::save()
     return obj;
 }
 
-void LabelEvent::load(matjson::Value obj)
-{
+void LabelEvent::load(matjson::Value obj) {
     if (obj.contains("type") && obj["type"].isNumber())
         type = geode::cast::as<LabelEventType>(obj["type"].asInt().unwrap());
 

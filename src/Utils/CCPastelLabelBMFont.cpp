@@ -1,11 +1,10 @@
 #include "CCPastelLabelBMFont.hpp"
+
 #include "../Client/ColourUtility.h"
 
-CCPastelLabelBMFont::CCPastelLabelBMFont() {
-}
+CCPastelLabelBMFont::CCPastelLabelBMFont() {}
 
-CCPastelLabelBMFont::~CCPastelLabelBMFont() {
-}
+CCPastelLabelBMFont::~CCPastelLabelBMFont() {}
 
 CCPastelLabelBMFont* CCPastelLabelBMFont::create(const char* text, const char* fontFile) {
     CCPastelLabelBMFont* label = new CCPastelLabelBMFont();
@@ -20,7 +19,7 @@ CCPastelLabelBMFont* CCPastelLabelBMFont::create(const char* text, const char* f
 bool CCPastelLabelBMFont::initWithString(const char* text, const char* fontFile) {
     if (!CCLabelBMFont::initWithString(text, fontFile))
         return false;
-    
+
     this->scheduleUpdate();
     return true;
 }

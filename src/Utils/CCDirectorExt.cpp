@@ -2,13 +2,11 @@
 
 double __deltatime__;
 
-float CCDirectorExt::getUnmodifiedDelta()
-{
+float CCDirectorExt::getUnmodifiedDelta() {
     return __deltatime__;
 }
 
-void CCSchedulerExt::update(float dt)
-{
+void CCSchedulerExt::update(float dt) {
     __deltatime__ = dt;
 
     CCScheduler::update(dt);

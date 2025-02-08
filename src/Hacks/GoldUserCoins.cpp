@@ -1,17 +1,16 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
+#include <Geode/modify/CCCircleWave.hpp>
 #include <Geode/modify/CCSpriteFrameCache.hpp>
 #include <Geode/modify/EnhancedGameObject.hpp>
 #include <Geode/modify/GJBaseGameLayer.hpp>
-#include <Geode/modify/CCCircleWave.hpp>
 #include <Geode/modify/GameObject.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (CCSpriteFrameCache)
-{
-    CCSpriteFrame* spriteFrameByName(const char *pszName)
-    {
+class $modify(CCSpriteFrameCache) {
+    CCSpriteFrame* spriteFrameByName(const char* pszName) {
         if (std::string(pszName).starts_with("secretCoin_2"))
             pszName = utils::string::replace(std::string(pszName), "_2", "").c_str();
 
@@ -24,10 +23,8 @@ class $modify (CCSpriteFrameCache)
 bool is;
 int objID;
 
-class $modify (GJBaseGameLayer)
-{
-    bool hasUniqueCoin(EffectGameObject* p0)
-    {
+class $modify(GJBaseGameLayer) {
+    bool hasUniqueCoin(EffectGameObject* p0) {
         auto v = GJBaseGameLayer::hasUniqueCoin(p0);
 
         if (is)
@@ -39,10 +36,8 @@ class $modify (GJBaseGameLayer)
     QOLMOD_MOD_ALL_HOOKS("gold-user-coins")
 };
 
-class $modify (EnhancedGameObject)
-{
-    void updateUserCoin()
-    {
+class $modify(EnhancedGameObject) {
+    void updateUserCoin() {
         objID = m_objectID;
         is = true;
 
@@ -59,10 +54,8 @@ class $modify (EnhancedGameObject)
 
 CCCircleWave* lastWave;
 
-class $modify (CCCircleWave)
-{
-    static CCCircleWave* create(float startRadius, float endRadius, float duration, bool fadeIn, bool easeOut)
-    {
+class $modify(CCCircleWave) {
+    static CCCircleWave* create(float startRadius, float endRadius, float duration, bool fadeIn, bool easeOut) {
         auto pRet = CCCircleWave::create(startRadius, endRadius, duration, fadeIn, easeOut);
 
         lastWave = pRet;
@@ -73,10 +66,8 @@ class $modify (CCCircleWave)
     QOLMOD_MOD_ALL_HOOKS("gold-user-coins")
 };
 
-class $modify (GameObject)
-{
-    void playDestroyObjectAnim(GJBaseGameLayer* p0)
-    {
+class $modify(GameObject) {
+    void playDestroyObjectAnim(GJBaseGameLayer* p0) {
         GameObject::playDestroyObjectAnim(p0);
 
         if (lastWave)

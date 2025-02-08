@@ -1,8 +1,8 @@
 #include "ColourPickModule.hpp"
+
 #include "../../UI/TransLabelBMFont.hpp"
 
-void ColourModule::makeAndroid(CCNode* menu, CCPoint pos)
-{
+void ColourModule::makeAndroid(CCNode* menu, CCPoint pos) {
     auto label = TransLabelBMFont::create(name, "bigFont.fnt");
     label->setAnchorPoint(ccp(0, 0.5f));
     label->setScale(0.575f);
@@ -16,27 +16,24 @@ void ColourModule::makeAndroid(CCNode* menu, CCPoint pos)
 
     btn->setPosition(pos + ccp(135, 0) + ccp(-15, 0));
 
-    menu->addChild(btn);    
+    menu->addChild(btn);
     menu->addChild(label);
 }
 
-void ColourModule::onPickColourAndroid(CCObject* sender)
-{
+void ColourModule::onPickColourAndroid(CCObject* sender) {
     auto men = geode::ColorPickPopup::create(colour);
 
     men->setDelegate(this);
     men->show();
 }
 
-void ColourModule::updateColor(cocos2d::ccColor4B const& color)
-{
+void ColourModule::updateColor(const cocos2d::ccColor4B& color) {
     colour = ccc3(color.r, color.g, color.b);
     btnSpr->setColor(colour);
     save();
 }
 
-ColourModule::ColourModule(std::string name, std::string id, ccColor3B def)
-{
+ColourModule::ColourModule(std::string name, std::string id, ccColor3B def) {
     this->name = name;
     this->id = id;
     colour = def;
@@ -45,13 +42,11 @@ ColourModule::ColourModule(std::string name, std::string id, ccColor3B def)
     this->load();
 }
 
-void ColourModule::save()
-{
+void ColourModule::save() {
     Mod::get()->setSavedValue<ccColor3B>(id + "_value", colour);
 }
 
-void ColourModule::load()
-{
+void ColourModule::load() {
     colour = Mod::get()->getSavedValue<ccColor3B>(id + "_value", colour);
     save();
 }

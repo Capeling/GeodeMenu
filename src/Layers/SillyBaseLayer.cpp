@@ -1,15 +1,14 @@
 #include "SillyBaseLayer.h"
+
 #include "../Utils/LaunchArgs.hpp"
 #include "../Utils/UnspeedhackedAction.hpp"
 
-bool SillyBaseLayer::setup()
-{
+bool SillyBaseLayer::setup() {
     m_mainLayer->setVisible(false);
     this->stopAllActions();
     this->setOpacity(0);
 
-    if (!noBlur && Client::GetModuleEnabled("menu-bg-blur") && !LaunchArgs::get()->hasLaunchArg("--qolmod:no-blur"))
-    {
+    if (!noBlur && Client::GetModuleEnabled("menu-bg-blur") && !LaunchArgs::get()->hasLaunchArg("--qolmod:no-blur")) {
         blur = BlurLayer::create();
         blur->runAction(UnspeedhackedAction::create(CCEaseIn::create(CCFadeTo::create(0.5f, 255), 2)));
         this->addChild(blur);
@@ -34,15 +33,13 @@ bool SillyBaseLayer::setup()
     title->setScale(0.6f);
     l->addChild(title);
 
-    if (createWithOK)
-    {
+    if (createWithOK) {
         ok = CCMenuItemSpriteExtra::create(ButtonSprite::create("OK"), this, menu_selector(SillyBaseLayer::onClose));
         ok->setPosition(l->getContentSize() / 2 + ccp(0, -l->getContentSize().height / 2 + 23));
         l->addChild(ok);
     }
 
-    if (animate)
-    {
+    if (animate) {
         auto action = UnspeedhackedAction::create(CCEaseElasticOut::create(CCScaleTo::create(0.5f, 1), 0.6f));
         action->setTag(69);
 
@@ -59,8 +56,7 @@ bool SillyBaseLayer::setup()
     return true;
 }
 
-bool SillyBaseLayer::initWithSizeAndName(CCPoint size, std::string _title, bool createWithOK, bool animate, bool noBlur)
-{
+bool SillyBaseLayer::initWithSizeAndName(CCPoint size, std::string _title, bool createWithOK, bool animate, bool noBlur) {
     this->_title = _title;
     this->createWithOK = createWithOK;
     this->animate = animate;
@@ -73,27 +69,14 @@ bool SillyBaseLayer::initWithSizeAndName(CCPoint size, std::string _title, bool 
     return true;
 }
 
-bool SillyBaseLayer::ccTouchBegan(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1)
-{
+bool SillyBaseLayer::ccTouchBegan(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1) {
     return true;
 }
 
-void SillyBaseLayer::ccTouchMoved(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1)
-{
+void SillyBaseLayer::ccTouchMoved(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1) {}
 
-}
+void SillyBaseLayer::ccTouchEnded(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1) {}
 
-void SillyBaseLayer::ccTouchEnded(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1)
-{
+void SillyBaseLayer::ccTouchCancelled(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1) {}
 
-}
-
-void SillyBaseLayer::ccTouchCancelled(cocos2d::CCTouch* p0, cocos2d::CCEvent* p1)
-{
-
-}
-
-SillyBaseLayer::~SillyBaseLayer()
-{
-
-}
+SillyBaseLayer::~SillyBaseLayer() {}

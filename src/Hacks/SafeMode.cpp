@@ -1,9 +1,10 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/GJGameLevel.hpp>
-#include <Geode/modify/PlayLayer.hpp>
-#include <Geode/modify/EndLevelLayer.hpp>
 #include "../Client/Client.h"
 #include "../Labels/Labels.h"
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/EndLevelLayer.hpp>
+#include <Geode/modify/GJGameLevel.hpp>
+#include <Geode/modify/PlayLayer.hpp>
 
 /*
 class $modify (PlayLayerExt, PlayLayer)
@@ -12,7 +13,7 @@ class $modify (PlayLayerExt, PlayLayer)
     {
         if (!PlayLayer::init(level, useReplay, dontCreateObjects))
             return false;
-        
+
         hasHackedAttempt = false;
         hasHackedAttemptReal = false;
         updateSafemode();
@@ -114,19 +115,20 @@ class $modify(EndLevelLayerExt, EndLevelLayer)
             ss << ", See above.";
         ss << "</c>";
 
-        auto alert = FLAlertLayer::create(nullptr, "Cheat Indicator", ss.str(), "OK", nullptr, 300, false, 300, 0.7f);
-        alert->show();
+        auto alert = FLAlertLayer::create(nullptr, "Cheat Indicator", ss.str(), "OK", nullptr, 300,
+false, 300, 0.7f); alert->show();
     }
 
-	void customSetup()
-	{
-		EndLevelLayer::customSetup();
+        void customSetup()
+        {
+                EndLevelLayer::customSetup();
 
         auto menu = CCMenu::create();
         menu->setPosition(CCDirector::get()->getWinSize() / 2);
 
-        auto info = CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this, menu_selector(EndLevelLayerExt::onInfo));
-        info->m_baseScale = 0.75f;
+        auto info =
+CCMenuItemSpriteExtra::create(CCSprite::createWithSpriteFrameName("GJ_infoIcon_001.png"), this,
+menu_selector(EndLevelLayerExt::onInfo)); info->m_baseScale = 0.75f;
         info->setScale(info->m_baseScale);
 
         info->setPosition(ccp(-181.5f, 126.5f));

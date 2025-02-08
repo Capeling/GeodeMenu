@@ -1,13 +1,12 @@
 #include "AndroidBall.h"
+
 #include "../Utils/UnspeedhackedAction.hpp"
 
-AndroidBall* AndroidBall::get()
-{
+AndroidBall* AndroidBall::get() {
     return instance;
 }
 
-bool AndroidBall::init()
-{
+bool AndroidBall::init() {
     if (!CCLayer::init())
         return false;
 
@@ -25,10 +24,11 @@ bool AndroidBall::init()
     menu->setPosition(position);
     menu->setContentSize(ccp(0, 0));
 
-    //l = CCLabelBMFont::create(">_", "bigFont.fnt");
-    //l->setAnchorPoint(ccp(0.5f, 0.35f));
+    // l = CCLabelBMFont::create(">_", "bigFont.fnt");
+    // l->setAnchorPoint(ccp(0.5f, 0.35f));
 
-    btnOverlay = CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr : "qolmodButtonOverlay.png"_spr);
+    btnOverlay =
+        CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr : "qolmodButtonOverlay.png"_spr);
 
     btn = CCSprite::createWithSpriteFrameName("qolmodButtonBG.png"_spr);
     btn->addChildAtPosition(btnOverlay, Anchor::Center);
@@ -43,20 +43,15 @@ bool AndroidBall::init()
     return true;
 }
 
-void AndroidBall::onOpenMenu()
-{
-    if (Client::get()->useImGuiUI())
-    {
+void AndroidBall::onOpenMenu() {
+    if (Client::get()->useImGuiUI()) {
         Client::get()->toggleWindowVisibility(WindowTransitionType::Vertical);
-    }
-    else
-    {
+    } else {
         AndroidUI::addToScene();
     }
 }
 
-bool AndroidBall::_ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event)
-{
+bool AndroidBall::_ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event) {
     if (!CCLayer::ccTouchBegan(touch, event))
         return false;
 
@@ -69,8 +64,7 @@ bool AndroidBall::_ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event
     auto point = btn->boundingBox();
     point.origin += ccp(btn->getContentWidth() / 2, btn->getContentHeight() / 2);
 
-    if (point.containsPoint(btn->convertToNodeSpace(touch->getLocation())))
-    {
+    if (point.containsPoint(btn->convertToNodeSpace(touch->getLocation()))) {
         auto scale = UnspeedhackedAction::create(CCEaseInOut::create(CCScaleTo::create(0.1f, 0.8f), 2));
         scale->setTag(69);
 
@@ -81,15 +75,13 @@ bool AndroidBall::_ccTouchBegan(cocos2d::CCTouch* touch, cocos2d::CCEvent* event
     return doingThing;
 }
 
-bool AndroidBall::_ccTouchEnded(cocos2d::CCTouch* touch, cocos2d::CCEvent* event)
-{
-    #ifdef GEODE_IS_DESKTOP
+bool AndroidBall::_ccTouchEnded(cocos2d::CCTouch* touch, cocos2d::CCEvent* event) {
+#ifdef GEODE_IS_DESKTOP
     if (mod->enabled)
         return false;
-    #endif
+#endif
 
-    if (doingThing)
-    {
+    if (doingThing) {
         if (!dragging)
             onOpenMenu();
 
@@ -100,8 +92,7 @@ bool AndroidBall::_ccTouchEnded(cocos2d::CCTouch* touch, cocos2d::CCEvent* event
 
         doingThing = false;
 
-        if (Client::GetModuleEnabled("save-pos"))
-        {
+        if (Client::GetModuleEnabled("save-pos")) {
             Mod::get()->setSavedValue("posX", position.x);
             Mod::get()->setSavedValue("posY", position.y);
         }
@@ -111,23 +102,20 @@ bool AndroidBall::_ccTouchEnded(cocos2d::CCTouch* touch, cocos2d::CCEvent* event
 }
 
 bool AndroidBall::_ccTouchMoved(cocos2d::CCTouch* touch, cocos2d::CCEvent* event) {
-    #ifdef GEODE_IS_DESKTOP
+#ifdef GEODE_IS_DESKTOP
     if (mod->enabled)
         return false;
-    #endif
+#endif
 
-    if (doingThing && !btn->getActionByTag(69))
-    {
-        if (btn->getPosition().getDistance(touch->getLocation()) > 7.5f)
-        {
+    if (doingThing && !btn->getActionByTag(69)) {
+        if (btn->getPosition().getDistance(touch->getLocation()) > 7.5f) {
             dragging = true;
         }
 
         if (!canDrag->enabled)
             dragging = false;
 
-        if (dragging)
-        {
+        if (dragging) {
             position = touch->getLocation();
             menu->setPosition(position);
         }
@@ -137,17 +125,15 @@ bool AndroidBall::_ccTouchMoved(cocos2d::CCTouch* touch, cocos2d::CCEvent* event
     return doingThing;
 }
 
-void AndroidBall::update(float dt)
-{
+void AndroidBall::update(float dt) {
     UpdateVisible(false);
 }
 
-#define TYPE_CHECK(__type__) \
-if (getParent()->getChildByType<__type__>(0)) \
+#define TYPE_CHECK(__type__)                      \
+    if (getParent()->getChildByType<__type__>(0)) \
     return true
 
-bool AndroidBall::editorShouldBeVisible()
-{
+bool AndroidBall::editorShouldBeVisible() {
     if (LevelEditorLayer::get()->getChildByType<EditorPauseLayer>(0))
         return true;
 
@@ -161,8 +147,7 @@ bool AndroidBall::editorShouldBeVisible()
     return false;
 }
 
-void AndroidBall::UpdateVisible(bool i)
-{
+void AndroidBall::UpdateVisible(bool i) {
     bool vis = true;
 
     if (Client::GetModuleEnabled("disable-gp") && this->getParent())
@@ -171,10 +156,10 @@ void AndroidBall::UpdateVisible(bool i)
     if (Client::GetModuleEnabled("disable-editor") && this->getParent() && this->getParent()->getChildByType<LevelEditorLayer>(0))
         vis = editorShouldBeVisible();
 
-    #ifdef GEODE_IS_DESKTOP
+#ifdef GEODE_IS_DESKTOP
     if (vis)
         vis = !mod->enabled;
-    #endif
+#endif
 
     this->setVisible(vis);
 
@@ -192,10 +177,8 @@ void AndroidBall::UpdateVisible(bool i)
     if (btn->getActionByTag(69))
         return;
 
-    if (i)
-    {
-        if (PlayLayer::get())
-        {
+    if (i) {
+        if (PlayLayer::get()) {
             btn->setOpacity(50);
             btnOverlay->setOpacity(50);
 
@@ -205,39 +188,26 @@ void AndroidBall::UpdateVisible(bool i)
 
     int op = Mod::get()->getSavedValue<int>("normal-opacity", 255);
 
-    if (auto pl = PlayLayer::get())
-    {
+    if (auto pl = PlayLayer::get()) {
         // if (CCScene::get()->getChildByType<PauseLayer>(0))
-        if (pl->m_isPaused)
-        {
+        if (pl->m_isPaused) {
             op = Mod::get()->getSavedValue<int>("normal-opacity", 255);
-        }
-        else
-        {
+        } else {
             op = Mod::get()->getSavedValue<int>("gameplay-opacity", 50);
         }
-    }
-    else if (GameManager::sharedState()->m_levelEditorLayer)
-    {
-        if (CCScene::get()->getChildByType<EditorPauseLayer>(0))
-        {
+    } else if (GameManager::sharedState()->m_levelEditorLayer) {
+        if (CCScene::get()->getChildByType<EditorPauseLayer>(0)) {
             op = Mod::get()->getSavedValue<int>("normal-opacity", 255);
-        }
-        else
-        {
+        } else {
             op = Mod::get()->getSavedValue<int>("editor-opacity", 50);
         }
     }
 
-    if (op != btn->getOpacity())
-    {
-        if (i)
-        {
+    if (op != btn->getOpacity()) {
+        if (i) {
             btn->setOpacity(op);
             btnOverlay->setOpacity(op);
-        }
-        else
-        {
+        } else {
             auto action = UnspeedhackedAction::create(CCEaseInOut::create(CCFadeTo::create(0.35f * (mod2->enabled ? 0 : 1), op), 2));
             action->setTag(69);
 
@@ -254,14 +224,12 @@ void AndroidBall::updateButtonScale(float scale) {
     menu->setScale(clampf(scale, 0.2f, 1));
 }
 
-AndroidBall::~AndroidBall()
-{
+AndroidBall::~AndroidBall() {
     if (instance == this)
         instance = nullptr;
 }
 
-float AndroidBall::clampf(float v, float min, float max)
-{
+float AndroidBall::clampf(float v, float min, float max) {
     if (v < min)
         v = min;
 
@@ -271,16 +239,16 @@ float AndroidBall::clampf(float v, float min, float max)
     return v;
 }
 
-bool AndroidBall::isColonThreeEnabled()
-{
+bool AndroidBall::isColonThreeEnabled() {
     return Mod::get()->getSavedValue<bool>("colon-three-secwet-uwu-:3", false);
 }
 
-void AndroidBall::setColonThreeEnabled()
-{
+void AndroidBall::setColonThreeEnabled() {
     Mod::get()->setSavedValue<bool>("colon-three-secwet-uwu-:3", !isColonThreeEnabled());
 
-    auto spr = CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr : "qolmodButtonOverlay.png"_spr)->getTexture();
+    auto spr =
+        CCSprite::createWithSpriteFrameName(isColonThreeEnabled() ? "qolmodButtonOverlaycolonthree.png"_spr : "qolmodButtonOverlay.png"_spr)
+            ->getTexture();
     btnOverlay->setTexture(spr);
 
 #ifndef GEODE_IS_IOS
@@ -299,10 +267,8 @@ void AndroidBall::setColonThreeEnabled()
 #endif
 }
 
-class $modify (CCScene)
-{
-    int getHighestChildZ()
-    {
+class $modify(CCScene) {
+    int getHighestChildZ() {
         if (!AndroidBall::get())
             return CCScene::getHighestChildZ();
 
@@ -319,18 +285,17 @@ class $modify (CCScene)
 };
 
 #ifdef __APPLE__
-class $modify (AchievementNotifier)
+class $modify(AchievementNotifier)
 #else
-class $modify (AppDelegate)
+class $modify(AppDelegate)
 #endif
 {
-    void willSwitchToScene(CCScene* newScene)
-    {
-        #ifdef __APPLE__
+    void willSwitchToScene(CCScene* newScene) {
+#ifdef __APPLE__
         AchievementNotifier::willSwitchToScene(newScene);
-        #else
+#else
         AppDelegate::willSwitchToScene(newScene);
-        #endif
+#endif
 
         if (!newScene)
             return;
@@ -338,8 +303,7 @@ class $modify (AppDelegate)
         if (newScene->getChildByType<LoadingLayer>(0))
             return; // fixes texture ldr
 
-        if (auto ball = newScene->getChildByType<AndroidBall>(0))
-        {
+        if (auto ball = newScene->getChildByType<AndroidBall>(0)) {
             AndroidBall::instance = ball;
 
             return;
@@ -351,19 +315,15 @@ class $modify (AppDelegate)
     }
 };
 
-void QOLModTouchDispatcher::touches(CCSet* touches, CCEvent* event, unsigned int type)
-{
+void QOLModTouchDispatcher::touches(CCSet* touches, CCEvent* event, unsigned int type) {
     bool sendToGame = true;
 
     if (AndroidUI::get())
         return CCTouchDispatcher::touches(touches, event, type);
 
-    if (touches)
-    {
-        if (auto ball = AndroidBall::get())
-        {
-            if (auto t = as<CCTouch*>(touches->anyObject()))
-            {
+    if (touches) {
+        if (auto ball = AndroidBall::get()) {
+            if (auto t = as<CCTouch*>(touches->anyObject())) {
                 if (type == ccTouchType::CCTOUCHBEGAN)
                     sendToGame = !ball->_ccTouchBegan(t, event);
 

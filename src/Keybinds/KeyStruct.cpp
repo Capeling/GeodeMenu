@@ -2,8 +2,7 @@
 
 using namespace geode::prelude;
 
-KeyStruct KeyStruct::loadFromModule(std::string id)
-{
+KeyStruct KeyStruct::loadFromModule(std::string id) {
     KeyStruct key;
 
     key.key = as<enumKeyCodes>(Mod::get()->getSavedValue<int>(fmt::format("{}_bind-key", id), -1));
@@ -16,19 +15,17 @@ KeyStruct KeyStruct::loadFromModule(std::string id)
     return key;
 }
 
-void KeyStruct::saveToModule(std::string id)
-{
-    Mod::get()->setSavedValue<int >(fmt::format("{}_bind-key"       , id), as<int>(key));
-    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-shift"     , id), shift);
-    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-alt"       , id), alt);
+void KeyStruct::saveToModule(std::string id) {
+    Mod::get()->setSavedValue<int>(fmt::format("{}_bind-key", id), as<int>(key));
+    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-shift", id), shift);
+    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-alt", id), alt);
     Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-can-repeat", id), canRepeat);
-    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-cmd"       , id), command);
-    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-ctrl"      , id), control);
+    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-cmd", id), command);
+    Mod::get()->setSavedValue<bool>(fmt::format("{}_bind-ctrl", id), control);
 }
 
-std::string KeyStruct::toString()
-{
-    #ifdef QOLMOD_KEYBINDS
+std::string KeyStruct::toString() {
+#ifdef QOLMOD_KEYBINDS
 
     if (key == enumKeyCodes::KEY_Unknown)
         return "";
@@ -52,9 +49,9 @@ std::string KeyStruct::toString()
 
     return ss.str();
 
-    #else
+#else
 
     return "";
 
-    #endif
+#endif
 }

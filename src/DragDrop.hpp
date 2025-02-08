@@ -6,17 +6,17 @@ using namespace geode::prelude;
 
 using DragDropCallback = std::function<void(std::vector<std::string>)>;
 
-class DragDrop
-{
-    private:
-        std::unordered_map<std::string, DragDropCallback> callbacks;
+class DragDrop {
+private:
+    std::unordered_map<std::string, DragDropCallback> callbacks;
 
-        DragDrop();
-    public:
-        static DragDrop* get();
+    DragDrop();
 
-        void addListener(std::string id, DragDropCallback callback);
-        void removeListener(std::string id);
+public:
+    static DragDrop* get();
 
-        void invoke(std::vector<std::string> paths);
+    void addListener(std::string id, DragDropCallback callback);
+    void removeListener(std::string id);
+
+    void invoke(std::vector<std::string> paths);
 };

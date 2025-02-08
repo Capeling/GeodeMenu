@@ -1,14 +1,13 @@
-#include <Geode/Geode.hpp>
-#include <Geode/modify/SecretRewardsLayer.hpp>
-#include <Geode/modify/GameStatsManager.hpp>
 #include "../Client/Client.h"
+
+#include <Geode/Geode.hpp>
+#include <Geode/modify/GameStatsManager.hpp>
+#include <Geode/modify/SecretRewardsLayer.hpp>
 
 using namespace geode::prelude;
 
-class $modify (SecretRewardsLayer)
-{
-    void onSelectItem(cocos2d::CCObject* sender)
-    {
+class $modify(SecretRewardsLayer) {
+    void onSelectItem(cocos2d::CCObject* sender) {
         auto keys = GameStatsManager::sharedState()->getStat("21");
         GameStatsManager::sharedState()->setStat("21", 9999);
 
@@ -20,8 +19,7 @@ class $modify (SecretRewardsLayer)
             m_keysLabel->setString(fmt::format("{}", keys).c_str());
     }
 
-    void onGoldChest(cocos2d::CCObject* sender)
-    {
+    void onGoldChest(cocos2d::CCObject* sender) {
         auto keys = GameStatsManager::sharedState()->getStat("43");
         GameStatsManager::sharedState()->setStat("43", 9999);
 

@@ -1,23 +1,22 @@
+#include "../Client/Client.h"
+
 #include <Geode/Geode.hpp>
 #include <Geode/modify/GameObject.hpp>
 #include <Geode/modify/PlayLayer.hpp>
-#include "../Client/Client.h"
 
 using namespace geode::prelude;
 
-class $modify (PlayLayer)
-{
+class $modify(PlayLayer) {
     struct Fields {
         Module* mod = nullptr;
         Module* mod2 = nullptr;
     };
 
     static void onModify(auto& self) {
-        (void)self.setHookPriority("PlayLayer::updateVisibility", -6969);
+        (void) self.setHookPriority("PlayLayer::updateVisibility", -6969);
     }
 
-    void updateVisibility(float p0)
-    {
+    void updateVisibility(float p0) {
         PlayLayer::updateVisibility(p0);
 
         if (!m_debugDrawNode)
@@ -39,7 +38,7 @@ class $modify (PlayLayer)
 
         if (shouldVis)
             PlayLayer::updateDebugDraw();
-        
+
         m_debugDrawNode->setVisible(shouldVis);
     }
 };

@@ -1,16 +1,15 @@
 #ifndef __APPLE__
 
-#include <Geode/Geode.hpp>
-#include <Geode/modify/SecretLayer2.hpp>
-#include "Client/AndroidBall.h"
-#include <random>
+# include "Client/AndroidBall.h"
+
+# include <Geode/Geode.hpp>
+# include <Geode/modify/SecretLayer2.hpp>
+# include <random>
 
 using namespace geode::prelude;
 
-class $modify (SecretLayer2)
-{
-    std::string getColonThreeLabel()
-    {
+class $modify(SecretLayer2) {
+    std::string getColonThreeLabel() {
         if (!AndroidBall::get()->isColonThreeEnabled())
             return "No more :3 :(";
 
@@ -18,8 +17,7 @@ class $modify (SecretLayer2)
         static std::mt19937 gen(rd());
         static std::uniform_int_distribution<> distr(1, 9);
 
-        switch (distr(gen))
-        {
+        switch (distr(gen)) {
             default:
                 return "";
 
@@ -44,17 +42,15 @@ class $modify (SecretLayer2)
         }
     }
 
-    void onSubmit(cocos2d::CCObject* sender)
-    {
+    void onSubmit(cocos2d::CCObject* sender) {
         bool inp = false;
 
-        if (auto input = this->getChildByType<CCTextInputNode>(0))
-        {
+        if (auto input = this->getChildByType<CCTextInputNode>(0)) {
             if (input->getString() != ":3")
                 return SecretLayer2::onSubmit(sender);
 
             inp = true;
-            
+
             if (auto ball = AndroidBall::get())
                 ball->setColonThreeEnabled();
         }

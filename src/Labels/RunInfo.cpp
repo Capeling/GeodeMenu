@@ -1,7 +1,6 @@
 #include "RunInfo.hpp"
 
-void RunPlayLayer::resetLevel()
-{
+void RunPlayLayer::resetLevel() {
     PlayLayer::resetLevel();
 
     m_fields->fromPercent = getCurrentPercent();
